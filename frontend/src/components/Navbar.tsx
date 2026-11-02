@@ -9,7 +9,8 @@ import {
   FileText,
   User,
   Settings,
-  UserCheck
+  UserCheck,
+  Plus
 } from "lucide-react";
 
 interface NavbarProps {
@@ -86,14 +87,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* 1. Resume Edit Option (OpenResume Technique) */}
+          {/* 1. Resume Edit Option (Clean Top + Edit Resume Button) */}
           <button
             onClick={handleEditResumeClick}
-            title="Edit any uploaded resume via OpenResume technique"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#121212] hover:bg-[#262626] text-white transition-all shadow-sm"
+            title="Edit resume or update skills in OpenResume ATS Studio"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#121212] hover:bg-[#262626] text-white transition-all shadow-sm group"
           >
-            <FileText className="w-3.5 h-3.5 text-amber-300" />
-            <span>✏️ Edit Resume</span>
+            <Plus className="w-3.5 h-3.5 text-emerald-400 group-hover:rotate-90 transition-transform" />
+            <span>+ Edit Resume</span>
           </button>
 
           {/* 2. Profile Settings Option (Skills, Name, Mail, Number, etc.) */}

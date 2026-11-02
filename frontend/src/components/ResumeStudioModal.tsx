@@ -6,7 +6,6 @@ import {
   FileText,
   UploadCloud,
   CheckCircle2,
-  AlertCircle,
   Sparkles,
   Download,
   Plus,
@@ -414,178 +413,44 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
     }
   }, [candidateName, candidateEmail, activeResumeName, isOpen]);
 
+  if (!isOpen) return null;
+
   const currentParsedResume = resumeData;
 
-  // CLEARHIRE 5-LAYER ATS SCORING ENGINE
-  const liveScore = React.useMemo(() => {
-    const profile = resumeData.profile || { name: "", email: "", phone: "", location: "", summary: "", url: "" };
-    
-    // Layer 1: Contact & Profile Completeness (20%)
-    let l1 = 0;
-    if ((profile.name || "").trim().length >= 2) l1 += 20;
-    if ((profile.email || "").includes("@") && (profile.email || "").includes(".")) l1 += 25;
-    if ((profile.phone || "").replace(/\D/g, "").length >= 7) l1 += 25;
-    if ((profile.location || "").trim().length >= 3) l1 += 15;
-    if ((profile.url || "").includes("http") || (profile.url || "").includes("github") || (profile.url || "").includes("linkedin")) l1 += 15;
-    l1 = Math.min(100, Math.max(40, l1));
-
-    // Layer 2: Taxonomy Skills & JD Alignment (30%)
-    const allResumeText = JSON.stringify(resumeData).toLowerCase();
-    const commonTaxonomy = [
-      "python", "react", "fastapi", "sql", "postgresql", "docker", "git",
-      "typescript", "javascript", "node.js", "c++", "java", "aws", "linux",
-      "kubernetes", "mongodb", "tailwind", "redux", "django", "flask", "redis",
-      "graphql", "html", "css", "rest", "pandas", "pytorch", "ci/cd", "ccna", "ccnp"
-    ];
-    const detectedSkills = commonTaxonomy.filter(skill => allResumeText.includes(skill));
-    
-    let l2 = 65;
-    let matchedSkills: string[] = [];
-    let missingSkills: string[] = [];
-
-    if (tailoringJD?.required_skills && tailoringJD.required_skills.length > 0) {
-      tailoringJD.required_skills.forEach((sk: string) => {
-        if (allResumeText.includes(sk.toLowerCase())) {
-          matchedSkills.push(sk);
-        } else {
-          missingSkills.push(sk);
-        }
-      });
-      const matchPct = (matchedSkills.length / tailoringJD.required_skills.length) * 100;
-      l2 = Math.min(100, Math.max(50, Math.round(matchPct + 10)));
-    } else {
-      if (detectedSkills.length >= 10) l2 = 98;
-      else if (detectedSkills.length >= 7) l2 = 92;
-      else if (detectedSkills.length >= 5) l2 = 85;
-      else if (detectedSkills.length >= 3) l2 = 75;
-      else l2 = 65;
-      matchedSkills = detectedSkills.slice(0, 8);
-      const suggestions = ["FastAPI", "Docker", "PostgreSQL", "Git", "React", "AWS"];
-      missingSkills = suggestions.filter(s => !allResumeText.includes(s.toLowerCase())).slice(0, 4);
-    }
-
-    // Layer 3: Education & Academic Integrity (15%)
-    let l3 = 50;
-    const edus = resumeData.educations || [];
-    if (edus.length > 0) {
-      const e = edus[0];
-      if (e.school && e.school.trim().length > 2) l3 += 20;
-      if (e.degree && e.degree.trim().length > 2) l3 += 20;
-      if (e.gpa || e.date) l3 += 10;
-    }
-    l3 = Math.min(100, l3);
-
-    // Layer 4: Work Experience, Projects & Quantified Impact (20%)
-    let l4 = 60;
-    const exps = resumeData.workExperiences || [];
-    const projs = resumeData.projects || [];
-    const totalExpItems = exps.length + projs.length;
-    if (totalExpItems >= 3) l4 += 20;
-    else if (totalExpItems >= 1) l4 += 10;
-
-    const actionVerbs = ["architected", "engineered", "implemented", "developed", "optimized", "built", "designed", "deployed", "automated", "created", "maintained"];
-    const hasVerbs = actionVerbs.some(v => allResumeText.includes(v));
-    if (hasVerbs) l4 += 10;
-
-    const hasNumbers = /\b(\d+[\d,]*%?|\d+x|\d+\+)\b/.test(allResumeText);
-    if (hasNumbers) l4 += 10;
-    l4 = Math.min(100, l4);
-
-    // Layer 5: ATS Formatting & Readability Compliance (15%)
-    const l5 = 98; // Guaranteed single-column OpenResume ATS structure
-
-    const compositeScore = Math.min(100, Math.max(50, Math.round(
-      l1 * 0.20 + l2 * 0.30 + l3 * 0.15 + l4 * 0.20 + l5 * 0.15
-    )));
-
-    const grade = compositeScore >= 90
-      ? "Tier-1 ATS Match (Top 5%)"
-      : compositeScore >= 80
-      ? "Strong ATS Pass"
-      : compositeScore >= 70
-      ? "Competitive ATS Match"
-      : "Needs Keyword Polish";
-
-    const recommendations: string[] = [];
-    if (!profile.phone || profile.phone.replace(/\D/g, "").length < 7) {
-      recommendations.push("Add a direct contact phone number for automated recruiter screening.");
-    }
-    if (!profile.url || profile.url.length < 5) {
-      recommendations.push("Add your GitHub or personal portfolio URL to provide verified proof-of-work.");
-    }
-    if (missingSkills.length > 0) {
-      recommendations.push(`Add trending competencies: ${missingSkills.join(", ")} to boost taxonomy score.`);
-    }
-    if (!hasNumbers) {
-      recommendations.push("Include measurable impact metrics (e.g. 'improved API response times by 35%') in experience bullets.");
-    }
-    if (recommendations.length === 0) {
-      recommendations.push("Outstanding ATS structure! Verified 100% compliant with enterprise ATS parsers.");
-    }
-
-    return {
-      score: compositeScore,
-      grade,
-      breakdown: {
-        contact: l1,
-        taxonomy: l2,
-        education: l3,
-        experience: l4,
-        readability: l5,
-      },
-      recommendations,
-      matchedSkills,
-      missingSkills,
-      hasNumbers,
-    };
-  }, [resumeData, tailoringJD]);
-
   const getTailoringKeywordStats = () => {
-    return {
-      matched: liveScore.matchedSkills,
-      missing: liveScore.missingSkills,
-      score: liveScore.score
-    };
+    if (!tailoringJD?.required_skills) return { matched: [], missing: [], score: 85 };
+    const resumeText = JSON.stringify(resumeData).toLowerCase();
+    const matched: string[] = [];
+    const missing: string[] = [];
+    tailoringJD.required_skills.forEach((sk: string) => {
+      if (resumeText.includes(sk.toLowerCase())) {
+        matched.push(sk);
+      } else {
+        missing.push(sk);
+      }
+    });
+    const total = tailoringJD.required_skills.length || 1;
+    const baseScore = Math.round((matched.length / total) * 100);
+    const score = Math.min(100, Math.max(50, baseScore + 10)); // affirmative boost
+    return { matched, missing, score };
   };
 
   const handleInfuseKeywords = () => {
-    const toAdd = liveScore.missingSkills.length > 0 ? liveScore.missingSkills : ["Docker", "PostgreSQL", "FastAPI", "Git"];
+    if (!tailoringJD?.required_skills) return;
+    const { missing } = getTailoringKeywordStats();
+    if (missing.length === 0) {
+      setSyncFeedback("All JD target keywords are already present in your resume!");
+      setTimeout(() => setSyncFeedback(""), 3000);
+      return;
+    }
     const currentSkills = [...resumeData.skills.descriptions];
-    const newBullet = `Technical Competencies: ${toAdd.join(", ")}`;
+    const newBullet = `Technical Competencies tailored for ${tailoringJD.title}: ${missing.join(", ")}`;
     currentSkills.push(newBullet);
     setResumeData({
       ...resumeData,
       skills: { descriptions: currentSkills },
     });
-    setSyncFeedback(`Successfully infused ${toAdd.length} keywords into your resume! ClearHire ATS score boosted.`);
-    setTimeout(() => setSyncFeedback(""), 4000);
-  };
-
-  const handleQuickInfuse = () => {
-    const toAdd = liveScore.missingSkills.length > 0 ? liveScore.missingSkills : ["Docker", "PostgreSQL", "FastAPI", "Git"];
-    const current = [...resumeData.skills.descriptions];
-    const newBullet = `Technical Competencies: ${toAdd.join(", ")}`;
-    current.push(newBullet);
-
-    const updatedExperiences = resumeData.workExperiences.map((exp, idx) => {
-      if (idx === 0 && !liveScore.hasNumbers) {
-        return {
-          ...exp,
-          descriptions: [
-            ...exp.descriptions,
-            "Optimized query execution and API response times by 35% using indexing and connection caching."
-          ]
-        };
-      }
-      return exp;
-    });
-
-    setResumeData({
-      ...resumeData,
-      workExperiences: updatedExperiences,
-      skills: { descriptions: current },
-    });
-    setSyncFeedback(`⚡ Infused ${toAdd.join(", ")} & quantifiable impact metrics! ClearHire score boosted to 98%.`);
+    setSyncFeedback(`Successfully infused ${missing.length} keywords into your resume! ATS match improved.`);
     setTimeout(() => setSyncFeedback(""), 4000);
   };
 
@@ -613,30 +478,11 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
       ]));
       if (typeof window !== "undefined" && resumeData.profile.name) {
         localStorage.setItem("pathfinder_candidate_name", resumeData.profile.name);
-        if (resumeData.profile.phone) localStorage.setItem("pathfinder_candidate_phone", resumeData.profile.phone);
-        if (resumeData.profile.email) localStorage.setItem("pathfinder_candidate_email", resumeData.profile.email);
       }
       onSyncWithProfile(allSkills, resumeData.profile.summary, resumeData.profile.name);
     }
-    setSyncFeedback(`🎉 ClearHire ATS Score (${liveScore.score}%) & skills synced to your Pathfinder Opportunity Matcher!`);
+    setSyncFeedback("Resume parsed & skills synced to your Pathfinder Opportunity Matcher!");
     setTimeout(() => setSyncFeedback(""), 4000);
-  };
-
-  const handleSaveAndBoost = () => {
-    // 1. Optimize skills & metrics if needed
-    if (liveScore.missingSkills.length > 0) {
-      const current = [...resumeData.skills.descriptions];
-      const newBullet = `Technical Competencies: ${liveScore.missingSkills.join(", ")}`;
-      current.push(newBullet);
-      resumeData.skills.descriptions = current;
-    }
-
-    // 2. Perform sync
-    handleSyncToPathfinder();
-
-    // 3. Highlight boosted result
-    setSyncFeedback(`🎉 ClearHire ATS Score Boosted to 98% (Tier-1 ATS Pass)! Synced to your Pathfinder profile.`);
-    setTimeout(() => setSyncFeedback(""), 5000);
   };
 
   const handlePrintDownload = () => {
@@ -678,8 +524,6 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
     setResumeData({ ...resumeData, workExperiences: updated });
   };
 
-  if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#121212]/70 backdrop-blur-md p-2 sm:p-4 overflow-y-auto print:p-0 print:bg-white">
       <div className="relative w-full max-w-7xl h-[94vh] bg-[#FAF8F5] rounded-3xl border border-[#E2DBD0] shadow-2xl flex flex-col overflow-hidden my-auto print:border-none print:shadow-none print:h-auto print:rounded-none">
@@ -694,17 +538,9 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 <span className="font-black text-sm tracking-tight text-[#121212]">
                   OpenResume <span className="font-light text-[#736E65]">ATS Studio</span>
                 </span>
-                <div className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold border transition-all ${
-                  liveScore.score >= 85
-                    ? "bg-emerald-50 text-emerald-900 border-emerald-300"
-                    : liveScore.score >= 70
-                    ? "bg-amber-50 text-amber-900 border-amber-300"
-                    : "bg-rose-50 text-rose-900 border-rose-300"
-                }`}>
-                  <Sparkles className="w-3 h-3 text-emerald-600 animate-pulse" />
-                  <span>ClearHire ATS: {liveScore.score}%</span>
-                  <span className="text-[9px] font-sans font-medium text-[#736E65]">({liveScore.grade})</span>
-                </div>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#EDE7DC] text-[#423E37]">
+                  ATS Readability 100%
+                </span>
               </div>
               <p className="text-[11px] text-[#736E65]">
                 Parse existing resumes with pdf.js and edit ATS-friendly single-column layouts.
@@ -915,7 +751,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               <div>
                 <div className="flex items-center justify-between pb-3 border-b border-[#E2DBD0] mb-4">
                   <h3 className="text-base font-black text-[#121212] tracking-tight">
-                    Resume Parsing Results & ClearHire Score
+                    Resume Parsing Results
                   </h3>
                   <button
                     onClick={handleApplyParsedToEditor}
@@ -924,72 +760,6 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                     <span>Edit in Live Builder</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
-                </div>
-
-                {/* ClearHire 5-Layer AI Scoring Card */}
-                <div className="mb-4 p-4 rounded-2xl bg-[#FAF8F5] border-2 border-[#121212] shadow-sm space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-[#121212] text-white flex flex-col items-center justify-center font-mono shrink-0 shadow-sm">
-                        <span className="text-lg font-black leading-none">{liveScore.score}%</span>
-                        <span className="text-[7.5px] font-bold text-emerald-400 mt-0.5">ATS SCORE</span>
-                      </div>
-                      <div>
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-xs font-black text-[#121212]">
-                            ClearHire 5-Layer ATS Evaluation
-                          </span>
-                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
-                            {liveScore.grade}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-[#736E65] mt-0.5">
-                          Deterministic merit scoring across 5 layers with affirmative anti-bias protection.
-                        </p>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={handleQuickInfuse}
-                      className="px-3.5 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs shrink-0 transition-all"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                      <span>⚡ 1-Click Boost to 98%</span>
-                    </button>
-                  </div>
-
-                  {/* 5-Layer Mini Breakdown Gauges */}
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2 border-t border-[#E2DBD0] text-xs">
-                    <div className="p-2 rounded-xl bg-white border border-[#E2DBD0]">
-                      <span className="text-[9.5px] text-[#736E65] font-mono block">1. Contact Info</span>
-                      <span className="font-black text-[#121212]">{liveScore.breakdown.contact}%</span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white border border-[#E2DBD0]">
-                      <span className="text-[9.5px] text-[#736E65] font-mono block">2. Taxonomy</span>
-                      <span className="font-black text-[#121212]">{liveScore.breakdown.taxonomy}%</span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white border border-[#E2DBD0]">
-                      <span className="text-[9.5px] text-[#736E65] font-mono block">3. Academic</span>
-                      <span className="font-black text-[#121212]">{liveScore.breakdown.education}%</span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white border border-[#E2DBD0]">
-                      <span className="text-[9.5px] text-[#736E65] font-mono block">4. Projects</span>
-                      <span className="font-black text-[#121212]">{liveScore.breakdown.experience}%</span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white border border-[#E2DBD0]">
-                      <span className="text-[9.5px] text-[#736E65] font-mono block">5. Readability</span>
-                      <span className="font-black text-emerald-800">{liveScore.breakdown.readability}%</span>
-                    </div>
-                  </div>
-
-                  {/* Recommendation notice */}
-                  {liveScore.recommendations.length > 0 && (
-                    <div className="text-[11px] text-[#59554E] flex items-start gap-1.5 bg-white p-2.5 rounded-xl border border-[#E2DBD0]">
-                      <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                      <span><strong>ClearHire Recommendation:</strong> {liveScore.recommendations[0]}</span>
-                    </div>
-                  )}
                 </div>
 
                 {/* Parsing Results Table */}
@@ -1179,107 +949,63 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 overflow-hidden print:block">
             {/* Left Col: Form Editor */}
             <div className="p-6 overflow-y-auto space-y-6 bg-white border-r border-[#E2DBD0] print:hidden">
-              {/* PERMANENT CLEARHIRE REAL-TIME ATS SCORE BAR */}
-              <div className="p-4 rounded-2xl bg-[#FAF8F5] border-2 border-[#121212] shadow-sm space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-[#121212] text-white flex flex-col items-center justify-center font-mono shrink-0 shadow-sm">
-                      <span className="text-sm font-black leading-none">{liveScore.score}%</span>
-                      <span className="text-[7.5px] font-bold text-emerald-400 mt-0.5">ATS</span>
-                    </div>
-                    <div>
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-xs font-black text-[#121212]">
-                          ClearHire ATS Score: {liveScore.score}%
+              {/* JD Tailoring Assistant Banner */}
+              {tailoringJD && (
+                <div className="p-4 rounded-2xl bg-[#FAF8F5] border-2 border-[#121212] shadow-sm space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121212] text-white">
+                          🎯 Tailoring Assistant Active
                         </span>
                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
-                          {liveScore.grade}
+                          {getTailoringKeywordStats().score}% ATS Compatibility
                         </span>
-                        {tailoringJD && (
-                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121212] text-white">
-                            🎯 Tailored: {tailoringJD.title}
-                          </span>
-                        )}
                       </div>
-                      <p className="text-[11px] text-[#736E65]">
-                        Live OpenResume parser score. Updates automatically as you edit fields.
-                      </p>
+                      <h4 className="text-xs font-black text-[#121212]">
+                        {tailoringJD.title} &bull; <span className="text-[#59554E] font-medium">{tailoringJD.company_name}</span>
+                      </h4>
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={handleInfuseKeywords}
+                      className="px-3 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                      <span>⚡ 1-Click Infuse Missing Keywords</span>
+                    </button>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={handleQuickInfuse}
-                    className="px-3 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 shrink-0"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                    <span>⚡ 1-Click Boost to 98%</span>
-                  </button>
-                </div>
-
-                {/* 5-Layer Progress Bar Row */}
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 pt-1 border-t border-[#E2DBD0] text-xs">
-                  <div className="p-1.5 rounded-lg bg-white border border-[#E2DBD0]">
-                    <span className="text-[9px] text-[#736E65] font-mono block">1. Contact</span>
-                    <span className="font-bold text-[#121212] text-xs">{liveScore.breakdown.contact}%</span>
-                  </div>
-                  <div className="p-1.5 rounded-lg bg-white border border-[#E2DBD0]">
-                    <span className="text-[9px] text-[#736E65] font-mono block">2. Taxonomy</span>
-                    <span className="font-bold text-[#121212] text-xs">{liveScore.breakdown.taxonomy}%</span>
-                  </div>
-                  <div className="p-1.5 rounded-lg bg-white border border-[#E2DBD0]">
-                    <span className="text-[9px] text-[#736E65] font-mono block">3. Academic</span>
-                    <span className="font-bold text-[#121212] text-xs">{liveScore.breakdown.education}%</span>
-                  </div>
-                  <div className="p-1.5 rounded-lg bg-white border border-[#E2DBD0]">
-                    <span className="text-[9px] text-[#736E65] font-mono block">4. Projects</span>
-                    <span className="font-bold text-[#121212] text-xs">{liveScore.breakdown.experience}%</span>
-                  </div>
-                  <div className="p-1.5 rounded-lg bg-white border border-[#E2DBD0]">
-                    <span className="text-[9px] text-[#736E65] font-mono block">5. Readability</span>
-                    <span className="font-bold text-emerald-800 text-xs">{liveScore.breakdown.readability}%</span>
-                  </div>
-                </div>
-
-                {/* Recommendations & Missing Keywords Chips */}
-                {liveScore.recommendations.length > 0 && (
+                  {/* Target Keywords breakdown */}
                   <div className="space-y-1.5 pt-1 border-t border-[#E2DBD0]">
-                    <div className="text-[11px] text-[#59554E] flex flex-wrap items-center justify-between gap-1">
-                      <span className="font-bold">ATS Improvement Recommendations:</span>
-                      {liveScore.missingSkills.length > 0 && (
-                        <span className="text-[10px] font-mono text-[#736E65]">
-                          Add trending skills to reach 98%:
-                        </span>
-                      )}
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="font-bold text-[#59554E]">JD Required Keywords:</span>
+                      <span className="font-mono text-[#736E65]">
+                        {getTailoringKeywordStats().matched.length} of {tailoringJD.required_skills?.length || 0} matched
+                      </span>
                     </div>
-                    {liveScore.missingSkills.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        {liveScore.missingSkills.map((sk) => (
-                          <button
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {tailoringJD.required_skills?.map((sk: string) => {
+                        const isMatched = getTailoringKeywordStats().matched.includes(sk);
+                        return (
+                          <span
                             key={sk}
-                            type="button"
-                            onClick={() => {
-                              const current = [...resumeData.skills.descriptions];
-                              current.push(sk);
-                              setResumeData({ ...resumeData, skills: { descriptions: current } });
-                              setSyncFeedback(`Added ${sk} to technical skills! ClearHire score increased.`);
-                              setTimeout(() => setSyncFeedback(""), 3000);
-                            }}
-                            className="px-2 py-0.5 rounded-md font-mono text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-300 hover:bg-emerald-50 hover:text-emerald-900 hover:border-emerald-300 transition-colors flex items-center gap-1"
-                            title={`Click to add ${sk} to your resume`}
+                            className={`px-2 py-0.5 rounded-md font-mono text-[10.5px] font-bold flex items-center gap-1 ${
+                              isMatched
+                                ? "bg-emerald-50 text-emerald-800 border border-emerald-300"
+                                : "bg-amber-50 text-amber-900 border border-amber-300"
+                            }`}
                           >
-                            <Plus className="w-2.5 h-2.5" />
-                            <span>{sk}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    <p className="text-[10.5px] text-[#736E65]">
-                      • {liveScore.recommendations[0]}
-                    </p>
+                            {isMatched ? <Check className="w-3 h-3 text-emerald-700" /> : <Plus className="w-3 h-3 text-amber-700" />}
+                            {sk}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Profile Card */}
               <div className="space-y-3 p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0]">
@@ -1677,7 +1403,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                     <span>Download Resume PDF</span>
                   </button>
                   <button
-                    onClick={handleSaveAndBoost}
+                    onClick={handleSyncToPathfinder}
                     className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
                   >
                     <Check className="w-3.5 h-3.5" />
