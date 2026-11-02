@@ -316,11 +316,20 @@ def parse_resume_content(full_text: str, original_filename: str = "") -> Dict[st
         }
     }
 
+    from app.services.ats_matcher import score_resume_with_clearthire
+    score_card = score_resume_with_clearthire(resume_data, full_text, extracted_skills)
+
     return {
         "resume_data": resume_data,
         "extracted_skills": extracted_skills,
         "inferred_name": inferred_name,
         "email": email,
         "phone": phone,
-        "headline": headline
+        "headline": headline,
+        "score_card": score_card,
+        "ats_score": score_card["score"],
+        "clearthire_score": score_card["score"],
+        "grade": score_card["grade"],
+        "score_breakdown": score_card["layer_breakdown"],
+        "recommendations": score_card["recommendations"]
     }
