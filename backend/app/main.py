@@ -1,0 +1,51 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
+from app.core.database import Base, engine
+import app.models # Ensure all models are registered
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    version=settings.VERSION,
+    description="PATHFINDER AI – Role-Based Authentication, Student Verification & Recruiter Verification System",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
+
+# CORS setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include Routers
+from app.api.auth import router as auth_router
+from app.api.student import router as student_router
+from app.api.recruiter import router as recruiter_router
+from app.api.admin import router as admin_router
+
+app.include_router(auth_router, prefix=settings.API_V1_STR)
+app.include_router(student_router, prefix=settings.API_V1_STR)
+app.include_router(recruiter_router, prefix=settings.API_V1_STR)
+app.include_router(admin_router, prefix=settings.API_V1_STR)
+
+@app.get("/")
+def root():
+    return {
+        "platform": settings.PROJECT_NAME,
+        "tagline": "Talent Has No Location. Opportunity Shouldn't Either.",
+        "status": "online",
+        "version": settings.VERSION,
+        "documentation": "/docs"
+    }
+
+@app.get("/health")
+def healthcheck():
+    return {"status": "healthy"}
+
