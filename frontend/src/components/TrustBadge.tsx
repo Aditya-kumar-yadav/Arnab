@@ -89,3 +89,4 @@ export const TrustBadge: React.FC<TrustBadgeProps> = ({ badge, size = "md" }) =>
     </div>
   );
 };
+

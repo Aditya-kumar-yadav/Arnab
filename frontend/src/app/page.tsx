@@ -2,21 +2,66 @@
 
 import React, { useState, useEffect } from "react";
 import { api } from "../lib/api";
-import { UserResponse, UserRole } from "../lib/types";
+import { UserResponse } from "../lib/types";
 import { Navbar } from "../components/Navbar";
 import { AuthLanding } from "../components/AuthLanding";
 import { StudentDashboard } from "../components/StudentDashboard";
 import { RecruiterDashboard } from "../components/RecruiterDashboard";
 import { AdminDashboard } from "../components/AdminDashboard";
 import { AcceptanceTestRunnerModal } from "../components/AcceptanceTestRunnerModal";
+import { useUser } from "@clerk/nextjs";
 
 export default function Home() {
+  const { user: clerkUser, isLoaded: clerkLoaded } = useUser();
   const [currentUser, setCurrentUser] = useState<UserResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isTestModalOpen, setIsTestModalOpen] = useState<boolean>(false);
   const [lowBandwidthMode, setLowBandwidthMode] = useState<boolean>(false);
 
-  // Load user on mount
+  // Sync Clerk user with backend if authenticated via Clerk
+  useEffect(() => {
+    const syncClerkSession = async () => {
+      if (!clerkLoaded) return;
+      if (clerkUser && !currentUser) {
+        try {
+          const clerkEmail = clerkUser.primaryEmailAddress?.emailAddress;
+          if (clerkEmail) {
+            // Check if user already exists or register them
+            try {
+              const res = await api.login(clerkEmail, "ClerkOAuthSecuredPass2026!");
+              setCurrentUser(res.user);
+            } catch {
+              // Register student with Clerk credentials
+              const res = await api.registerStudent({
+                full_name: clerkUser.fullName || clerkUser.username || "Verified Student",
+                email: clerkEmail,
+                password: "ClerkOAuthSecuredPass2026!",
+                confirm_password: "ClerkOAuthSecuredPass2026!",
+                college_name: "Birla Institute of Technology, Mesra",
+                degree: "B.Tech",
+                branch: "Computer Science",
+                academic_year: "3rd Year",
+                graduation_year: 2027,
+                college_location: "Ranchi, Jharkhand",
+                preferred_domain: "Full Stack Development",
+                is_first_generation: true,
+                is_rural_or_disadvantaged: true,
+                clerk_user_id: clerkUser.id,
+                skills: ["React", "TypeScript", "Python"],
+              });
+              setCurrentUser(res.user);
+            }
+          }
+        } catch (e) {
+          console.error("Clerk sync error:", e);
+        }
+      }
+    };
+
+    syncClerkSession();
+  }, [clerkUser, clerkLoaded]);
+
+  // Load existing token on mount
   useEffect(() => {
     const fetchMe = async () => {
       try {
@@ -59,7 +104,6 @@ export default function Home() {
         const res = await api.login("talent@ruraltechlabs.io", "RecruiterPass2026!");
         setCurrentUser(res.user);
       } else if (personaKey === "recruiter_pending") {
-        // Register or login a pending recruiter
         try {
           const res = await api.login("pending.recruiter@demo.org", "RecruiterPass2026!");
           setCurrentUser(res.user);
@@ -90,7 +134,7 @@ export default function Home() {
       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center text-zinc-100">
         <div className="w-10 h-10 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mb-4" />
         <p className="text-sm text-zinc-400 font-mono tracking-wide">
-          PATHFINDER AI • Initializing Secure Environment...
+          PATHFINDER AI • Initializing Secure Environment with Clerk Auth...
         </p>
       </div>
     );

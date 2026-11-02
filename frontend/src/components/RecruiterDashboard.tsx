@@ -441,3 +441,4 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
     </div>
   );
 };
+

@@ -1,13 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { UserResponse, UserRole } from "../lib/types";
-import { TrustBadge } from "./TrustBadge";
+import { UserResponse } from "../lib/types";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser
+} from "@clerk/nextjs";
 import {
   Compass,
   LogOut,
   ShieldAlert,
-  UserCheck,
   GraduationCap,
   Briefcase,
   Layers,
@@ -15,7 +20,8 @@ import {
   Sparkles,
   FlaskConical,
   Wifi,
-  WifiOff
+  WifiOff,
+  UserCheck
 } from "lucide-react";
 
 interface NavbarProps {
@@ -36,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleLowBandwidth,
 }) => {
   const [showPersonaMenu, setShowPersonaMenu] = useState(false);
+  const { user: clerkUser, isLoaded } = useUser();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-xl transition-all">
@@ -64,6 +71,35 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Action Controls & Persona Switcher */}
         <div className="flex items-center gap-2.5">
+          {/* Clerk Auth Integration Widget */}
+          <div className="flex items-center">
+            <SignedIn>
+              <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: "w-6 h-6",
+                    },
+                  }}
+                />
+                <span className="hidden lg:inline text-xs text-zinc-300 font-medium">
+                  {clerkUser?.primaryEmailAddress?.emailAddress}
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold border border-emerald-800/40">
+                  Clerk Active
+                </span>
+              </div>
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 transition-colors">
+                  <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Clerk Sign In</span>
+                </button>
+              </SignInButton>
+            </SignedOut>
+          </div>
+
           {/* Low Bandwidth / Rural Mode Toggle */}
           <button
             onClick={onToggleLowBandwidth}
