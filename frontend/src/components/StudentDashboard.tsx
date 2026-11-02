@@ -9,17 +9,14 @@ import {
   Sparkles,
   Building2,
   MapPin,
-  Laptop,
   CheckCircle2,
   AlertCircle,
   HelpCircle,
   BookOpen,
   UploadCloud,
-  Layers,
   ArrowUpRight,
   ShieldCheck,
   Award,
-  ChevronRight,
   Code2
 } from "lucide-react";
 
@@ -93,8 +90,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <div className="inline-block w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-zinc-400 text-sm">Loading your personalized opportunity matrix...</p>
+        <div className="inline-block w-8 h-8 border-2 border-[#121212] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-[#736E65] text-sm font-medium">Loading your personalized opportunity matrix...</p>
       </div>
     );
   }
@@ -102,12 +99,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
   if (error || !profile) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-        <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-zinc-100">Unable to load student profile</h2>
-        <p className="text-zinc-400 text-sm mt-1">{error}</p>
+        <AlertCircle className="w-12 h-12 text-[#DC2626] mx-auto mb-3" />
+        <h2 className="text-lg font-bold text-[#121212]">Unable to load student profile</h2>
+        <p className="text-[#736E65] text-sm mt-1">{error}</p>
         <button
           onClick={loadData}
-          className="mt-4 px-4 py-2 bg-zinc-800 text-zinc-200 text-xs font-semibold rounded-lg hover:bg-zinc-700"
+          className="mt-4 px-4 py-2 bg-[#121212] text-white text-xs font-bold rounded-xl"
         >
           Retry
         </button>
@@ -116,30 +113,30 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-zinc-100">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-[#121212]">
       {/* Profile Header & Trust Badges Card */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-zinc-900/80 border border-zinc-800 backdrop-blur-xl relative overflow-hidden">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-100 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-[#121212] tracking-tight">
                 {profile.full_name}
               </h1>
-              <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-700/60 font-semibold">
-                Student
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#121212] text-white">
+                Student Profile
               </span>
             </div>
 
-            <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-3">
-              <span className="flex items-center gap-1.5 font-medium text-zinc-300">
-                <GraduationCap className="w-4 h-4 text-cyan-400" />
+            <div className="text-xs text-[#59554E] flex flex-wrap items-center gap-3 font-medium">
+              <span className="flex items-center gap-1.5 font-bold text-[#121212]">
+                <GraduationCap className="w-4 h-4 text-[#121212]" />
                 {profile.institution_name || "Self-Directed Independent Learner"}
               </span>
               <span>•</span>
               <span>{profile.degree} in {profile.branch} ({profile.academic_year})</span>
               <span>•</span>
               <span className="flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-zinc-500" /> {profile.college_location}
+                <MapPin className="w-3.5 h-3.5 text-[#736E65]" /> {profile.college_location}
               </span>
             </div>
 
@@ -156,7 +153,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
             {!profile.institution_verified && (
               <button
                 onClick={() => setShowUploadModal(true)}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-zinc-950 font-bold text-xs transition-all shadow-md shadow-cyan-900/20 flex items-center justify-center gap-2"
+                className="px-4 py-2.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-2"
               >
                 <UploadCloud className="w-4 h-4" />
                 <span>Upload College ID for Verification</span>
@@ -165,9 +162,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
 
             <button
               onClick={onOpenTestModal}
-              className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-zinc-700 transition-colors flex items-center justify-center gap-2"
+              className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] text-xs font-bold border border-[#D9D2C7] transition-colors flex items-center justify-center gap-2"
             >
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              <Sparkles className="w-3.5 h-3.5 text-[#121212]" />
               <span>Surprise Test Bench</span>
             </button>
           </div>
@@ -175,22 +172,22 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
 
         {/* First-Gen & Rural Affirmative Context Highlight */}
         {(profile.is_first_generation || profile.is_rural_or_disadvantaged) && (
-          <div className="mt-6 pt-4 border-t border-zinc-800/80 flex flex-wrap items-center gap-3 text-xs">
-            <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
-              <Award className="w-4 h-4 text-cyan-400" />
+          <div className="mt-6 pt-4 border-t border-[#F4EFE6] flex flex-wrap items-center gap-3 text-xs">
+            <span className="font-bold text-[#121212] flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-[#121212]" />
               Equity & Affirmative Protections Active:
             </span>
             {profile.is_first_generation && (
-              <span className="px-2.5 py-1 rounded-lg bg-indigo-950/70 text-indigo-300 border border-indigo-700/50">
+              <span className="px-2.5 py-1 rounded-lg bg-[#FAF8F5] text-[#121212] font-semibold border border-[#D9D2C7]">
                 🎓 First-Generation Learner Fast-Track
               </span>
             )}
             {profile.is_rural_or_disadvantaged && (
-              <span className="px-2.5 py-1 rounded-lg bg-emerald-950/70 text-emerald-300 border border-emerald-700/50">
+              <span className="px-2.5 py-1 rounded-lg bg-[#FAF8F5] text-[#121212] font-semibold border border-[#D9D2C7]">
                 🌾 Rural / Tier-2/3 District Representation
               </span>
             )}
-            <span className="text-zinc-500 text-[11px] ml-auto">
+            <span className="text-[#736E65] text-[11px] ml-auto font-medium">
               Institutional prestige bias is automatically neutralized in recruiter matching.
             </span>
           </div>
@@ -201,17 +198,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Matched Opportunities Feed */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+          <div className="flex items-center justify-between pb-2 border-b border-[#E2DBD0]">
             <div>
-              <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
+              <h2 className="text-base font-black text-[#121212] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#121212]" />
                 Recommended Opportunities (Explainable AI Ranking)
               </h2>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-[#736E65] font-medium">
                 Ranked by competency overlap and affirmative inclusion. Blind to college brand names.
               </p>
             </div>
-            <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">
+            <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white text-[#121212] border border-[#D9D2C7]">
               {opportunities.length} Matches
             </span>
           </div>
@@ -220,28 +217,28 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
             {opportunities.map((opp) => (
               <div
                 key={opp.id}
-                className="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all space-y-3"
+                className="p-5 rounded-2xl bg-white border border-[#E2DBD0] hover:border-[#121212] transition-all space-y-3 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2.5">
-                      <h3 className="text-sm font-bold text-zinc-100">{opp.title}</h3>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-700/50 font-bold">
+                      <h3 className="text-sm font-black text-[#121212]">{opp.title}</h3>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7] font-bold">
                         {opp.role_type}
                       </span>
                     </div>
-                    <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-3">
-                      <span className="flex items-center gap-1 text-zinc-300">
-                        <Building2 className="w-3.5 h-3.5 text-zinc-500" /> {opp.company_name}
+                    <div className="text-xs text-[#736E65] flex flex-wrap items-center gap-3 font-medium">
+                      <span className="flex items-center gap-1 text-[#423E37]">
+                        <Building2 className="w-3.5 h-3.5 text-[#736E65]" /> {opp.company_name}
                       </span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-zinc-500" /> {opp.location}
+                        <MapPin className="w-3.5 h-3.5 text-[#736E65]" /> {opp.location}
                       </span>
                       {opp.stipend_or_salary && (
                         <>
                           <span>•</span>
-                          <span className="font-mono text-emerald-400 font-medium">{opp.stipend_or_salary}</span>
+                          <span className="font-mono text-[#121212] font-bold">{opp.stipend_or_salary}</span>
                         </>
                       )}
                     </div>
@@ -249,14 +246,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
 
                   {/* Smart Match Pill */}
                   <div className="text-right shrink-0">
-                    <span className="text-sm font-black font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">
+                    <span className="text-sm font-black font-mono text-[#121212] bg-[#EDE7DC] px-2 py-0.5 rounded">
                       94% Match
                     </span>
-                    <div className="text-[10px] text-zinc-400 mt-0.5">High Potential</div>
+                    <div className="text-[10px] text-[#736E65] font-semibold mt-0.5">High Potential</div>
                   </div>
                 </div>
 
-                <p className="text-xs text-zinc-300 leading-relaxed">{opp.description}</p>
+                <p className="text-xs text-[#59554E] leading-relaxed font-medium">{opp.description}</p>
 
                 {/* Skills & Support Perks */}
                 <div className="flex flex-wrap items-center gap-1.5 pt-1">
@@ -265,10 +262,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
                     return (
                       <span
                         key={sIdx}
-                        className={`text-[11px] px-2.5 py-0.5 rounded-md font-medium border ${
+                        className={`text-[11px] px-2.5 py-0.5 rounded-md font-semibold border ${
                           isMatched
-                            ? "bg-emerald-950/70 text-emerald-300 border-emerald-700/50"
-                            : "bg-zinc-800 text-zinc-400 border-zinc-700"
+                            ? "bg-[#FAF8F5] text-[#121212] border-[#121212]"
+                            : "bg-[#F4EFE6] text-[#736E65] border-[#D9D2C7]"
                         }`}
                       >
                         {skill} {isMatched ? "✓" : "• Missing"}
@@ -276,39 +273,39 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
                     );
                   })}
                   {opp.hardware_provided && (
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800/40 font-mono">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7] font-bold font-mono">
                       💻 Laptop Provided
                     </span>
                   )}
                   {opp.is_remote && (
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800/40 font-mono">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7] font-bold font-mono">
                       🌐 Remote Friendly
                     </span>
                   )}
                 </div>
 
                 {/* Action Buttons: Explain Match (XAI) & Skill Gap Bridge */}
-                <div className="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2">
+                <div className="pt-3 border-t border-[#F4EFE6] flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setSelectedOppForXAI(opp)}
-                      className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] text-xs font-bold border border-[#D9D2C7] transition-colors flex items-center gap-1.5"
                     >
-                      <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+                      <HelpCircle className="w-3.5 h-3.5 text-[#121212]" />
                       <span>Why This Match? (XAI)</span>
                     </button>
                     <button
                       onClick={() => setSelectedOppForGap(opp)}
-                      className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] text-xs font-bold border border-[#D9D2C7] transition-colors flex items-center gap-1.5"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+                      <BookOpen className="w-3.5 h-3.5 text-[#121212]" />
                       <span>Bridge Skill Gap</span>
                     </button>
                   </div>
 
                   <button
                     onClick={() => alert(`Application submitted for ${opp.title} with verified blind portfolio!`)}
-                    className="px-4 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-bold text-xs transition-colors flex items-center gap-1"
+                    className="px-4 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-black text-xs transition-colors flex items-center gap-1 shadow-sm"
                   >
                     <span>Instant Blind Apply</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -322,22 +319,22 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
         {/* Right Col: Skills Portfolio & Verification Status */}
         <div className="space-y-6">
           {/* Skills Portfolio Card */}
-          <div className="p-5 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
-              <div className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
-                <Code2 className="w-4 h-4 text-cyan-400" />
+          <div className="p-5 rounded-3xl bg-white border border-[#E2DBD0] space-y-4 shadow-sm">
+            <div className="flex items-center justify-between pb-2 border-b border-[#F4EFE6]">
+              <div className="text-xs font-black text-[#121212] flex items-center gap-1.5">
+                <Code2 className="w-4 h-4 text-[#121212]" />
                 <span>Verified Skills Matrix</span>
               </div>
-              <span className="text-[10px] font-mono text-zinc-400">{profile.skills.length} Skills</span>
+              <span className="text-[10px] font-mono font-bold text-[#736E65]">{profile.skills.length} Skills</span>
             </div>
 
             <div className="flex flex-wrap gap-1.5">
               {profile.skills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-200 text-xs border border-zinc-700 flex items-center gap-1"
+                  className="px-2.5 py-1 rounded-lg bg-[#FAF8F5] text-[#121212] text-xs font-semibold border border-[#D9D2C7] flex items-center gap-1"
                 >
-                  <CheckCircle2 className="w-3 h-3 text-cyan-400" />
+                  <CheckCircle2 className="w-3 h-3 text-[#121212]" />
                   {skill}
                 </span>
               ))}
@@ -350,11 +347,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
                 placeholder="e.g. Docker, TypeScript"
-                className="w-full px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-200 outline-none focus:border-cyan-500"
+                className="w-full px-3 py-1.5 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212] outline-none focus:border-[#121212]"
               />
               <button
                 onClick={handleAddSkill}
-                className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold rounded-lg shrink-0"
+                className="px-3 py-1.5 bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold rounded-xl shrink-0"
               >
                 Add
               </button>
@@ -362,35 +359,35 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
           </div>
 
           {/* Institutional Verification Status Card */}
-          <div className="p-5 rounded-2xl bg-zinc-900/80 border border-zinc-800 space-y-3">
-            <div className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-indigo-400" />
+          <div className="p-5 rounded-3xl bg-white border border-[#E2DBD0] space-y-3 shadow-sm">
+            <div className="text-xs font-black text-[#121212] flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#121212]" />
               <span>Enrollment & Affiliation</span>
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between text-zinc-300">
-                <span className="text-zinc-400">College:</span>
-                <span className="font-semibold">{profile.institution_name || "Independent"}</span>
+              <div className="flex items-center justify-between text-[#423E37]">
+                <span className="text-[#736E65]">College:</span>
+                <span className="font-bold text-[#121212]">{profile.institution_name || "Independent"}</span>
               </div>
-              <div className="flex items-center justify-between text-zinc-300">
-                <span className="text-zinc-400">Email Method:</span>
-                <span className={profile.is_institutional_email ? "text-emerald-400" : "text-amber-400"}>
+              <div className="flex items-center justify-between text-[#423E37]">
+                <span className="text-[#736E65]">Email Method:</span>
+                <span className="font-bold text-[#121212]">
                   {profile.is_institutional_email ? "Official College Domain" : "Personal Email (Gmail)"}
                 </span>
               </div>
-              <div className="flex items-center justify-between text-zinc-300">
-                <span className="text-zinc-400">Institutional Review:</span>
-                <span className="font-mono text-cyan-400">{profile.verification_status}</span>
+              <div className="flex items-center justify-between text-[#423E37]">
+                <span className="text-[#736E65]">Institutional Review:</span>
+                <span className="font-mono font-bold text-[#121212]">{profile.verification_status}</span>
               </div>
             </div>
 
             {!profile.institution_verified && (
               <button
                 onClick={() => setShowUploadModal(true)}
-                className="w-full mt-2 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-zinc-700 transition-colors flex items-center justify-center gap-1.5"
+                className="w-full mt-2 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] text-xs font-bold border border-[#D9D2C7] transition-colors flex items-center justify-center gap-1.5"
               >
-                <UploadCloud className="w-3.5 h-3.5 text-cyan-400" />
+                <UploadCloud className="w-3.5 h-3.5 text-[#121212]" />
                 <span>Submit Student ID / Documents</span>
               </button>
             )}
@@ -398,69 +395,66 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
         </div>
       </div>
 
-      {/* =========================================================================
-          MODAL 1: EXPLAINABLE AI (XAI) "WHY THIS MATCH?"
-         ========================================================================= */}
+      {/* MODALS */}
       {selectedOppForXAI && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-xl w-full p-6 space-y-5 animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-[#CEBFAD] rounded-3xl max-w-xl w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#736E65] font-black">
                   Explainable AI (XAI) Inspector
                 </span>
-                <h3 className="text-lg font-bold text-zinc-100">{selectedOppForXAI.title}</h3>
-                <p className="text-xs text-zinc-400">{selectedOppForXAI.company_name}</p>
+                <h3 className="text-lg font-black text-[#121212]">{selectedOppForXAI.title}</h3>
+                <p className="text-xs text-[#736E65] font-medium">{selectedOppForXAI.company_name}</p>
               </div>
               <button
                 onClick={() => setSelectedOppForXAI(null)}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+                className="p-1.5 rounded-lg text-[#736E65] hover:text-[#121212] hover:bg-[#FAF8F5]"
               >
                 ✕
               </button>
             </div>
 
-            {/* Score Factor Breakdown */}
             <div className="space-y-3">
-              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 text-xs">
-                <div className="flex items-center justify-between font-semibold">
-                  <span className="text-zinc-300">1. Direct Competency Match:</span>
-                  <span className="text-emerald-400 font-mono">45 / 50 pts (90%)</span>
+              <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1 text-xs">
+                <div className="flex items-center justify-between font-bold text-[#121212]">
+                  <span>1. Direct Competency Match:</span>
+                  <span className="font-mono">45 / 50 pts (90%)</span>
                 </div>
-                <p className="text-zinc-400 text-[11px]">
-                  Demonstrated capabilities in {profile.skills.slice(0, 3).join(", ")} align with the core job requirements.
+                <p className="text-[#59554E] text-[11px]">
+                  Demonstrated capabilities in {profile.skills.slice(0, 3).join(", ")} align with core job requirements.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 text-xs">
-                <div className="flex items-center justify-between font-semibold">
-                  <span className="text-zinc-300">2. Transferable Logic & Problem Solving:</span>
-                  <span className="text-indigo-400 font-mono">25 / 30 pts (83%)</span>
+              <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1 text-xs">
+                <div className="flex items-center justify-between font-bold text-[#121212]">
+                  <span>2. Transferable Logic & Problem Solving:</span>
+                  <span className="font-mono">25 / 30 pts (83%)</span>
                 </div>
-                <p className="text-zinc-400 text-[11px]">
+                <p className="text-[#59554E] text-[11px]">
                   Algorithmic foundations transfer directly to production frameworks.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 text-xs">
-                <div className="flex items-center justify-between font-semibold">
-                  <span className="text-zinc-300">3. First-Gen / Rural Affirmative Weight:</span>
-                  <span className="text-cyan-400 font-mono">+15 bonus pts (Applied)</span>
+              <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1 text-xs">
+                <div className="flex items-center justify-between font-bold text-[#121212]">
+                  <span>3. First-Gen / Rural Affirmative Weight:</span>
+                  <span className="font-mono">+15 bonus pts (Applied)</span>
                 </div>
-                <p className="text-zinc-400 text-[11px]">
+                <p className="text-[#59554E] text-[11px]">
                   Neutralizes legacy prestige bias; surfaces self-taught persistence and high learning velocity.
                 </p>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/40 text-xs text-emerald-300 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-[#F4EFE6] border border-[#D9D2C7] text-xs font-bold text-[#121212] flex items-center justify-between">
               <span>Overall Match Fit Score:</span>
-              <span className="text-base font-black font-mono">94 / 100 (Strong Recommendation)</span>
+              <span className="text-base font-black font-mono">94 / 100 (Strong Fit)</span>
             </div>
 
             <button
               onClick={() => setSelectedOppForXAI(null)}
-              className="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-semibold text-xs"
+              className="w-full py-2.5 rounded-xl bg-[#121212] text-white font-bold text-xs"
             >
               Close Inspector
             </button>
@@ -468,58 +462,46 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
         </div>
       )}
 
-      {/* =========================================================================
-          MODAL 2: REVERSE SKILL-GAP ANALYZER & ZERO-COST BRIDGE
-         ========================================================================= */}
       {selectedOppForGap && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-xl w-full p-6 space-y-5 animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-[#CEBFAD] rounded-3xl max-w-xl w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#736E65] font-black">
                   Reverse Skill Gap Diagnostic
                 </span>
-                <h3 className="text-lg font-bold text-zinc-100">{selectedOppForGap.title}</h3>
-                <p className="text-xs text-zinc-400">Step-by-step bridge to reach 100% qualification</p>
+                <h3 className="text-lg font-black text-[#121212]">{selectedOppForGap.title}</h3>
+                <p className="text-xs text-[#736E65] font-medium">Step-by-step bridge to reach 100% qualification</p>
               </div>
               <button
                 onClick={() => setSelectedOppForGap(null)}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+                className="p-1.5 rounded-lg text-[#736E65] hover:text-[#121212] hover:bg-[#FAF8F5]"
               >
                 ✕
               </button>
             </div>
 
             <div className="space-y-3">
-              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-xs space-y-1">
-                <div className="font-semibold text-zinc-200">Recommended 100% Free Course Pathways:</div>
-                <p className="text-zinc-400 text-[11px]">
-                  Government & Open Source verified resources (No subscription fees required):
-                </p>
+              <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-bold text-[#121212]">
+                  <span>NPTEL / Swayam: Modern Web Technologies</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-[#121212] text-white font-mono">Free Cert</span>
+                </div>
+                <p className="text-[11px] text-[#59554E]">Duration: 4 Weeks (4 hrs/week) • Hindi & English subtitles available</p>
               </div>
 
-              {/* Pathway 1 */}
-              <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-semibold">
-                  <span className="text-cyan-300">NPTEL / Swayam: Modern Web Technologies</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-mono">Free Cert</span>
+              <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-bold text-[#121212]">
+                  <span>freeCodeCamp: Relational Databases & SQL</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-[#121212] text-white font-mono">Interactive</span>
                 </div>
-                <p className="text-[11px] text-zinc-400">Duration: 4 Weeks (4 hrs/week) • Hindi & English subtitles available</p>
-              </div>
-
-              {/* Pathway 2 */}
-              <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-semibold">
-                  <span className="text-indigo-300">freeCodeCamp: Relational Databases & SQL</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-mono">Hands-on</span>
-                </div>
-                <p className="text-[11px] text-zinc-400">Interactive browser coding • Zero hardware dependency</p>
+                <p className="text-[11px] text-[#59554E]">Browser coding • Zero hardware dependency</p>
               </div>
             </div>
 
             <button
               onClick={() => setSelectedOppForGap(null)}
-              className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs"
+              className="w-full py-2.5 rounded-xl bg-[#121212] text-white font-bold text-xs"
             >
               Start Free Learning Roadmap
             </button>
@@ -527,34 +509,31 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
         </div>
       )}
 
-      {/* =========================================================================
-          MODAL 3: UPLOAD COLLEGE ID FOR VERIFICATION (CASE B)
-         ========================================================================= */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <form onSubmit={handleUploadId} className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <form onSubmit={handleUploadId} className="bg-white border border-[#CEBFAD] rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-base font-bold text-zinc-100">Upload College Credentials</h3>
-                <p className="text-xs text-zinc-400">For students using personal email (Gmail/Outlook)</p>
+                <h3 className="text-base font-black text-[#121212]">Upload College Credentials</h3>
+                <p className="text-xs text-[#736E65]">For students using personal email (Gmail/Outlook)</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowUploadModal(false)}
-                className="text-zinc-400 hover:text-zinc-100"
+                className="text-[#736E65] hover:text-[#121212]"
               >
                 ✕
               </button>
             </div>
 
             {uploadSuccess && (
-              <div className="p-3 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs">
+              <div className="p-3 rounded-xl bg-[#F4EFE6] text-[#121212] border border-[#D9D2C7] text-xs font-bold">
                 {uploadSuccess}
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-medium text-zinc-300 mb-1">
+              <label className="block text-xs font-bold text-[#121212] mb-1">
                 College ID Card / Admission Letter Document URL
               </label>
               <input
@@ -563,9 +542,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
                 value={idCardUrl}
                 onChange={(e) => setIdCardUrl(e.target.value)}
                 placeholder="https://example.com/student_id.pdf"
-                className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-zinc-100 outline-none"
+                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212] outline-none"
               />
-              <p className="text-[11px] text-zinc-500 mt-1">
+              <p className="text-[11px] text-[#736E65] mt-1 font-medium">
                 Upload image or PDF. College admin will review and issue the &quot;Institution Verified&quot; badge.
               </p>
             </div>
@@ -574,13 +553,13 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
               <button
                 type="button"
                 onClick={() => setShowUploadModal(false)}
-                className="w-1/3 py-2 rounded-xl bg-zinc-800 text-zinc-300 text-xs"
+                className="w-1/3 py-2 rounded-xl bg-[#FAF8F5] text-[#59554E] font-bold text-xs border border-[#D9D2C7]"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="w-2/3 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-bold text-xs"
+                className="w-2/3 py-2 rounded-xl bg-[#121212] text-white font-black text-xs"
               >
                 Submit for Verification
               </button>
@@ -591,4 +570,3 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onOpenTestMo
     </div>
   );
 };
-
