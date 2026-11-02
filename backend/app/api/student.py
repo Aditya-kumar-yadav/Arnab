@@ -19,6 +19,7 @@ from app.schemas.recruiter import OpportunityResponse
 from app.services.badge_service import get_user_badges
 from app.services.domain_verification import extract_and_normalize_domain, PUBLIC_EMAIL_DOMAINS
 from app.services.audit_service import record_audit_log
+from app.services.ats_matcher import compute_ats_opportunity_match
 
 router = APIRouter(prefix="/student", tags=["Student Portal"])
 
@@ -144,8 +145,25 @@ def get_available_opportunities(
     db: Session = Depends(get_db)
 ):
     """
-    Returns active opportunities posted by verified employers.
+    Returns active opportunities ranked with Resume-Matcher ATS scoring algorithms.
     """
+    profile = current_user.student_profile
+    candidate_skills = []
+    if profile and profile.skills:
+        try:
+            candidate_skills = json.loads(profile.skills)
+        except Exception:
+            candidate_skills = []
+
+    candidate_ctx = {
+        "full_name": current_user.full_name,
+        "skills": candidate_skills,
+        "preferred_domain": profile.preferred_domain if profile else "Software Engineering",
+        "summary": "",
+        "is_first_generation": profile.is_first_generation if profile else False,
+        "is_rural_or_disadvantaged": profile.is_rural_or_disadvantaged if profile else False
+    }
+
     opportunities = db.query(Opportunity).filter(Opportunity.is_active == True).all()
     results = []
     for opp in opportunities:
@@ -159,6 +177,18 @@ def get_available_opportunities(
             pref_skills = json.loads(opp.preferred_skills)
         except Exception:
             pass
+
+        opp_dict = {
+            "id": opp.id,
+            "title": opp.title,
+            "description": opp.description,
+            "required_skills": req_skills,
+            "preferred_skills": pref_skills,
+            "hardware_provided": opp.hardware_provided
+        }
+
+        # Compute deterministic ATS match
+        ats_diagnostics = compute_ats_opportunity_match(candidate_ctx, opp_dict)
 
         results.append(OpportunityResponse(
             id=opp.id,
@@ -175,7 +205,12 @@ def get_available_opportunities(
             company_id=opp.company_id,
             company_name=opp.company.company_name if opp.company else "Unknown Company",
             is_active=opp.is_active,
-            created_at=opp.created_at
+            created_at=opp.created_at,
+            match_score=ats_diagnostics["overall_score"],
+            ats_match=ats_diagnostics
         ))
+
+    # Sort so candidate's highest ATS matches appear first
+    results.sort(key=lambda x: x.match_score or 0, reverse=True)
     return results
 

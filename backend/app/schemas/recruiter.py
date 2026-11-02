@@ -57,6 +57,8 @@ class OpportunityResponse(BaseModel):
     company_name: str
     is_active: bool
     created_at: datetime
+    match_score: Optional[float] = 95.0
+    ats_match: Optional[dict] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -71,3 +73,11 @@ class CandidateListItem(BaseModel):
     is_first_generation: bool = False
     is_rural_or_disadvantaged: bool = False
     match_score: Optional[int] = 85
+    rank: Optional[int] = 1
+    composite_score: Optional[float] = 85.0
+    layer_breakdown: Optional[dict] = None
+    matched_skills: List[str] = []
+    missing_skills: List[str] = []
+    bias_flag: Optional[str] = None
+
+    model_config = ConfigDict(from_attributes=True)

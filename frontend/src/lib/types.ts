@@ -102,6 +102,21 @@ export interface OpportunityData {
   is_active: boolean;
   created_at: string;
   matchScore?: number;
+  atsMatch?: {
+    overall_score: number;
+    is_perfect_match: boolean;
+    sub_scores: {
+      keyword_match: number;
+      skills_coverage: number;
+      title_match: number;
+      section_completeness: number;
+      date_consistency: number;
+      equity_boost: number;
+    };
+    matched_skills: string[];
+    missing_keywords: string[];
+    recommendations: string[];
+  };
 }
 
 export interface AdminOverviewStats {

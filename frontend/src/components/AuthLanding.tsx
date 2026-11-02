@@ -328,7 +328,7 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
 
           {/* Real Clerk OAuth / Social Authentication */}
           <div className="mb-5">
-            <SignInButton mode="modal">
+            <SignInButton mode="modal" fallbackRedirectUrl="/" forceRedirectUrl="/">
               <button
                 type="button"
                 className="w-full py-2.5 px-4 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] border border-[#D9D2C7] hover:border-[#121212] text-[#121212] font-bold text-xs flex items-center justify-center gap-2.5 transition-all shadow-sm"

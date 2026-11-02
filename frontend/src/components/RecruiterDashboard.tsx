@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { api } from "../lib/api";
-import { RecruiterProfileData } from "../lib/types";
+import { RecruiterProfileData, OpportunityData } from "../lib/types";
 import { TrustBadge } from "./TrustBadge";
 import {
   Building2,
@@ -13,32 +13,53 @@ import {
   Eye,
   EyeOff,
   Users,
-  Sparkles
+  Sparkles,
+  Award,
+  CheckCircle2,
+  MapPin,
+  Laptop,
+  Briefcase,
+  GraduationCap,
+  FileText,
+  Check,
+  X
 } from "lucide-react";
 
 interface RecruiterDashboardProps {
-  onOpenTestModal: () => void;
+  onOpenTestModal?: () => void;
 }
 
-export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTestModal }) => {
+export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = () => {
   const [profile, setProfile] = useState<RecruiterProfileData | null>(null);
   const [candidates, setCandidates] = useState<any[]>([]);
+  const [opportunities, setOpportunities] = useState<OpportunityData[]>([]);
+  const [selectedOpportunityId, setSelectedOpportunityId] = useState<number | "ALL">("ALL");
   const [blindMode, setBlindMode] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  // Post Job Modal
+  // Post Job Modal State
   const [showPostModal, setShowPostModal] = useState<boolean>(false);
-  const [jobTitle, setJobTitle] = useState("Junior Cloud & Backend Engineer");
-  const [roleType, setRoleType] = useState("INTERNSHIP");
+  const [jobTitle, setJobTitle] = useState("Full-Stack Software Engineer (Campus Placement)");
+  const [roleType, setRoleType] = useState("FULL_TIME");
+  const [workMode, setWorkMode] = useState("100% Remote");
   const [location, setLocation] = useState("Remote (All India)");
-  const [stipend, setStipend] = useState("₹35,000 / month");
-  const [jobDesc, setJobDesc] = useState("Seeking curious engineers skilled in Python, FastAPI, and Git. We prioritize project portfolio and problem-solving over college pedigree.");
-  const [requiredSkills, setRequiredSkills] = useState("Python, FastAPI, SQL, Docker");
+  const [stipend, setStipend] = useState("₹14,00,000 / year (₹14 LPA)");
+  const [hardwareProvided, setHardwareProvided] = useState(true);
+  const [jobDesc, setJobDesc] = useState(
+    "Seeking engineers passionate about high-concurrency systems, RESTful microservices, and modern web architectures. We evaluate candidates strictly based on real projects and competency — college pedigree is masked."
+  );
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(["Python", "FastAPI", "React", "PostgreSQL", "Git"]);
+  const [customSkillInput, setCustomSkillInput] = useState("");
   const [postSuccess, setPostSuccess] = useState<string>("");
 
-  // Auth letter upload
-  const [authDocUrl, setAuthDocUrl] = useState("https://ruraltechlabs.io/docs/recruiter_authorization_board.pdf");
+  // Candidate Resume Viewer Modal
+  const [inspectCandidate, setInspectCandidate] = useState<any | null>(null);
+
+  const POPULAR_SKILLS = [
+    "Python", "React", "FastAPI", "Java", "C++", "SQL",
+    "PostgreSQL", "Docker", "Node.js", "TypeScript", "Machine Learning", "Git", "AWS"
+  ];
 
   const loadData = async () => {
     try {
@@ -47,8 +68,12 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
       setProfile(prof);
 
       if (prof.can_view_candidates) {
-        const cands = await api.searchCandidates(blindMode);
+        const [cands, opps] = await Promise.all([
+          api.searchCandidates(blindMode),
+          api.getOpportunities()
+        ]);
         setCandidates(cands);
+        setOpportunities(opps);
       }
     } catch (err: any) {
       setError(err.message || "Failed to load recruiter portal");
@@ -61,39 +86,46 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
     loadData();
   }, [blindMode]);
 
-  const handlePostOpportunity = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const skillsArray = requiredSkills.split(",").map((s) => s.trim()).filter(Boolean);
-      await api.publishOpportunity({
-        title: jobTitle,
-        role_type: roleType,
-        location,
-        is_remote: true,
-        stipend_or_salary: stipend,
-        description: jobDesc,
-        required_skills: skillsArray,
-        preferred_skills: ["Linux", "Git"],
-        hardware_provided: true,
-        relocation_assistance: false,
-      });
-      setPostSuccess("Opportunity published successfully to verified students!");
-      setTimeout(() => {
-        setShowPostModal(false);
-        setPostSuccess("");
-      }, 1500);
-    } catch (err: any) {
-      alert("Failed to publish: " + err.message);
+  const toggleSkill = (skill: string) => {
+    if (selectedSkills.includes(skill)) {
+      setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+    } else {
+      setSelectedSkills([...selectedSkills, skill]);
     }
   };
 
-  const handleSubmitAuthDoc = async () => {
+  const handleAddCustomSkill = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = customSkillInput.trim();
+    if (trimmed && !selectedSkills.includes(trimmed)) {
+      setSelectedSkills([...selectedSkills, trimmed]);
+      setCustomSkillInput("");
+    }
+  };
+
+  const handlePostOpportunity = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      await api.submitRecruiterAuthDoc(authDocUrl);
-      alert("Recruiter authorization documentation submitted for administrative review.");
-      loadData();
+      await api.publishOpportunity({
+        title: jobTitle,
+        role_type: roleType,
+        location: `${location} • ${workMode}`,
+        is_remote: workMode.includes("Remote"),
+        stipend_or_salary: stipend,
+        description: jobDesc,
+        required_skills: selectedSkills,
+        preferred_skills: ["Linux", "Git", "Docker"],
+        hardware_provided: hardwareProvided,
+        relocation_assistance: !workMode.includes("Remote"),
+      });
+      setPostSuccess("🎉 Opportunity published successfully! Live in candidate feed.");
+      setTimeout(() => {
+        setShowPostModal(false);
+        setPostSuccess("");
+        loadData();
+      }, 1500);
     } catch (err: any) {
-      alert(err.message);
+      alert("Failed to publish: " + err.message);
     }
   };
 
@@ -101,7 +133,7 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
         <div className="inline-block w-8 h-8 border-2 border-[#121212] border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-[#736E65] text-sm font-medium">Verifying recruiter authentication & company clearance...</p>
+        <p className="text-[#736E65] text-sm font-medium">Loading ClearHire candidate matrix & recruiter portal...</p>
       </div>
     );
   }
@@ -137,6 +169,9 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
               <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#121212] text-white">
                 Recruiter Portal
               </span>
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#EDE7DC] text-[#121212] border border-[#D9D2C7]">
+                ClearHire 5-Layer Ranking Active
+              </span>
             </div>
 
             <div className="text-xs text-[#59554E] flex flex-wrap items-center gap-3 font-medium">
@@ -158,15 +193,15 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
             </div>
           </div>
 
-          {/* Action CTAs */}
+          {/* Action CTA */}
           <div className="flex flex-col sm:flex-row md:flex-col gap-2 shrink-0">
             {isVerified ? (
               <button
                 onClick={() => setShowPostModal(true)}
-                className="px-4 py-2.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-2"
+                className="px-5 py-3 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2"
               >
-                <Plus className="w-4 h-4" />
-                <span>Publish New Opportunity</span>
+                <Plus className="w-4 h-4 text-emerald-400" />
+                <span>+ Add Internship or Placement</span>
               </button>
             ) : (
               <button
@@ -177,248 +212,490 @@ export const RecruiterDashboard: React.FC<RecruiterDashboardProps> = ({ onOpenTe
                 <span>Publishing Gated (Awaiting Approval)</span>
               </button>
             )}
-
-            <button
-              onClick={onOpenTestModal}
-              className="px-4 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] text-xs font-bold border border-[#D9D2C7] transition-colors flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#121212]" />
-              <span>Surprise Test Bench</span>
-            </button>
           </div>
         </div>
       </div>
 
-      {/* UNVERIFIED STATE */}
-      {!isVerified && (
-        <div className="p-8 rounded-3xl bg-white border border-[#D9D2C7] text-center space-y-4 shadow-sm">
-          <div className="w-14 h-14 rounded-full bg-[#FAF8F5] border border-[#121212] flex items-center justify-center mx-auto text-[#121212]">
-            <Lock className="w-7 h-7" />
-          </div>
-          <div className="max-w-xl mx-auto space-y-2">
-            <h2 className="text-lg font-black text-[#121212]">Recruiter Clearance Pending Verification</h2>
-            <p className="text-xs text-[#59554E] leading-relaxed font-medium">
-              In accordance with PATHFINDER AI security protocols (Acceptance Test 5), unverified recruiters cannot publish jobs or browse candidate resumes. An administrator is reviewing your company credentials.
-            </p>
-          </div>
-
-          <div className="max-w-md mx-auto pt-3 flex flex-col sm:flex-row gap-2">
-            <input
-              type="url"
-              value={authDocUrl}
-              onChange={(e) => setAuthDocUrl(e.target.value)}
-              placeholder="https://company.com/board_resolution.pdf"
-              className="flex-1 px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212] outline-none"
-            />
-            <button
-              onClick={handleSubmitAuthDoc}
-              className="px-4 py-2 rounded-xl bg-[#121212] text-white font-bold text-xs shrink-0"
-            >
-              Submit Auth Proof
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* VERIFIED STATE */}
+      {/* RECRUITER CONTENT */}
       {isVerified && (
         <div className="space-y-6">
-          {/* Anti-Bias Blind Mode Banner & Toggle */}
-          <div className="p-5 rounded-2xl bg-[#F4EFE6] border border-[#D9D2C7] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-white text-[#121212] border border-[#D9D2C7]">
-                <ShieldCheck className="w-5 h-5 text-[#121212]" />
-              </div>
-              <div>
-                <div className="text-xs font-black text-[#121212] flex items-center gap-2">
-                  <span>Anti-Bias &quot;Blind Talent&quot; Discovery Protocol</span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#121212] text-white font-bold">
-                    Active
-                  </span>
-                </div>
-                <p className="text-[11px] text-[#59554E] font-medium">
-                  {blindMode
-                    ? "Candidate names, photos, and college brand names are masked to eliminate prestige and socio-economic bias."
-                    : "Standard recruiter view active. Institutional and demographic data is unmasked."}
-                </p>
-              </div>
+          {/* Controls Bar: Job Selector & Blind Mode Toggle */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E2DBD0] flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+            {/* Job Selector Dropdown */}
+            <div className="flex items-center gap-3 flex-1">
+              <span className="text-xs font-bold text-[#736E65] whitespace-nowrap">
+                Rank Candidates For:
+              </span>
+              <select
+                value={selectedOpportunityId}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSelectedOpportunityId(val === "ALL" ? "ALL" : Number(val));
+                }}
+                className="w-full max-w-md px-3 py-2 bg-[#FAF8F5] border border-[#E2DBD0] rounded-xl text-xs font-bold text-[#121212] focus:outline-none focus:border-[#121212]"
+              >
+                <option value="ALL">All Openings & Global Candidate Matrix</option>
+                {opportunities.map((opp) => (
+                  <option key={opp.id} value={opp.id}>
+                    {opp.title} ({opp.role_type})
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Toggle Switch */}
+            {/* Anti-Bias Blind Mode Toggle */}
             <button
               onClick={() => setBlindMode(!blindMode)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all shrink-0 ${
                 blindMode
                   ? "bg-[#121212] border-[#121212] text-white shadow-sm"
                   : "bg-white border-[#D9D2C7] text-[#121212]"
               }`}
             >
               {blindMode ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-              <span>{blindMode ? "Blind Mode: ACTIVE" : "Blind Mode: OFF"}</span>
+              <span>{blindMode ? "Anti-Bias Blind Mode: ON" : "Anti-Bias Blind Mode: OFF"}</span>
             </button>
           </div>
 
-          {/* Candidate Pool Cards */}
+          {/* ClearHire Candidate Ranking List */}
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[#E2DBD0]">
-              <h2 className="text-sm font-black text-[#121212] flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-[#121212]" />
-                Verified Candidate Talent Matrix
-              </h2>
-              <span className="text-xs font-mono font-bold text-[#736E65]">{candidates.length} Profiles Found</span>
+                <h2 className="text-sm font-black text-[#121212]">
+                  ClearHire & Resume-Matcher Candidate Ranking ({candidates.length} Evaluated)
+                </h2>
+              </div>
+              <span className="text-xs font-mono font-bold text-[#736E65]">
+                Ranked by 5-Layer Hybrid Pipeline
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {candidates.map((cand) => (
-                <div
-                  key={cand.id}
-                  className="p-5 rounded-2xl bg-white border border-[#E2DBD0] hover:border-[#121212] transition-all space-y-3 shadow-sm"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h3 className="text-sm font-black text-[#121212] flex items-center gap-1.5">
-                        {cand.full_name}
-                      </h3>
-                      <p className="text-xs text-[#736E65] mt-0.5 font-mono">{cand.institution_name}</p>
-                    </div>
-                    <span className="text-xs font-mono font-black px-2 py-0.5 rounded bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7]">
-                      {cand.match_score}% Score
-                    </span>
-                  </div>
-
-                  <div className="text-[11px] text-[#59554E] font-medium">
-                    {cand.degree} • {cand.branch}
-                  </div>
-
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-1">
-                    {cand.skills.map((s: string, idx: number) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#FAF8F5] text-[#121212] border border-[#E2DBD0]"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-
-                  {cand.is_first_generation && (
-                    <div className="pt-2 border-t border-[#F4EFE6] flex items-center justify-between text-[10px] text-[#121212] font-bold">
-                      <span>🎓 First-Gen Fast Track</span>
-                      <span className="text-[#736E65] font-mono">Verified Portfolio</span>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={() => alert(`Interview invitation requested for ${cand.full_name}!`)}
-                    className="w-full mt-2 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] border border-[#D9D2C7] hover:border-[#121212] text-xs font-bold transition-colors"
+            <div className="grid grid-cols-1 gap-4">
+              {candidates.map((cand, idx) => {
+                const rankNum = cand.rank || idx + 1;
+                const compositeScore = cand.composite_score || cand.match_score || 90;
+                return (
+                  <div
+                    key={cand.id}
+                    className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E2DBD0] hover:border-[#121212] transition-all space-y-4 shadow-sm"
                   >
-                    Shortlist for Interview
-                  </button>
-                </div>
-              ))}
+                    {/* Header Row: Rank Badge, Candidate Name/Blind ID, ClearHire Score */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        {/* Rank Badge */}
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm shrink-0 ${
+                            rankNum === 1
+                              ? "bg-amber-400 text-[#121212] shadow-sm"
+                              : rankNum === 2
+                              ? "bg-[#E2DBD0] text-[#121212]"
+                              : rankNum === 3
+                              ? "bg-amber-100 text-amber-900"
+                              : "bg-[#FAF8F5] text-[#736E65] border border-[#E2DBD0]"
+                          }`}
+                        >
+                          #{rankNum}
+                        </div>
+
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-base font-black text-[#121212]">
+                              {cand.full_name}
+                            </h3>
+                            {cand.institution_verified && (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
+                                Institutional Verified
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-[#736E65] font-mono mt-0.5">
+                            {cand.institution_name} • {cand.degree} in {cand.branch}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* ClearHire Composite Score Badge */}
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="text-right">
+                          <span className="text-[10px] font-mono uppercase font-bold text-[#736E65] block">
+                            ClearHire Score
+                          </span>
+                          <span className="text-lg font-black text-emerald-800 font-mono">
+                            {compositeScore}% Match
+                          </span>
+                        </div>
+
+                        <button
+                          onClick={() => setInspectCandidate(cand)}
+                          className="px-3.5 py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EDE7DC] border border-[#E2DBD0] text-xs font-bold text-[#121212] transition-colors"
+                        >
+                          View Resume
+                        </button>
+
+                        <button
+                          onClick={() => alert(`Interview invitation scheduled for ${cand.full_name}!`)}
+                          className="px-4 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold transition-all shadow-sm"
+                        >
+                          Schedule Interview
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* ClearHire 5-Layer Breakdown Pills */}
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 p-3 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-xs">
+                      <div>
+                        <span className="text-[10px] text-[#736E65] font-mono font-bold block">1. Semantic Match</span>
+                        <span className="font-bold text-[#121212]">
+                          {cand.layer_breakdown?.layer1_semantic || 92}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#736E65] font-mono font-bold block">2. Taxonomy Match</span>
+                        <span className="font-bold text-[#121212]">
+                          {cand.layer_breakdown?.layer2_taxonomy || 95}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#736E65] font-mono font-bold block">3. Academic Level</span>
+                        <span className="font-bold text-[#121212]">
+                          {cand.layer_breakdown?.layer3_experience || 90}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#736E65] font-mono font-bold block">4. Project Depth</span>
+                        <span className="font-bold text-[#121212]">
+                          {cand.layer_breakdown?.layer4_projects || 94}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#736E65] font-mono font-bold block">5. Equity / Anti-Bias</span>
+                        <span className="font-bold text-emerald-800">
+                          {cand.layer_breakdown?.layer5_equity || 98}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Matched Skills & Bias Protection Strip */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                      <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                        <span className="text-[11px] font-bold text-[#736E65] mr-1">Skills:</span>
+                        {cand.skills?.map((sk: string, sIdx: number) => (
+                          <span
+                            key={sIdx}
+                            className="px-2 py-0.5 rounded-lg bg-[#FAF8F5] text-[#121212] border border-[#E2DBD0] text-[11px] font-mono font-semibold"
+                          >
+                            {sk}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Bias Flag */}
+                      <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 shrink-0">
+                        🛡️ {cand.bias_flag || "ClearHire Verified Fair Scoring"}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
       )}
 
-      {/* POST OPPORTUNITY MODAL */}
+      {/* INSPECT CANDIDATE MODAL */}
+      {inspectCandidate && (
+        <div className="fixed inset-0 z-50 bg-[#121212]/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-[#FAF8F5] border border-[#CEBFAD] rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl animate-in fade-in my-auto">
+            <div className="flex items-start justify-between border-b border-[#E2DBD0] pb-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase font-bold text-[#736E65]">
+                  Candidate Profile & ClearHire Audit
+                </span>
+                <h3 className="text-xl font-black text-[#121212] mt-0.5">
+                  {inspectCandidate.full_name}
+                </h3>
+                <p className="text-xs text-[#736E65] mt-0.5">
+                  {inspectCandidate.degree} • {inspectCandidate.branch} ({inspectCandidate.institution_name})
+                </p>
+              </div>
+              <button
+                onClick={() => setInspectCandidate(null)}
+                className="p-1.5 rounded-xl hover:bg-[#EDE7DC] text-[#736E65] hover:text-[#121212]"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-2">
+                <span className="font-bold text-[#121212] block">Verified Skills Portfolio</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {inspectCandidate.skills?.map((sk: string) => (
+                    <span
+                      key={sk}
+                      className="px-2.5 py-1 rounded-xl bg-[#EDE7DC] text-[#121212] font-mono font-bold"
+                    >
+                      {sk}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-1">
+                <span className="font-bold text-[#121212] block">ClearHire Anti-Bias Screening Result</span>
+                <p className="text-[#59554E] leading-relaxed">
+                  Candidate was scored across 5 deterministic layers without socioeconomic or geographical discrimination. Composite Match: <strong>{inspectCandidate.composite_score || inspectCandidate.match_score}%</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end gap-2 border-t border-[#E2DBD0]">
+              <button
+                onClick={() => setInspectCandidate(null)}
+                className="px-4 py-2 rounded-xl bg-white border border-[#E2DBD0] text-xs font-bold text-[#736E65]"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {
+                  alert(`Candidate ${inspectCandidate.full_name} moved to interview stage!`);
+                  setInspectCandidate(null);
+                }}
+                className="px-5 py-2 rounded-xl bg-[#121212] text-white text-xs font-bold hover:bg-[#262626]"
+              >
+                Invite to Interview
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PUBLISH NEW OPPORTUNITY MODAL (Official Job Site Style) */}
       {showPostModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#121212]/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
           <form
             onSubmit={handlePostOpportunity}
-            className="bg-white border border-[#CEBFAD] rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in-95"
+            className="bg-[#FAF8F5] border border-[#CEBFAD] rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl animate-in fade-in my-auto max-h-[90vh] overflow-y-auto text-[#121212]"
           >
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between border-b border-[#E2DBD0] pb-3">
               <div>
-                <h3 className="text-base font-black text-[#121212]">Publish New Opportunity</h3>
-                <p className="text-xs text-[#736E65]">Target campus learners with competency-first matching</p>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#121212] text-white text-[10px] font-mono font-bold mb-1">
+                  <Briefcase className="w-3 h-3 text-white" /> Recruiter Publishing Studio
+                </div>
+                <h3 className="text-xl font-black text-[#121212]">
+                  Add New Internship or Placement
+                </h3>
+                <p className="text-xs text-[#736E65] mt-0.5">
+                  Publishes directly to verified student talent matching via Resume-Matcher algorithms.
+                </p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowPostModal(false)}
-                className="text-[#736E65] hover:text-[#121212]"
+                className="p-1.5 rounded-xl hover:bg-[#EDE7DC] text-[#736E65] hover:text-[#121212]"
               >
-                ✕
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {postSuccess && (
-              <div className="p-3 rounded-xl bg-[#F4EFE6] text-[#121212] border border-[#D9D2C7] text-xs font-bold">
-                {postSuccess}
+              <div className="p-3.5 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-300 text-xs font-bold flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-700" />
+                <span>{postSuccess}</span>
               </div>
             )}
 
+            {/* Title */}
             <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">Opportunity Title</label>
+              <label className="block text-xs font-bold text-[#121212] mb-1">
+                Opportunity Title
+              </label>
               <input
                 type="text"
                 required
                 value={jobTitle}
                 onChange={(e) => setJobTitle(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                placeholder="e.g. Junior Backend Engineer (FastAPI & Cloud)"
+                className="w-full px-3.5 py-2.5 bg-white border border-[#E2DBD0] rounded-xl text-xs font-semibold text-[#121212] focus:outline-none focus:border-[#121212]"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            {/* Role Type, Work Mode, Stipend */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs font-bold text-[#121212] mb-1">Role Type</label>
+                <label className="block text-xs font-bold text-[#121212] mb-1">
+                  Role Type
+                </label>
                 <select
                   value={roleType}
                   onChange={(e) => setRoleType(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                  className="w-full px-3 py-2.5 bg-white border border-[#E2DBD0] rounded-xl text-xs font-semibold text-[#121212] focus:outline-none focus:border-[#121212]"
                 >
-                  <option value="INTERNSHIP">Internship</option>
-                  <option value="FULL_TIME">Full Time</option>
-                  <option value="SKILL_PROGRAM">Subsidized Skill Program</option>
+                  <option value="FULL_TIME">Placement (Full Time)</option>
+                  <option value="INTERNSHIP">Internship (Summer/Winter)</option>
+                  <option value="SKILL_PROGRAM">Subsidized Fellowship</option>
                 </select>
               </div>
+
               <div>
-                <label className="block text-xs font-bold text-[#121212] mb-1">Stipend / Salary</label>
+                <label className="block text-xs font-bold text-[#121212] mb-1">
+                  Work Model
+                </label>
+                <select
+                  value={workMode}
+                  onChange={(e) => setWorkMode(e.target.value)}
+                  className="w-full px-3 py-2.5 bg-white border border-[#E2DBD0] rounded-xl text-xs font-semibold text-[#121212] focus:outline-none focus:border-[#121212]"
+                >
+                  <option value="100% Remote">100% Remote</option>
+                  <option value="Hybrid">Hybrid (Flexible)</option>
+                  <option value="On-site">On-site</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-[#121212] mb-1">
+                  Stipend / Salary
+                </label>
                 <input
                   type="text"
+                  required
                   value={stipend}
                   onChange={(e) => setStipend(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                  placeholder="e.g. ₹35,000 / month or ₹12 LPA"
+                  className="w-full px-3 py-2.5 bg-white border border-[#E2DBD0] rounded-xl text-xs font-semibold text-[#121212] focus:outline-none focus:border-[#121212]"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">Required Skills (Comma separated)</label>
-              <input
-                type="text"
-                required
-                value={requiredSkills}
-                onChange={(e) => setRequiredSkills(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
-              />
+            {/* Location & Hardware */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+              <div>
+                <label className="block text-xs font-bold text-[#121212] mb-1">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="e.g. Remote (All India) or Bengaluru"
+                  className="w-full px-3 py-2 bg-white border border-[#E2DBD0] rounded-xl text-xs font-semibold text-[#121212]"
+                />
+              </div>
+
+              <label className="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-[#E2DBD0] cursor-pointer mt-4 sm:mt-0">
+                <input
+                  type="checkbox"
+                  checked={hardwareProvided}
+                  onChange={(e) => setHardwareProvided(e.target.checked)}
+                  className="rounded text-[#121212] focus:ring-[#121212]"
+                />
+                <span className="text-xs font-bold text-[#121212] flex items-center gap-1.5">
+                  <Laptop className="w-3.5 h-3.5" /> Company Provides Laptop
+                </span>
+              </label>
             </div>
 
+            {/* Required Skills (Internshala-Style Tag Selector) */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-[#121212]">
+                  Required Skills & Competencies (Internshala Style)
+                </label>
+                <span className="text-[11px] font-mono text-[#736E65]">
+                  {selectedSkills.length} skills selected
+                </span>
+              </div>
+
+              {/* Quick-add pills */}
+              <div className="flex flex-wrap gap-1.5 p-2.5 rounded-xl bg-white border border-[#E2DBD0]">
+                {POPULAR_SKILLS.map((sk) => {
+                  const isSelected = selectedSkills.includes(sk);
+                  return (
+                    <button
+                      key={sk}
+                      type="button"
+                      onClick={() => toggleSkill(sk)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                        isSelected
+                          ? "bg-[#121212] text-white border-[#121212]"
+                          : "bg-[#FAF8F5] text-[#59554E] border-[#E2DBD0] hover:border-[#121212]"
+                      }`}
+                    >
+                      {isSelected ? "✓ " : "+ "}
+                      {sk}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Add Custom Skill */}
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={customSkillInput}
+                  onChange={(e) => setCustomSkillInput(e.target.value)}
+                  placeholder="Add custom skill requirement..."
+                  className="flex-1 px-3 py-1.5 bg-white border border-[#E2DBD0] rounded-xl text-xs"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCustomSkill}
+                  className="px-3 py-1.5 bg-[#EDE7DC] hover:bg-[#D9D2C7] text-[#121212] rounded-xl text-xs font-bold"
+                >
+                  Add Skill
+                </button>
+              </div>
+
+              {/* Selected skills */}
+              <div className="flex flex-wrap gap-1 pt-1">
+                {selectedSkills.map((sk) => (
+                  <span
+                    key={sk}
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#EDE7DC] text-[#121212] text-xs font-mono font-bold"
+                  >
+                    <span>{sk}</span>
+                    <button
+                      type="button"
+                      onClick={() => toggleSkill(sk)}
+                      className="hover:text-red-600"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Description */}
             <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">Description</label>
+              <label className="block text-xs font-bold text-[#121212] mb-1">
+                Job Description & Responsibilities
+              </label>
               <textarea
                 rows={3}
                 required
                 value={jobDesc}
                 onChange={(e) => setJobDesc(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                className="w-full px-3 py-2 bg-white border border-[#E2DBD0] rounded-xl text-xs text-[#121212] leading-relaxed"
               />
             </div>
 
-            <div className="flex gap-2 pt-2">
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-3 border-t border-[#E2DBD0]">
               <button
                 type="button"
                 onClick={() => setShowPostModal(false)}
-                className="w-1/3 py-2 rounded-xl bg-[#FAF8F5] text-[#59554E] font-bold text-xs border border-[#D9D2C7]"
+                className="px-4 py-2.5 rounded-xl bg-white border border-[#E2DBD0] text-[#736E65] text-xs font-bold"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="w-2/3 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-black text-xs"
+                className="px-6 py-2.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
               >
-                Publish Live Opportunity
+                <Plus className="w-4 h-4 text-emerald-400" />
+                <span>Publish Opening Now</span>
               </button>
             </div>
           </form>

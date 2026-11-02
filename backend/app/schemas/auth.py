@@ -66,6 +66,15 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
 
+class ClerkSyncRequest(BaseModel):
+    clerk_user_id: str
+    email: EmailStr
+    full_name: Optional[str] = None
+    role: Optional[UserRole] = None
+    avatar_url: Optional[str] = None
+    student_details: Optional[dict] = None
+    recruiter_details: Optional[dict] = None
+
 class EmailVerificationRequest(BaseModel):
     email: EmailStr
     code: Optional[str] = "123456" # Mock/simulated verification code for testability
