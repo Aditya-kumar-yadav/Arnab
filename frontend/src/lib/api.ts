@@ -32,6 +32,204 @@ export interface CandidateApplication {
 
 export const SEEDED_OPPORTUNITIES: OpportunityData[] = [
   {
+    id: 10,
+    title: "Software Engineering Intern (Summer 2026)",
+    role_type: "INTERNSHIP",
+    location: "Bengaluru / Hyderabad (Hybrid)",
+    is_remote: false,
+    stipend_or_salary: "₹1,25,000 / month",
+    description: "Join Google's Core Engineering & Cloud infrastructure teams. Work on real-time search indexing, distributed storage systems, and machine learning pipelines. 12-week summer internship with pre-placement offer (PPO) potential for graduating 2026 batch.",
+    required_skills: ["Python", "C++", "SQL", "Git"],
+    preferred_skills: ["FastAPI", "Linux", "Docker", "Algorithms"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 10,
+    company_name: "Google",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 98
+  },
+  {
+    id: 11,
+    title: "Associate Software Engineer - Campus 2026",
+    role_type: "FULL_TIME",
+    location: "Bengaluru, Karnataka",
+    is_remote: false,
+    stipend_or_salary: "₹26,00,000 / year (₹26 LPA)",
+    description: "Full-time software engineering role for graduating batch of 2026. Design robust backend microservices, scale data pipelines, and collaborate with globally distributed engineering teams. Pure blind merit evaluation without college prestige bias.",
+    required_skills: ["Python", "Java", "SQL", "Git"],
+    preferred_skills: ["Docker", "Kubernetes", "FastAPI", "System Design"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 10,
+    company_name: "Google",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 97
+  },
+  {
+    id: 12,
+    title: "Full Stack Developer Apprentice",
+    role_type: "INTERNSHIP",
+    location: "Noida / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹85,000 / month",
+    description: "Design and implement modern web interfaces and cloud microservices within Microsoft 365 and Azure Developer divisions. Pure merit-based hiring evaluating real code and GitHub contributions.",
+    required_skills: ["React", "TypeScript", "Python", "SQL"],
+    preferred_skills: ["Azure", "Next.js", "Docker", "Tailwind CSS"],
+    hardware_provided: true,
+    relocation_assistance: false,
+    company_id: 11,
+    company_name: "Microsoft",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 96
+  },
+  {
+    id: 13,
+    title: "Software Development Engineer - SDE 1",
+    role_type: "FULL_TIME",
+    location: "Hyderabad, Telangana",
+    is_remote: false,
+    stipend_or_salary: "₹22,00,000 / year (₹22 LPA)",
+    description: "Architect highly scalable microservices, optimize low-latency API gateways, and build enterprise cloud platforms supporting Fortune 500 workflows.",
+    required_skills: ["C++", "Python", "SQL", "Git"],
+    preferred_skills: ["Azure", "FastAPI", "Docker", "Microservices"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 11,
+    company_name: "Microsoft",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 95
+  },
+  {
+    id: 14,
+    title: "AWS Cloud & DevOps Engineering Intern",
+    role_type: "INTERNSHIP",
+    location: "Bengaluru / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹95,000 / month",
+    description: "Work directly on AWS developer tooling and cloud reliability engineering. Automate continuous integration, containerized testing, and auto-scaling telemetry.",
+    required_skills: ["Linux", "Python", "Docker", "Git"],
+    preferred_skills: ["AWS", "PostgreSQL", "FastAPI", "Kubernetes"],
+    hardware_provided: true,
+    relocation_assistance: false,
+    company_id: 12,
+    company_name: "Amazon (AWS)",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 95
+  },
+  {
+    id: 15,
+    title: "Software Development Engineer (Campus 2026)",
+    role_type: "FULL_TIME",
+    location: "Bengaluru / Hyderabad",
+    is_remote: false,
+    stipend_or_salary: "₹24,00,000 / year (₹24 LPA)",
+    description: "Develop high-scale distributed backend systems powering Amazon fulfillment, payments, and Prime video streaming infrastructure.",
+    required_skills: ["Java", "Python", "SQL", "Git"],
+    preferred_skills: ["AWS", "Docker", "PostgreSQL", "Kafka"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 12,
+    company_name: "Amazon (AWS)",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 94
+  },
+  {
+    id: 16,
+    title: "Associate Frontend Engineer (Campus 2026)",
+    role_type: "FULL_TIME",
+    location: "Bengaluru, Karnataka",
+    is_remote: false,
+    stipend_or_salary: "₹18,00,000 / year (₹18 LPA)",
+    description: "Build high-speed, mobile-optimized checkout and product discovery web apps for the Big Billion Days. Inclusive hiring prioritizing candidate skills and GitHub repositories.",
+    required_skills: ["React", "JavaScript", "TypeScript", "Tailwind CSS"],
+    preferred_skills: ["Next.js", "Redux", "Jest", "Framer Motion"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 13,
+    company_name: "Flipkart",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 93
+  },
+  {
+    id: 18,
+    title: "Junior Backend Engineer - Payments Platform",
+    role_type: "FULL_TIME",
+    location: "Bengaluru / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹16,00,000 / year (₹16 LPA)",
+    description: "Design 99.999% uptime payment webhooks, payout routing, and automated dispute resolution microservices handling over ₹40,000 Cr in transactions.",
+    required_skills: ["Python", "FastAPI", "PostgreSQL", "Docker", "Git"],
+    preferred_skills: ["Redis", "AWS", "SQL", "REST APIs"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 14,
+    company_name: "Razorpay",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 94
+  },
+  {
+    id: 20,
+    title: "Software Engineering Intern - Web & Consumer Apps",
+    role_type: "INTERNSHIP",
+    location: "Bengaluru / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹45,00,0 / month",
+    description: "Engineer real-time order tracking, accessible search interfaces, and lightning-fast web delivery apps.",
+    required_skills: ["React", "TypeScript", "JavaScript", "Git"],
+    preferred_skills: ["Tailwind CSS", "Next.js", "Redux"],
+    hardware_provided: true,
+    relocation_assistance: false,
+    company_id: 15,
+    company_name: "Swiggy",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 92
+  },
+  {
+    id: 25,
+    title: "Software Engineer Intern - Jira Cloud Platform",
+    role_type: "INTERNSHIP",
+    location: "Bengaluru / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹1,10,000 / month",
+    description: "Build collaborative features, real-time board sync, and developer automation for 300,000+ organizations.",
+    required_skills: ["React", "TypeScript", "Python", "Git"],
+    preferred_skills: ["GraphQL", "Docker", "AWS"],
+    hardware_provided: true,
+    relocation_assistance: false,
+    company_id: 18,
+    company_name: "Atlassian",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 95
+  },
+  {
+    id: 26,
+    title: "Digital Systems Engineer (Cadre 1 - Campus 2026)",
+    role_type: "FULL_TIME",
+    location: "PAN India / Remote",
+    is_remote: true,
+    stipend_or_salary: "₹7,50,000 / year (₹7.5 LPA)",
+    description: "Premier R&D placement cadre focusing on modern web frameworks, cloud migration, and enterprise full-stack development.",
+    required_skills: ["Python", "React", "SQL", "Git"],
+    preferred_skills: ["FastAPI", "Docker", "Linux"],
+    hardware_provided: true,
+    relocation_assistance: true,
+    company_id: 19,
+    company_name: "Tata Consultancy Services (TCS Digital)",
+    is_active: true,
+    created_at: new Date().toISOString(),
+    matchScore: 90
+  },
+  {
     id: 1,
     title: "Full-Stack Engineering Apprentice (Remote)",
     role_type: "INTERNSHIP",
@@ -48,78 +246,6 @@ export const SEEDED_OPPORTUNITIES: OpportunityData[] = [
     is_active: true,
     created_at: new Date().toISOString(),
     matchScore: 96
-  },
-  {
-    id: 2,
-    title: "Junior Software Engineer - Core Platform (Campus 2026)",
-    role_type: "FULL_TIME",
-    location: "Remote / Bengaluru (Hybrid)",
-    is_remote: true,
-    stipend_or_salary: "₹12,00,000 / year (₹12 LPA)",
-    description: "Full-time placement offer for graduating batch. Work on high-performance distributed microservices, APIs, and real-time data sync. Pure blind merit evaluation without college tier bias.",
-    required_skills: ["Python", "FastAPI", "PostgreSQL", "Docker", "Git"],
-    preferred_skills: ["Kubernetes", "Redis", "Next.js"],
-    hardware_provided: true,
-    relocation_assistance: true,
-    company_id: 1,
-    company_name: "RuralTech Labs & Systems",
-    is_active: true,
-    created_at: new Date().toISOString(),
-    matchScore: 93
-  },
-  {
-    id: 3,
-    title: "AI & Data Intelligence Research Intern",
-    role_type: "INTERNSHIP",
-    location: "Remote (All India)",
-    is_remote: true,
-    stipend_or_salary: "₹35,000 / month",
-    description: "Collaborate on fine-tuning LLMs, evaluating embeddings, and benchmarking multilingual retrieval systems. High-performance cloud GPU compute and stipend provided.",
-    required_skills: ["Python", "PyTorch", "Machine Learning", "Git"],
-    preferred_skills: ["Transformers", "FastAPI", "Vector Databases"],
-    hardware_provided: true,
-    relocation_assistance: false,
-    company_id: 2,
-    company_name: "NeuralCampus AI Labs",
-    is_active: true,
-    created_at: new Date().toISOString(),
-    matchScore: 95
-  },
-  {
-    id: 4,
-    title: "Associate Frontend Engineer (Next.js & UI Architecture)",
-    role_type: "FULL_TIME",
-    location: "Remote / Mumbai",
-    is_remote: true,
-    stipend_or_salary: "₹9,50,000 / year (₹9.5 LPA)",
-    description: "Design and build ultra-responsive, accessible user interfaces with Next.js, React, and TypeScript. We welcome candidates from rural colleges who have built tangible GitHub projects.",
-    required_skills: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
-    preferred_skills: ["Framer Motion", "State Management", "Jest"],
-    hardware_provided: true,
-    relocation_assistance: true,
-    company_id: 3,
-    company_name: "FinInclusion Digital Systems",
-    is_active: true,
-    created_at: new Date().toISOString(),
-    matchScore: 91
-  },
-  {
-    id: 5,
-    title: "National Cloud & DevOps Fellowship (Govt. Subsidized)",
-    role_type: "SKILL_PROGRAM",
-    location: "Remote (All India)",
-    is_remote: true,
-    stipend_or_salary: "100% Free + NPTEL Certified + Placement Gateway",
-    description: "Recognized by National Skill Development Mission. Learn Linux administration, CI/CD with GitHub Actions, containerization with Docker, and cloud orchestration with AWS/GCP credits.",
-    required_skills: ["Linux", "Git", "Basic Networking"],
-    preferred_skills: ["Python", "Docker"],
-    hardware_provided: true,
-    relocation_assistance: false,
-    company_id: 3,
-    company_name: "FinInclusion Digital Systems",
-    is_active: true,
-    created_at: new Date().toISOString(),
-    matchScore: 89
   },
   {
     id: 6,
@@ -495,6 +621,24 @@ class ApiClient {
     }
   }
 
+  async parseResume(file: File): Promise<any> {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch(`${API_BASE}/student/parse-resume`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        throw new Error(`Parse failed with HTTP ${res.status}`);
+      }
+      return await res.json();
+    } catch (err) {
+      console.warn("Server parse error, fallback to client parser:", err);
+      throw err;
+    }
+  }
+
   async updateStudentSkills(skills: string[], preferred_domain?: string) {
     try {
       return await this.request<{ message: string; skills: string[] }>("/student/skills", {
@@ -587,27 +731,49 @@ class ApiClient {
       return [
         {
           id: 1,
-          full_name: blindMode ? "Candidate #7729 (Masked)" : "Aarav Verma",
+          full_name: blindMode ? "Candidate #7729 (Masked)" : "Manish Kumar",
           degree: "B.Tech",
-          branch: "Computer Science",
+          branch: "Computer Science & Engineering",
           institution_name: blindMode ? "Deemed University (Jharkhand)" : "Birla Institute of Technology, Mesra",
-          skills: ["Python", "React", "FastAPI", "SQL", "Git"],
+          skills: ["Java", "C++", "SQL", "Cloud Computing", "CCNA", "FastAPI", "React", "Git"],
           institution_verified: true,
           is_first_generation: true,
           is_rural_or_disadvantaged: true,
-          match_score: 96
+          match_score: 96,
+          composite_score: 96,
+          resume_url: "/resumes/manish_resume.pdf",
+          resume_file_name: "manish_resume.pdf",
+          layer_breakdown: {
+            layer1_semantic: 92,
+            layer2_taxonomy: 95,
+            layer3_experience: 90,
+            layer4_projects: 94,
+            layer5_equity: 98
+          },
+          bias_flag: "ClearHire Verified Fair Scoring"
         },
         {
           id: 2,
-          full_name: blindMode ? "Candidate #4812 (Masked)" : "Rahul Kumar",
-          degree: "B.Sc Computer Science",
-          branch: "Information Technology",
-          institution_name: blindMode ? "State University (Bihar)" : "L.N. Mithila University",
-          skills: ["HTML", "CSS", "JavaScript", "React", "Git"],
-          institution_verified: false,
+          full_name: blindMode ? "Candidate #4812 (Masked)" : "Aditya Yadav",
+          degree: "B.Tech",
+          branch: "Computer Science & Engineering",
+          institution_name: blindMode ? "State University (Bihar)" : "Birla Institute of Technology, Mesra",
+          skills: ["Python", "FastAPI", "PostgreSQL", "Docker", "Machine Learning", "Git"],
+          institution_verified: true,
           is_first_generation: true,
-          is_rural_or_disadvantaged: true,
-          match_score: 88
+          is_rural_or_disadvantaged: false,
+          match_score: 88,
+          composite_score: 88,
+          resume_url: "/resumes/aditya_kumar_yadav_resume.pdf",
+          resume_file_name: "aditya_kumar_yadav_resume.pdf",
+          layer_breakdown: {
+            layer1_semantic: 92,
+            layer2_taxonomy: 95,
+            layer3_experience: 90,
+            layer4_projects: 94,
+            layer5_equity: 98
+          },
+          bias_flag: "ClearHire Verified Fair Scoring"
         }
       ];
     }

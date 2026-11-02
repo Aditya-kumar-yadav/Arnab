@@ -258,7 +258,9 @@ def search_candidates(
             layer_breakdown=c["layer_breakdown"],
             matched_skills=c["matched_skills"],
             missing_skills=c["missing_skills"],
-            bias_flag=c["bias_flag"]
+            bias_flag=c["bias_flag"],
+            resume_url=c.get("resume_url", "/resumes/manish_resume.pdf"),
+            resume_file_name=c.get("resume_file_name", "manish_resume.pdf")
         ))
 
     return results

@@ -79,5 +79,7 @@ class CandidateListItem(BaseModel):
     matched_skills: List[str] = []
     missing_skills: List[str] = []
     bias_flag: Optional[str] = None
+    resume_url: Optional[str] = "/resumes/manish_resume.pdf"
+    resume_file_name: Optional[str] = "manish_resume.pdf"
 
     model_config = ConfigDict(from_attributes=True)

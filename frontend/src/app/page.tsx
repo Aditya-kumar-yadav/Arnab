@@ -382,6 +382,10 @@ export default function Home() {
           "Aditya Yadav"
         }
         candidateEmail={clerkUser?.primaryEmailAddress?.emailAddress || currentUser?.email || "yraj15927@gmail.com"}
+        activeResumeName={
+          (typeof window !== "undefined" ? localStorage.getItem("pathfinder_uploaded_resume_name") : null) ||
+          "Aditya_Yadav_Resume.pdf"
+        }
         initialTab="BUILDER"
       />
 

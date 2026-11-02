@@ -443,7 +443,9 @@ def rank_candidates_with_clearhire(
             },
             "matched_skills": matched_skills,
             "missing_skills": missing_skills,
-            "bias_flag": bias_flag
+            "bias_flag": bias_flag,
+            "resume_url": c.get("resume_url", "/resumes/manish_resume.pdf"),
+            "resume_file_name": c.get("resume_file_name", "manish_resume.pdf")
         })
 
     # Sort descending by composite score

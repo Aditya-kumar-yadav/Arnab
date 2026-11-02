@@ -1,6 +1,8 @@
 import json
+import os
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -20,6 +22,7 @@ from app.services.badge_service import get_user_badges
 from app.services.domain_verification import extract_and_normalize_domain, PUBLIC_EMAIL_DOMAINS
 from app.services.audit_service import record_audit_log
 from app.services.ats_matcher import compute_ats_opportunity_match
+from app.services.resume_parser import extract_text_from_bytes, parse_resume_content
 
 router = APIRouter(prefix="/student", tags=["Student Portal"])
 
@@ -213,4 +216,67 @@ def get_available_opportunities(
     # Sort so candidate's highest ATS matches appear first
     results.sort(key=lambda x: x.match_score or 0, reverse=True)
     return results
+
+@router.post("/parse-resume")
+async def parse_uploaded_resume(file: UploadFile = File(...)):
+    """
+    Parses any uploaded resume (.pdf, .docx, .txt) with deep structural extraction (PyMuPDF / docx).
+    Returns structured ResumeData for OpenResume builder & candidate profile synchronization.
+    Saves the original uploaded document for direct recruiter PDF inspection.
+    """
+    file_bytes = await file.read()
+    clean_name = os.path.basename(file.filename or "uploaded_resume.pdf").replace(" ", "_")
+
+    # Save to uploads directory
+    uploads_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads", "resumes"))
+    os.makedirs(uploads_dir, exist_ok=True)
+    save_path = os.path.join(uploads_dir, clean_name)
+    try:
+        with open(save_path, "wb") as f:
+            f.write(file_bytes)
+    except Exception as e:
+        print(f"Error saving to backend uploads: {e}")
+
+    # Also save to frontend public/resumes directory
+    fe_resumes_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "..", "frontend", "public", "resumes"))
+    try:
+        os.makedirs(fe_resumes_dir, exist_ok=True)
+        with open(os.path.join(fe_resumes_dir, clean_name), "wb") as f:
+            f.write(file_bytes)
+    except Exception as e:
+        print(f"Error saving to frontend public: {e}")
+
+    raw_text = extract_text_from_bytes(file_bytes, file.filename or "")
+    parsed_result = parse_resume_content(raw_text, file.filename or "")
+
+    parsed_result["resume_url"] = f"/resumes/{clean_name}"
+    parsed_result["download_url"] = f"/api/v1/student/resume/{clean_name}"
+    parsed_result["file_name"] = clean_name
+    return parsed_result
+
+
+@router.get("/resume/{filename}")
+def get_candidate_resume(filename: str):
+    """
+    Serves the exact uploaded resume PDF for candidate inspection & recruiter verification.
+    """
+    clean_name = os.path.basename(filename)
+    candidates_dirs = [
+        os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads", "resumes")),
+        os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "..", "frontend", "public", "resumes")),
+        "C:/Users/bitd/OneDrive/Documents",
+        "C:/Users/bitd/Downloads",
+    ]
+    for d in candidates_dirs:
+        target = os.path.join(d, clean_name)
+        if os.path.exists(target) and os.path.isfile(target):
+            return FileResponse(
+                path=target,
+                media_type="application/pdf",
+                filename=clean_name,
+                headers={"Content-Disposition": f"inline; filename={clean_name}"}
+            )
+    raise HTTPException(status_code=404, detail="Resume document not found")
+
+
 

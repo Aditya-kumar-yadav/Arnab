@@ -1,5 +1,7 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.core.database import Base, engine
 import app.models # Ensure all models are registered
@@ -23,6 +25,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount uploaded resume documents static serving
+uploads_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "uploads", "resumes"))
+os.makedirs(uploads_dir, exist_ok=True)
+app.mount("/resumes", StaticFiles(directory=uploads_dir), name="resumes")
 
 # Include Routers
 from app.api.auth import router as auth_router

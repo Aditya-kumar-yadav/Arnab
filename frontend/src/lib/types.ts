@@ -119,6 +119,33 @@ export interface OpportunityData {
   };
 }
 
+export interface CandidateData {
+  id: number;
+  full_name: string;
+  degree?: string;
+  branch?: string;
+  institution_name?: string;
+  skills: string[];
+  institution_verified: boolean;
+  is_first_generation?: boolean;
+  is_rural_or_disadvantaged?: boolean;
+  match_score?: number;
+  rank?: number;
+  composite_score?: number;
+  layer_breakdown?: {
+    layer1_semantic: number;
+    layer2_taxonomy: number;
+    layer3_experience: number;
+    layer4_projects: number;
+    layer5_equity: number;
+  };
+  matched_skills?: string[];
+  missing_skills?: string[];
+  bias_flag?: string;
+  resume_url?: string;
+  resume_file_name?: string;
+}
+
 export interface AdminOverviewStats {
   total_students: number;
   total_recruiters: number;

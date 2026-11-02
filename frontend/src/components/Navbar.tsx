@@ -90,10 +90,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={handleEditResumeClick}
             title="Edit any uploaded resume via OpenResume technique"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-[#E2DBD0] hover:border-[#121212] text-[#121212] transition-colors shadow-xs"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#121212] hover:bg-[#262626] text-white transition-all shadow-sm"
           >
-            <FileText className="w-3.5 h-3.5 text-[#121212]" />
-            <span>Edit Resume</span>
+            <FileText className="w-3.5 h-3.5 text-amber-300" />
+            <span>✏️ Edit Resume</span>
           </button>
 
           {/* 2. Profile Settings Option (Skills, Name, Mail, Number, etc.) */}
@@ -101,9 +101,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenProfileSettings}
               title="Manage your profile, skills, phone number & career preferences"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#121212] hover:bg-[#262626] text-white transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-[#E2DBD0] hover:border-[#121212] text-[#121212] transition-colors shadow-xs"
             >
-              <Settings className="w-3.5 h-3.5 text-white" />
+              <Settings className="w-3.5 h-3.5 text-[#121212]" />
               <span>Profile & Skills</span>
             </button>
           )}
