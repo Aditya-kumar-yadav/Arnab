@@ -95,6 +95,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [uploadSuccess, setUploadSuccess] = useState("");
   const [applicationSuccessMsg, setApplicationSuccessMsg] = useState("");
   const [candidateResumeName, setCandidateResumeName] = useState<string>("Aditya_Yadav_Resume.pdf");
+  const [candidateResumeData, setCandidateResumeData] = useState<any>(null);
   const [isDraggingOnCard, setIsDraggingOnCard] = useState<boolean>(false);
   const cardFileRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -129,11 +130,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           setOpportunities(reRanked);
         }
 
+        setCandidateResumeData(parsedResult.resume_data);
+
         if (typeof window !== "undefined") {
           localStorage.setItem("pathfinder_candidate_name", realName);
           localStorage.setItem("pathfinder_uploaded_resume_name", fileName);
           localStorage.setItem("pathfinder_candidate_phone", parsedResult.phone);
           localStorage.setItem("pathfinder_candidate_email", parsedResult.email);
+          localStorage.setItem("pathfinder_parsed_resume_data", JSON.stringify(parsedResult.resume_data));
           if (parsedResult.resume_url) {
             localStorage.setItem("pathfinder_uploaded_resume_url", parsedResult.resume_url);
           }
@@ -238,6 +242,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       if (storedPhone) setCandidatePhoneState(storedPhone);
       const storedResume = localStorage.getItem("pathfinder_uploaded_resume_name");
       if (storedResume) setCandidateResumeName(storedResume);
+      const storedData = localStorage.getItem("pathfinder_parsed_resume_data");
+      if (storedData) {
+        try {
+          const parsed = JSON.parse(storedData);
+          if (parsed && parsed.profile) {
+            setCandidateResumeData(parsed);
+          }
+        } catch (e) {
+          console.warn("Parse stored data failed:", e);
+        }
+      }
     }
   }, [clerkUser]);
 
@@ -884,12 +899,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
           </div>
 
-          {/* Master-Detail Split Grid (7 Cols Featured Role Detail, 5 Cols Recommendations Feed) */}
+          {/* Master-Detail Split Grid: Left side pinned in view, Right side scrollable feed of all JDs */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* LEFT / CENTER: Active Selected Job Description (Exact Talently Image 1 Style) */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* LEFT / CENTER: Active Selected Job Description (Pinned in View - Never Leaves Screen) */}
+            <div className="lg:col-span-7 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto pr-1 rounded-3xl">
               {selectedOpportunity ? (
-                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-6 sticky top-20">
+                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-6">
                   {/* Best Fit Rank & Match Banner */}
                   {(() => {
                     const fitRank = sortedOpportunities.findIndex((o) => o.id === selectedOpportunity.id) + 1;
@@ -1278,7 +1293,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
 
               {/* Scrollable Opportunities List (Exact Inker & Talently Cards with Best Fit Discovery) */}
-              <div className="space-y-3 max-h-[720px] overflow-y-auto pr-1">
+              <div className="space-y-3 max-h-[calc(100vh-140px)] overflow-y-auto pr-1.5">
                 {sortedOpportunities.map((opp, idx) => {
                   const fitRank = idx + 1;
                   const isSelected = selectedOpportunity?.id === opp.id;
@@ -2006,6 +2021,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         candidateEmail={clerkUser?.primaryEmailAddress?.emailAddress || profile.email}
         activeResumeName={candidateResumeName}
         candidateSkills={profile.skills}
+        parsedResumeData={candidateResumeData}
       />
 
       {/* Candidate Profile & Skills Settings Modal */}

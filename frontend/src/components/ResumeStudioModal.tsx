@@ -122,6 +122,143 @@ const INITIAL_RESUME: ResumeData = {
 };
 
 const SAMPLE_PARSED_RESUMES: Record<string, ResumeData> = {
+  "manish_resume.pdf": {
+    profile: {
+      name: "Manish Kumar",
+      summary:
+        "Motivated Network Engineer skilled in Java, C++, SQL, Cloud Computing, Cisco Packet Tracer, and Wireshark. Proven track record designing scalable enterprise network infrastructure, hybrid cloud deployments with Azure/AWS, and modular microservices at Birla Institute of Technology, Mesra.",
+      email: "manishraj019ty@gmail.com",
+      phone: "+91-9508442758",
+      location: "Ranchi, Jharkhand / Remote",
+      url: "https://linkedin.com/in/manish-kumar",
+    },
+    workExperiences: [
+      {
+        company: "Enterprise Network Design and Implementation",
+        jobTitle: "Network Engineer Project Lead",
+        date: "2024 – 2025",
+        descriptions: [
+          "Designed and implemented a scalable enterprise network infrastructure using Cisco routers and switches.",
+          "Configured VLANs, inter-VLAN routing, and implemented dynamic routing protocols like OSPF and EIGRP for efficient data flow.",
+          "Enhanced network throughput and reliability by 40% using Cisco Packet Tracer and Wireshark packet inspection.",
+        ],
+      },
+      {
+        company: "Cloud-Based Network Deployment",
+        jobTitle: "Cloud & Network Engineer",
+        date: "2024 – 2025",
+        descriptions: [
+          "Deployed a hybrid cloud network architecture integrating on-premises systems with Azure and AWS.",
+          "Configured secure VPN connections, subnets, and load balancers to ensure seamless connectivity and 99.9% high availability.",
+          "Engineered automated network telemetry monitoring utilizing Linux and shell automation.",
+        ],
+      },
+    ],
+    educations: [
+      {
+        school: "Birla Institute of Technology, Mesra",
+        degree: "B.Tech. in Computer Science and Engineering",
+        date: "2024 – 2028",
+        gpa: "8.8 / 10.0 CGPA",
+        descriptions: [
+          "Relevant Coursework: Computer Networks, Cloud Computing, Operating Systems, Database Management Systems, Data Structures & Algorithms.",
+          "Certifications: CCNA (Mindluster), CCNP (Mindluster), Cloud Computing (IIT Mandi), Java (Learntube), Wireshark.",
+        ],
+      },
+    ],
+    projects: [
+      {
+        project: "Healthcare Facility Management Solution",
+        date: "2025",
+        descriptions: [
+          "Healthcare Facility Management Solutions streamline operations in healthcare settings by integrating maintenance, space management, energy efficiency, and safety protocols into a single platform.",
+          "Optimized resource use, ensured regulatory compliance, and enhanced overall operational efficiency.",
+        ],
+      },
+      {
+        project: "Drink Water Health Tracker",
+        date: "2025",
+        descriptions: [
+          "Aimed at promoting hydration and improving health, this project focuses on encouraging regular water consumption through innovative reminders and tracking systems.",
+        ],
+      },
+      {
+        project: "Student Attendance Management System",
+        date: "2025",
+        descriptions: [
+          "Tool designed to streamline tracking and automated record-keeping of student attendance with analytics and insights.",
+        ],
+      },
+    ],
+    skills: {
+      descriptions: [
+        "Languages: Java, C++, HTML, SQL, Cloud Computing, React",
+        "Networking & Protocols: Cisco Packet Tracer, Wireshark, CCNA, CCNP, TCP/IP, VLAN, OSPF, EIGRP",
+        "Cloud & Tools: Amazon AWS, Microsoft Azure, Linux, Tableau, Putty, Microsoft Office, Git",
+      ],
+    },
+  },
+  "Aditya_Yadav_Resume.pdf": {
+    profile: {
+      name: "Aditya Yadav",
+      summary:
+        "Driven software developer with proven competencies in Python, React, FastAPI, SQL, and Docker. Seeking high-impact software engineering opportunities to build scalable distributed systems and accessible platforms.",
+      email: "yraj15927@gmail.com",
+      phone: "+91-989888978",
+      location: "Ranchi, Jharkhand / Remote",
+      url: "https://github.com/aditya-yadav",
+    },
+    workExperiences: [
+      {
+        company: "RuralTech Labs & Systems",
+        jobTitle: "Software Engineering Apprentice",
+        date: "May 2025 – Present",
+        descriptions: [
+          "Led cross-functional team of 4 engineers developing offline-first PWA for rural college placement discovery.",
+          "Optimized client-side bundle size by 42% and implemented JWT session caching.",
+          "Engineered RESTful APIs with Python FastAPI and PostgreSQL handling 5,000+ mock verification events.",
+        ],
+      },
+      {
+        company: "Open Source Campus Initiative",
+        jobTitle: "Core Contributor",
+        date: "Aug 2024 – Dec 2024",
+        descriptions: [
+          "Contributed to accessibility benchmarks and screen-reader compatibility for student dashboards.",
+          "Authored automated CI/CD GitHub Action workflows for automated unit and acceptance tests.",
+        ],
+      },
+    ],
+    educations: [
+      {
+        school: "Birla Institute of Technology, Mesra",
+        degree: "Bachelor of Technology in Computer Science & Engineering",
+        date: "Expected Graduation: June 2027",
+        gpa: "8.8 / 10.0 CGPA",
+        descriptions: [
+          "Honors / Awards: Dean's List for Academic Excellence (Fall 2024, Spring 2025).",
+          "Relevant Coursework: Data Structures & Algorithms, Operating Systems, Database Management, Cloud Computing.",
+        ],
+      },
+    ],
+    projects: [
+      {
+        project: "Pathfinder AI – Opportunity Matcher",
+        date: "Jan 2026 – Present",
+        descriptions: [
+          "Designed and implemented explainable recommendation engine eliminating college prestige bias.",
+          "Created affirmative inclusion weighting for first-generation and rural learners.",
+        ],
+      },
+    ],
+    skills: {
+      descriptions: [
+        "Languages: Python, TypeScript, JavaScript, SQL, C++, HTML5, CSS3",
+        "Frameworks & Libraries: React, Next.js, FastAPI, Node.js, Tailwind CSS",
+        "Developer Tools: Docker, Git, GitHub Actions, PostgreSQL, Linux, Clerk Auth",
+      ],
+    },
+  },
   "laverne-resume.pdf": {
     profile: {
       name: "Leo Leopard",
@@ -193,6 +330,7 @@ interface ResumeStudioModalProps {
   candidateEmail?: string;
   activeResumeName?: string;
   candidateSkills?: string[];
+  parsedResumeData?: ResumeData | null;
 }
 
 export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
@@ -205,6 +343,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
   candidateEmail,
   activeResumeName,
   candidateSkills,
+  parsedResumeData,
 }) => {
   const [activeTab, setActiveTab] = useState<"PARSER" | "BUILDER">(initialTab);
   const [selectedResumeFile, setSelectedResumeFile] = useState<string>(activeResumeName || "Aditya_Yadav_Resume.pdf");
@@ -235,6 +374,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
           localStorage.setItem("pathfinder_uploaded_resume_name", fileName);
           localStorage.setItem("pathfinder_candidate_phone", parsedResult.phone);
           localStorage.setItem("pathfinder_candidate_email", parsedResult.email);
+          localStorage.setItem("pathfinder_parsed_resume_data", JSON.stringify(parsedResult.resume_data));
         }
 
         if (onSyncWithProfile) {
@@ -392,26 +532,67 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      if (activeResumeName) {
-        setSelectedResumeFile(activeResumeName);
-      } else if (typeof window !== "undefined") {
-        const storedResumeName = localStorage.getItem("pathfinder_uploaded_resume_name");
-        if (storedResumeName) setSelectedResumeFile(storedResumeName);
+      const activeFile =
+        activeResumeName ||
+        (typeof window !== "undefined" ? localStorage.getItem("pathfinder_uploaded_resume_name") : "") ||
+        "Aditya_Yadav_Resume.pdf";
+      setSelectedResumeFile(activeFile);
+
+      const storedName =
+        typeof window !== "undefined" ? localStorage.getItem("pathfinder_candidate_name") : null;
+      const targetName = storedName || candidateName || "";
+
+      // 1. Direct parsedResumeData passed from parent prop
+      if (parsedResumeData && parsedResumeData.profile && parsedResumeData.profile.name) {
+        setResumeData(parsedResumeData);
+        return;
       }
-      
-      const storedName = typeof window !== "undefined" ? localStorage.getItem("pathfinder_candidate_name") : null;
-      const targetName = storedName || candidateName || "Aditya Yadav";
-      
-      setResumeData((prev) => ({
-        ...prev,
-        profile: {
-          ...prev.profile,
-          name: targetName,
-          email: candidateEmail || prev.profile.email,
-        },
-      }));
+
+      // 2. Check localStorage for stored real parsed resume data
+      if (typeof window !== "undefined") {
+        const storedJson = localStorage.getItem("pathfinder_parsed_resume_data");
+        if (storedJson) {
+          try {
+            const parsedObj = JSON.parse(storedJson);
+            if (parsedObj && parsedObj.profile && parsedObj.profile.name) {
+              setResumeData(parsedObj);
+              return;
+            }
+          } catch (e) {
+            console.warn("Stored resume JSON parse failed:", e);
+          }
+        }
+      }
+
+      // 3. Match from SAMPLE_PARSED_RESUMES by filename or candidate name
+      const isManish =
+        activeFile.toLowerCase().includes("manish") ||
+        targetName.toLowerCase().includes("manish");
+
+      if (isManish && SAMPLE_PARSED_RESUMES["manish_resume.pdf"]) {
+        setResumeData(SAMPLE_PARSED_RESUMES["manish_resume.pdf"]);
+        return;
+      }
+
+      if (SAMPLE_PARSED_RESUMES[activeFile]) {
+        setResumeData(SAMPLE_PARSED_RESUMES[activeFile]);
+        return;
+      }
+
+      // 4. Default to Aditya's real profile
+      if (SAMPLE_PARSED_RESUMES["Aditya_Yadav_Resume.pdf"]) {
+        const base = SAMPLE_PARSED_RESUMES["Aditya_Yadav_Resume.pdf"];
+        setResumeData({
+          ...base,
+          profile: {
+            ...base.profile,
+            name: targetName || base.profile.name,
+            email: candidateEmail || base.profile.email,
+          },
+        });
+      }
     }
-  }, [candidateName, candidateEmail, activeResumeName, isOpen]);
+  }, [candidateName, candidateEmail, activeResumeName, isOpen, parsedResumeData]);
 
   if (!isOpen) return null;
 
@@ -455,13 +636,29 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
   };
 
   const handleApplyParsedToEditor = () => {
-    setResumeData(JSON.parse(JSON.stringify(currentParsedResume)));
+    const dataToApply = JSON.parse(JSON.stringify(currentParsedResume));
+    setResumeData(dataToApply);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("pathfinder_parsed_resume_data", JSON.stringify(dataToApply));
+    }
     setActiveTab("BUILDER");
     setSyncFeedback("Parsed resume data loaded into live editor!");
     setTimeout(() => setSyncFeedback(""), 3000);
   };
 
   const handleSyncToPathfinder = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("pathfinder_parsed_resume_data", JSON.stringify(resumeData));
+      if (resumeData.profile.name) {
+        localStorage.setItem("pathfinder_candidate_name", resumeData.profile.name);
+      }
+      if (resumeData.profile.phone) {
+        localStorage.setItem("pathfinder_candidate_phone", resumeData.profile.phone);
+      }
+      if (resumeData.profile.email) {
+        localStorage.setItem("pathfinder_candidate_email", resumeData.profile.email);
+      }
+    }
     if (onSyncWithProfile) {
       // Extract all skills from resumeData descriptions
       const parsedSkills: string[] = [];
@@ -476,9 +673,6 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
       const allSkills = Array.from(new Set([
         "Python", "React", "FastAPI", "SQL", "Git", ...parsedSkills
       ]));
-      if (typeof window !== "undefined" && resumeData.profile.name) {
-        localStorage.setItem("pathfinder_candidate_name", resumeData.profile.name);
-      }
       onSyncWithProfile(allSkills, resumeData.profile.summary, resumeData.profile.name);
     }
     setSyncFeedback("Resume parsed & skills synced to your Pathfinder Opportunity Matcher!");

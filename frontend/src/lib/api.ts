@@ -653,13 +653,22 @@ class ApiClient {
   async getOpportunities(): Promise<OpportunityData[]> {
     try {
       const opps = await this.request<OpportunityData[]>("/student/opportunities");
+      const combined = [...SEEDED_OPPORTUNITIES];
       if (opps && opps.length > 0) {
-        return opps.map((o) => ({
-          ...o,
-          matchScore: 92 + (o.id % 7),
-        }));
+        opps.forEach((o) => {
+          if (
+            !combined.some(
+              (c) =>
+                c.id === o.id ||
+                (c.title.toLowerCase() === o.title.toLowerCase() &&
+                  c.company_name.toLowerCase() === o.company_name.toLowerCase())
+            )
+          ) {
+            combined.push(o);
+          }
+        });
       }
-      return SEEDED_OPPORTUNITIES;
+      return combined;
     } catch {
       return SEEDED_OPPORTUNITIES;
     }

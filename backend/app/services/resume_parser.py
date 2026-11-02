@@ -262,7 +262,18 @@ def parse_resume_content(full_text: str, original_filename: str = "") -> Dict[st
     else:
         # Convert top 2 major technical projects into practical engineering experience
         if projects:
-            for p in projects[:2]:
+            def project_weight(p):
+                desc_len = sum(len(d) for d in p.get("descriptions", []))
+                tech_score = 0
+                name_lower = p.get("project", "").lower()
+                desc_lower = " ".join(p.get("descriptions", [])).lower()
+                for term in ["network", "cloud", "system", "enterprise", "distributed", "platform", "infrastructure", "management", "architecture"]:
+                    if term in name_lower or term in desc_lower:
+                        tech_score += 25
+                return tech_score + desc_len
+
+            sorted_projs = sorted(projects, key=project_weight, reverse=True)
+            for p in sorted_projs[:2]:
                 work_experiences.append({
                     "company": p["project"],
                     "jobTitle": f"{headline} Project Lead",
