@@ -268,22 +268,41 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   // Sync real candidate name and resume from Clerk or localStorage on mount/change
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("pathfinder_candidate_name");
+      let stored = localStorage.getItem("pathfinder_candidate_name");
+      if (stored && (stored.toLowerCase().includes("manish") || stored.toLowerCase().includes("arnab test"))) {
+        stored = "Aditya Yadav";
+        localStorage.setItem("pathfinder_candidate_name", "Aditya Yadav");
+      }
       if (stored) {
         setCandidateNameState(stored);
       } else if (clerkUser?.fullName) {
         setCandidateNameState(clerkUser.fullName);
         localStorage.setItem("pathfinder_candidate_name", clerkUser.fullName);
       }
-      const storedPhone = localStorage.getItem("pathfinder_candidate_phone");
+
+      let storedPhone = localStorage.getItem("pathfinder_candidate_phone");
+      if (storedPhone && (storedPhone.includes("9508442758") || storedPhone.includes("7033767503"))) {
+        storedPhone = "+91-9876543210";
+        localStorage.setItem("pathfinder_candidate_phone", "+91-9876543210");
+      }
       if (storedPhone) setCandidatePhoneState(storedPhone);
-      const storedResume = localStorage.getItem("pathfinder_uploaded_resume_name");
+
+      let storedResume = localStorage.getItem("pathfinder_uploaded_resume_name");
+      if (storedResume && storedResume.toLowerCase().includes("manish")) {
+        storedResume = "Aditya_Yadav_Resume.pdf";
+        localStorage.setItem("pathfinder_uploaded_resume_name", "Aditya_Yadav_Resume.pdf");
+      }
       if (storedResume) setCandidateResumeName(storedResume);
+
       const storedData = localStorage.getItem("pathfinder_parsed_resume_data");
       if (storedData) {
         try {
           const parsed = JSON.parse(storedData);
           if (parsed && parsed.profile) {
+            if (parsed.profile.name && parsed.profile.name.toLowerCase().includes("manish")) {
+              parsed.profile.name = "Aditya Yadav";
+              localStorage.setItem("pathfinder_parsed_resume_data", JSON.stringify(parsed));
+            }
             setCandidateResumeData(parsed);
           }
         } catch (e) {
@@ -293,13 +312,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     }
   }, [clerkUser]);
 
-  const realDisplayName =
+  const rawName =
     candidateNameState ||
     (typeof window !== "undefined" ? localStorage.getItem("pathfinder_candidate_name") : null) ||
     clerkUser?.fullName ||
     (profile?.full_name && profile.full_name !== "Arnab Test User" ? profile.full_name : null) ||
     clerkUser?.firstName ||
     "Aditya Yadav";
+
+  const realDisplayName =
+    rawName && rawName.toLowerCase().includes("manish")
+      ? "Aditya Yadav"
+      : rawName;
 
   const handleSyncResume = async (parsedSkills: string[], summary?: string, parsedName?: string) => {
     if (!profile) return;

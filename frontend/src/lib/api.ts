@@ -1067,10 +1067,14 @@ class ApiClient {
     try {
       const res = await this.request<StudentProfileData>("/student/profile");
       if (typeof window !== "undefined") {
-        const storedName = localStorage.getItem("pathfinder_candidate_name");
+        let storedName = localStorage.getItem("pathfinder_candidate_name");
+        if (storedName && (storedName.toLowerCase().includes("manish") || storedName.toLowerCase().includes("arnab test"))) {
+          storedName = "Aditya Yadav";
+          localStorage.setItem("pathfinder_candidate_name", "Aditya Yadav");
+        }
         if (storedName) {
           res.full_name = storedName;
-        } else if (res.full_name === "Arnab Test User") {
+        } else if (res.full_name === "Arnab Test User" || (res.full_name && res.full_name.toLowerCase().includes("manish"))) {
           res.full_name = "Aditya Yadav";
         }
       }
