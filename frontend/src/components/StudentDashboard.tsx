@@ -1019,10 +1019,36 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
           </div>
 
-          <TPOPlacementSection onApplyOrLogin={() => {
-            const firstOpp = opportunities[0];
-            if (firstOpp) handleApply(firstOpp);
-          }} />
+          <TPOPlacementSection
+            candidateSkills={profile?.skills || ["Python", "React", "FastAPI", "SQL", "Git"]}
+            candidateProfile={profile}
+            onApplyOrLogin={(listing?: any) => {
+              if (listing) {
+                const oppAdapter: OpportunityData = {
+                  id: 888000 + Math.floor(Math.random() * 900),
+                  title: listing.role,
+                  role_type: "FULL_TIME",
+                  location: listing.location,
+                  is_remote: listing.location.toLowerCase().includes("remote"),
+                  stipend_or_salary: listing.stipendOrSalary,
+                  description: `${listing.overview}\n\n[Key Requirements: ${listing.requirements?.join(" | ")}]\n[Source: ${listing.source} | Deadline: ${listing.deadline}]`,
+                  required_skills: listing.skills || [],
+                  preferred_skills: ["System Design", "Git", "Problem Solving"],
+                  hardware_provided: true,
+                  relocation_assistance: true,
+                  company_id: 888,
+                  company_name: listing.company,
+                  is_active: true,
+                  created_at: new Date().toISOString(),
+                  matchScore: listing.computedScore || 96,
+                };
+                handleApply(oppAdapter);
+              } else {
+                const firstOpp = opportunities[0];
+                if (firstOpp) handleApply(firstOpp);
+              }
+            }}
+          />
         </div>
       ) : activeTab === "EXTERNAL_JOBS" ? (
         /* VIEW: External Jobs & Live Unstop Search Hub */

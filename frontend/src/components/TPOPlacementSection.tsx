@@ -226,22 +226,71 @@ const TPO_LISTINGS: TPOListing[] = [
 ];
 
 interface TPOPlacementSectionProps {
-  onApplyOrLogin?: () => void;
+  onApplyOrLogin?: (listing?: TPOListing) => void;
+  candidateSkills?: string[];
+  candidateProfile?: any;
 }
 
-export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onApplyOrLogin }) => {
+export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({
+  onApplyOrLogin,
+  candidateSkills = ["Python", "React", "FastAPI", "SQL", "Git"],
+  candidateProfile,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedId, setExpandedId] = useState<string | null>("tpo-1");
+  const [sortByRank, setSortByRank] = useState<boolean>(true);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const filteredListings = TPO_LISTINGS.filter((item) => {
-    const matchesCat = selectedCategory === "ALL" || item.category === selectedCategory;
-    const matchesQuery =
-      item.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.skills.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCat && matchesQuery;
-  });
+  // Compute live ClearHire ATS match score for each TPO listing based on candidate skills
+  const scoredListings = React.useMemo(() => {
+    const candSkillSet = new Set(candidateSkills.map((s) => s.toLowerCase().trim()));
+    return TPO_LISTINGS.map((item) => {
+      const reqSkills = item.skills || [];
+      const matched = reqSkills.filter((s) => candSkillSet.has(s.toLowerCase().trim()));
+      const overlapRatio = reqSkills.length > 0 ? matched.length / reqSkills.length : 0.8;
+      
+      // Calculate realistic ClearHire match score (75% to 98%)
+      const base = Math.round(overlapRatio * 40);
+      const affirmativeBoost = 10; // First-gen / institutional equity parity
+      const transferableLogic = 45;
+      const computedScore = Math.min(98, Math.max(76, base + transferableLogic + affirmativeBoost));
+
+      return {
+        ...item,
+        computedScore,
+        matchedSkills: matched,
+        missingSkills: reqSkills.filter((s) => !candSkillSet.has(s.toLowerCase().trim())),
+      };
+    });
+  }, [candidateSkills]);
+
+  const filteredListings = React.useMemo(() => {
+    const list = scoredListings.filter((item) => {
+      const matchesCat = selectedCategory === "ALL" || item.category === selectedCategory;
+      const matchesQuery =
+        !searchQuery.trim() ||
+        item.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.skills.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCat && matchesQuery;
+    });
+
+    if (sortByRank) {
+      list.sort((a, b) => b.computedScore - a.computedScore);
+    }
+    return list;
+  }, [scoredListings, selectedCategory, searchQuery, sortByRank]);
+
+  const handleMatchClick = (item: any) => {
+    setToastMessage(`⚡ ClearHire ATS Match computed: ${item.computedScore}% alignment with ${item.company}! Applying under institutional blind evaluation...`);
+    setTimeout(() => setToastMessage(null), 4500);
+    if (onApplyOrLogin) {
+      onApplyOrLogin(item);
+    }
+  };
+
+
 
   return (
     <section id="tpo-cell" className="py-16 sm:py-24 bg-white relative overflow-hidden">
@@ -294,6 +343,54 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
           </div>
         </div>
 
+        {/* Live Action Toast Banner */}
+        {toastMessage && (
+          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-emerald-900 to-[#0D0B2D] border border-emerald-500/40 text-white shadow-xl flex items-center justify-between gap-3 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                ✓
+              </span>
+              <span className="text-xs font-semibold leading-relaxed">{toastMessage}</span>
+            </div>
+            <button
+              onClick={() => setToastMessage(null)}
+              className="text-neutral-400 hover:text-white text-xs font-mono px-2 py-1"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {/* Official Campus ClearHire Standing & Rank Leaderboard Header */}
+        <div className="mb-8 p-6 rounded-3xl bg-gradient-to-br from-[#F7F8FF] to-white border border-[#DDD6FE] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#5B4BFF]/10 text-[#5B4BFF] border border-[#5B4BFF]/20">
+                LIVE ATS RANK LIST
+              </span>
+              <span className="text-xs font-mono text-[#77758F]">
+                Sorted by ClearHire™ Semantic Fit for {candidateProfile?.full_name || "Aarav Verma"}
+              </span>
+            </div>
+            <h3 className="text-base font-black text-[#0D0B2D]">
+              Institutional On-Campus Placement Rankings (Top Matches First)
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSortByRank(!sortByRank)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 ${
+                sortByRank
+                  ? "bg-[#5B4BFF] text-white shadow-xs"
+                  : "bg-white text-[#0D0B2D] border border-[#DDD6FE]"
+              }`}
+            >
+              <span>🏆 {sortByRank ? "Ranked: Highest Match First" : "Default Order"}</span>
+            </button>
+          </div>
+        </div>
+
         {/* Search & Category Filter Controls */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
           {/* Search Box */}
@@ -335,7 +432,7 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
 
         {/* Listings Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredListings.map((item) => {
+          {filteredListings.map((item: any, index: number) => {
             const isExpanded = expandedId === item.id;
             return (
               <div
@@ -343,14 +440,26 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
                 className="rounded-3xl bg-[#F7F8FF] border border-[#DDD6FE] p-6 hover:border-[#5B4BFF] hover:shadow-[0_12px_32px_rgba(91,75,255,0.06)] transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
-                  {/* Top Badges */}
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-[#E6E0FF] text-[#5B4BFF]">
-                      {item.source}
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md">
-                      Deadline: {item.deadline}
-                    </span>
+                  {/* Top Badges & Live Match Rank */}
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[11px] font-mono font-black px-2 py-0.5 rounded-lg bg-[#0D0B2D] text-white">
+                        #{index + 1}
+                      </span>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-[#E6E0FF] text-[#5B4BFF]">
+                        {item.source}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-mono font-black px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-emerald-600" />
+                        {item.computedScore}% ATS Fit
+                      </span>
+                      <span className="text-[10px] font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md">
+                        {item.deadline}
+                      </span>
+                    </div>
                   </div>
 
                   <div>
@@ -382,7 +491,7 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
 
                     {isExpanded && (
                       <div className="space-y-1.5 p-3 rounded-2xl bg-white border border-[#DDD6FE]/80 animate-fade-in text-xs text-[#0D0B2D]">
-                        {item.requirements.map((req, rIdx) => (
+                        {item.requirements.map((req: string, rIdx: number) => (
                           <div key={rIdx} className="flex items-start gap-2">
                             <span className="text-[#5B4BFF] font-bold">•</span>
                             <span className="text-[11px] text-[#77758F] leading-relaxed">{req}</span>
@@ -394,7 +503,7 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
 
                   {/* Skills Pills */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
-                    {item.skills.map((sk) => (
+                    {item.skills.map((sk: string) => (
                       <span
                         key={sk}
                         className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-white border border-[#DDD6FE] text-[#0D0B2D]"
@@ -413,9 +522,11 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
                   </span>
 
                   <button
-                    onClick={onApplyOrLogin}
-                    className="px-4 py-1.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white text-xs font-bold transition-all flex items-center gap-1 shadow-xs hover:-translate-y-0.5"
+                    onClick={() => handleMatchClick(item)}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#5B4BFF] to-[#4338CA] hover:from-[#4D3DF5] hover:to-[#3730A3] text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-[#5B4BFF]/20 hover:-translate-y-0.5 active:translate-y-0"
+                    title={`Calculate match and submit blind application for ${item.company}`}
                   >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                     <span>Match Profile</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
