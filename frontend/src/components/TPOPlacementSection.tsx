@@ -263,6 +263,17 @@ export const TPOPlacementSection: React.FC<TPOPlacementSectionProps> = ({ onAppl
                 Direct integration with the official <strong>BIT Mesra T&P Portal (Academic Year 2026-27)</strong>.
                 Verified campus recruiters, official submission deadlines, and deterministic ClearHire™ resume matching.
               </p>
+              <div className="pt-2">
+                <a
+                  href="https://tp.bitmesra.co.in/login.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white text-xs font-bold transition-all shadow-md hover:-translate-y-0.5"
+                >
+                  <span>🔗 Open Official BIT Mesra TPO Portal (tp.bitmesra.co.in)</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
 
             {/* Quick Metrics Bar */}
