@@ -552,7 +552,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   // Highly Optimized Memoized Filter & Sort (Instant 0ms UI Response)
   const sortedOpportunities = useMemo(() => {
     const filtered = opportunities.filter((opp) => {
-      if (activeTab !== "ALL" && activeTab !== "APPLICATIONS" && opp.role_type !== activeTab) {
+      if (activeTab !== "ALL" && activeTab !== "APPLICATIONS" && activeTab !== "TPO_PORTAL" && opp.role_type !== activeTab) {
         return false;
       }
       if (filterRemoteOnly && !opp.is_remote) return false;
@@ -975,6 +975,54 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               );
             })}
           </div>
+        </div>
+      ) : activeTab === "TPO_PORTAL" ? (
+        /* VIEW: Official Institutional TPO Cell Portal (BIT Mesra / Verified College) */
+        <div className="space-y-6">
+          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#0D0B2D] via-[#1A1448] to-[#0D0B2D] text-white shadow-xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-white/10 text-[#A78BFA] border border-white/15 flex items-center gap-1.5">
+                    <GraduationCap className="w-3.5 h-3.5 text-[#5B4BFF]" />
+                    BIT MESRA TRAINING &amp; PLACEMENT CELL
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    Verified Institutional Access
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  Active Placement Drives &amp; Official JDs (2026-27 Batch)
+                </h2>
+                <p className="text-xs text-neutral-300 max-w-2xl leading-relaxed">
+                  Direct official placement drive listings for BIT Mesra students. Direct slot bookings, verified CTC packages, eligibility criteria, and 1-click apply under institutional clearance.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
+                <a
+                  href="https://tp.bitmesra.co.in/login.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-2xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 hover:-translate-y-0.5"
+                >
+                  <span>🔗 Official TPO Login (tp.bitmesra.co.in)</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <button
+                  onClick={() => setActiveTab("ALL")}
+                  className="px-3.5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold border border-white/15 text-center transition-all"
+                >
+                  &larr; All Opportunities
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <TPOPlacementSection onApplyOrLogin={() => {
+            const firstOpp = opportunities[0];
+            if (firstOpp) handleApply(firstOpp);
+          }} />
         </div>
       ) : activeTab === "EXTERNAL_JOBS" ? (
         /* VIEW: External Jobs & Live Unstop Search Hub */
