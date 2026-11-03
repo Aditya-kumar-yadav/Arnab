@@ -261,14 +261,6 @@ const NETWORK_PATHS: PathConnection[] = [
 
 export const HeroMatchingNetwork: React.FC = () => {
   const [selectedNodeId, setSelectedNodeId] = useState<string>("std-2");
-  const [, setPulseTick] = useState<number>(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPulseTick((prev) => (prev + 1) % 100);
-    }, 1500);
-    return () => clearInterval(timer);
-  }, []);
 
   const allNodes = [...CANDIDATES, ...LEFT_SKILLS, ...RIGHT_SKILLS, ...EMPLOYERS];
   const selectedNode = allNodes.find((n) => n.id === selectedNodeId) || CANDIDATES[1];

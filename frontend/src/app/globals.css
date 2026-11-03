@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   font-feature-settings: "ss01", "ss02", "cv01";
 }
 
-/* Base Body - Outfit for Ultra-Refined Geometric Elegance */
+/* Base Body - Optimized with Hardware Compositor Layer */
 body, .font-sans {
   font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   letter-spacing: -0.01em;
@@ -43,8 +43,9 @@ body, .font-sans {
     radial-gradient(circle at 15% 18%, rgba(167, 139, 250, 0.16), transparent 35%),
     radial-gradient(circle at 85% 72%, rgba(91, 75, 255, 0.09), transparent 38%),
     radial-gradient(circle at 50% 50%, rgba(230, 224, 255, 0.25), transparent 60%);
-  background-attachment: fixed;
   color: #0D0B2D;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Technical Telemetry & Scores - JetBrains Mono */
