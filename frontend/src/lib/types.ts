@@ -204,3 +204,27 @@ export interface AuditLogItem {
   created_at: string;
 }
 
+export type ExternalPlatform = "Unstop" | "LinkedIn" | "Internshala" | "Wellfound" | "Indeed";
+
+export interface ExternalJobData {
+  id: string;
+  title: string;
+  company: string;
+  company_logo?: string;
+  platform: ExternalPlatform;
+  platform_url: string;
+  location: string;
+  role_type: "FULL_TIME" | "INTERNSHIP" | "FRESHER";
+  stipend_or_salary: string;
+  batch_eligibility: string;
+  posted_time: string;
+  deadline?: string;
+  applicants_count?: string;
+  required_skills: string[];
+  description: string;
+  matchScore?: number;
+  verified_listing: boolean;
+  direct_apply_query?: string;
+}
+
+

@@ -42,6 +42,9 @@ app.include_router(student_router, prefix=settings.API_V1_STR)
 app.include_router(recruiter_router, prefix=settings.API_V1_STR)
 app.include_router(admin_router, prefix=settings.API_V1_STR)
 
+from app.api.student import get_external_jobs
+app.add_api_route(f"{settings.API_V1_STR}/external-jobs", get_external_jobs, methods=["GET"], tags=["External Job Search"])
+
 @app.get("/")
 def root():
     return {

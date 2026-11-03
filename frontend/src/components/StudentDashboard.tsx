@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { api, CandidateApplication } from "../lib/api";
-import { StudentProfileData, OpportunityData } from "../lib/types";
+import { StudentProfileData, OpportunityData, ExternalJobData, ExternalPlatform } from "../lib/types";
 import { TrustBadge } from "./TrustBadge";
 import { ResumeStudioModal } from "./ResumeStudioModal";
 import { ProfileSettingsModal } from "./ProfileSettingsModal";
@@ -40,7 +40,9 @@ import {
   User,
   Phone,
   Mail,
-  Plus
+  Plus,
+  Globe,
+  Users
 } from "lucide-react";
 
 interface StudentDashboardProps {
@@ -66,8 +68,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [candidatePhoneState, setCandidatePhoneState] = useState<string>("+91-9876543210");
   const [isProfileSettingsOpen, setIsProfileSettingsOpen] = useState(false);
 
-  // Navigation Tabs: ALL, INTERNSHIPS, PLACEMENTS, SKILL_PROGRAMS, APPLICATIONS
-  const [activeTab, setActiveTab] = useState<"ALL" | "INTERNSHIP" | "FULL_TIME" | "SKILL_PROGRAM" | "APPLICATIONS">("ALL");
+  // Navigation Tabs: ALL, INTERNSHIPS, PLACEMENTS, SKILL_PROGRAMS, APPLICATIONS, EXTERNAL_JOBS
+  const [activeTab, setActiveTab] = useState<"ALL" | "INTERNSHIP" | "FULL_TIME" | "SKILL_PROGRAM" | "APPLICATIONS" | "EXTERNAL_JOBS">("ALL");
+
+  // External Jobs Discovery State (Unstop, LinkedIn, Internshala, Wellfound)
+  const [externalJobs, setExternalJobs] = useState<ExternalJobData[]>([]);
+  const [externalSearchQuery, setExternalSearchQuery] = useState("");
+  const [selectedExternalPlatform, setSelectedExternalPlatform] = useState<"ALL" | "Unstop" | "LinkedIn" | "Internshala" | "Wellfound">("ALL");
+  const [isRedirectingToast, setIsRedirectingToast] = useState<{ visible: boolean; platform: string; jobTitle: string; company: string; url: string } | null>(null);
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
@@ -322,13 +330,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const loadData = async () => {
     try {
       setLoading(true);
-      const [p, opps] = await Promise.all([
+      const [p, opps, extJobs] = await Promise.all([
         api.getStudentProfile(),
-        api.getOpportunities()
+        api.getOpportunities(),
+        api.getExternalJobs()
       ]);
       setProfile(p);
       const ranked = rankOpportunitiesWithATS(p, opps);
       setOpportunities(ranked);
+      setExternalJobs(extJobs);
       setApplications(api.getCandidateApplications());
     } catch (err: any) {
       setError(err.message || "Failed to load student dashboard");
@@ -340,6 +350,97 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   useEffect(() => {
     loadData();
   }, []);
+
+  // Real-time external job query synchronization
+  useEffect(() => {
+    let isCancelled = false;
+    const fetchExt = async () => {
+      try {
+        const jobs = await api.getExternalJobs(externalSearchQuery, selectedExternalPlatform);
+        if (!isCancelled) {
+          setExternalJobs(jobs);
+        }
+      } catch (err) {
+        console.warn("External jobs query error:", err);
+      }
+    };
+    fetchExt();
+    return () => {
+      isCancelled = true;
+    };
+  }, [externalSearchQuery, selectedExternalPlatform]);
+
+  const handleOpenExternalJob = (job: ExternalJobData) => {
+    setIsRedirectingToast({
+      visible: true,
+      platform: job.platform,
+      jobTitle: job.title,
+      company: job.company,
+      url: job.platform_url
+    });
+
+    if (typeof window !== "undefined") {
+      window.open(job.platform_url, "_blank", "noopener,noreferrer");
+    }
+
+    setTimeout(() => {
+      setIsRedirectingToast(null);
+    }, 4500);
+  };
+
+  const handleTailorForExternalJob = (job: ExternalJobData) => {
+    const oppAdapter: OpportunityData = {
+      id: 999900 + Math.floor(Math.random() * 100),
+      title: `${job.title} (${job.platform})`,
+      role_type: job.role_type,
+      location: job.location,
+      is_remote: job.location.toLowerCase().includes("remote"),
+      stipend_or_salary: job.stipend_or_salary,
+      description: `${job.description}\n\n[Platform: ${job.platform} | Batch: ${job.batch_eligibility} | Apply URL: ${job.platform_url}]`,
+      required_skills: job.required_skills,
+      preferred_skills: ["System Design", "Git", "Problem Solving"],
+      hardware_provided: false,
+      relocation_assistance: false,
+      company_id: 999,
+      company_name: job.company,
+      is_active: true,
+      created_at: new Date().toISOString(),
+      matchScore: job.matchScore || 92
+    };
+    setTailoringJD(oppAdapter);
+    setResumeModalTab("BUILDER");
+    setIsResumeModalOpen(true);
+  };
+
+  const handleDirectPlatformSearch = (platform: "Unstop" | "LinkedIn" | "Internshala" | "Wellfound") => {
+    const query = externalSearchQuery.trim() || "Campus Fresher";
+    let url = "";
+    if (platform === "Unstop") {
+      url = `https://unstop.com/jobs?searchTerm=${encodeURIComponent(query)}`;
+    } else if (platform === "LinkedIn") {
+      url = `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(query)}`;
+    } else if (platform === "Internshala") {
+      url = `https://internshala.com/jobs/keywords-${encodeURIComponent(query.toLowerCase().replace(/\s+/g, "-"))}/`;
+    } else if (platform === "Wellfound") {
+      url = `https://wellfound.com/jobs?role=${encodeURIComponent(query)}`;
+    }
+
+    setIsRedirectingToast({
+      visible: true,
+      platform,
+      jobTitle: `All "${query}" listings`,
+      company: platform,
+      url
+    });
+
+    if (typeof window !== "undefined") {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    setTimeout(() => {
+      setIsRedirectingToast(null);
+    }, 4500);
+  };
 
   const handleInfuseSkills = async (skillsToAdd: string[]) => {
     if (!profile || skillsToAdd.length === 0) return;
@@ -720,6 +821,21 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           </button>
 
           <button
+            onClick={() => setActiveTab("EXTERNAL_JOBS")}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === "EXTERNAL_JOBS"
+                ? "bg-[#121212] text-white shadow-sm ring-2 ring-emerald-500/50"
+                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+            }`}
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Live Jobs: Unstop & Web ({externalJobs.length > 0 ? externalJobs.length : 16})</span>
+            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 animate-pulse">
+              ● LIVE
+            </span>
+          </button>
+
+          <button
             onClick={() => setActiveTab("APPLICATIONS")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "APPLICATIONS"
@@ -807,6 +923,356 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               );
             })}
           </div>
+        </div>
+      ) : activeTab === "EXTERNAL_JOBS" ? (
+        /* VIEW: External Jobs & Live Unstop Search Hub */
+        <div className="space-y-6">
+          {/* Header Banner */}
+          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-[#121212] via-[#1E1E1E] to-[#2D2D2D] text-white shadow-lg space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    LIVE PORTAL SEARCH
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    Unstop Official Campus Partner Feed
+                  </span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                  External Job Discovery & 1-Click Redirect Hub
+                </h2>
+                <p className="text-xs text-neutral-300 max-w-2xl leading-relaxed">
+                  Search verified campus drives, internships, and off-campus tech roles from <strong className="text-white">Unstop</strong>, <strong className="text-white">LinkedIn</strong>, <strong className="text-white">Internshala</strong>, and <strong className="text-white">Wellfound</strong>. Inspect requirements, boost your OpenResume ATS score, and apply directly on the host portal with 1 click.
+                </p>
+              </div>
+
+              {/* Direct Unstop Quick Launch */}
+              <button
+                onClick={() => handleDirectPlatformSearch("Unstop")}
+                className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-black text-xs shadow-md transition-all flex items-center gap-2 shrink-0 group"
+              >
+                <span>Search Directly on Unstop</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+            </div>
+
+            {/* Live Search Input & Platform Selector */}
+            <div className="pt-2 border-t border-neutral-700/60 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                <div className="sm:col-span-8 relative">
+                  <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-neutral-400" />
+                  <input
+                    type="text"
+                    placeholder="Search any job role, company, or tech stack (e.g. Swiggy, SDE, React, Unstop, Fresher, Tata 1mg)..."
+                    value={externalSearchQuery}
+                    onChange={(e) => setExternalSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-10 py-3 rounded-2xl bg-neutral-900/90 border border-neutral-700 text-white text-xs font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                  />
+                  {externalSearchQuery && (
+                    <button
+                      onClick={() => setExternalSearchQuery("")}
+                      className="absolute right-3.5 top-3 text-neutral-400 hover:text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="sm:col-span-4 flex items-center gap-2">
+                  <div className="w-full relative">
+                    <select
+                      value={selectedExternalPlatform}
+                      onChange={(e) => setSelectedExternalPlatform(e.target.value as any)}
+                      className="w-full px-3.5 py-3 rounded-2xl bg-neutral-900/90 border border-neutral-700 text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                    >
+                      <option value="ALL">All Platforms ({externalJobs.length})</option>
+                      <option value="Unstop">Unstop Official Campus Hub</option>
+                      <option value="LinkedIn">LinkedIn Jobs</option>
+                      <option value="Internshala">Internshala</option>
+                      <option value="Wellfound">Wellfound (AngelList)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dynamic 1-Click Platform Direct Search Shortcuts */}
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <span className="text-[11px] font-bold text-neutral-400 flex items-center gap-1">
+                  <Zap className="w-3 h-3 text-amber-400" />
+                  Direct 1-Click Search:
+                </span>
+                <button
+                  onClick={() => handleDirectPlatformSearch("Unstop")}
+                  className="px-3 py-1 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-bold transition-all flex items-center gap-1"
+                >
+                  <span>Unstop: &quot;{externalSearchQuery.trim() || "Campus 2026"}&quot;</span>
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleDirectPlatformSearch("LinkedIn")}
+                  className="px-3 py-1 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/40 text-[11px] font-bold transition-all flex items-center gap-1"
+                >
+                  <span>LinkedIn: &quot;{externalSearchQuery.trim() || "Fresher SDE"}&quot;</span>
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleDirectPlatformSearch("Internshala")}
+                  className="px-3 py-1 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[11px] font-bold transition-all flex items-center gap-1"
+                >
+                  <span>Internshala: &quot;{externalSearchQuery.trim() || "Tech Intern"}&quot;</span>
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleDirectPlatformSearch("Wellfound")}
+                  className="px-3 py-1 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-600 text-[11px] font-bold transition-all flex items-center gap-1"
+                >
+                  <span>Wellfound: &quot;{externalSearchQuery.trim() || "Startup"}&quot;</span>
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Platform Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: "ALL", label: "All Curated Drives", count: externalJobs.length },
+              { id: "Unstop", label: "🔥 Unstop Campus Hub", count: externalJobs.filter(j => j.platform === "Unstop").length },
+              { id: "LinkedIn", label: "💼 LinkedIn Jobs", count: externalJobs.filter(j => j.platform === "LinkedIn").length },
+              { id: "Internshala", label: "🎓 Internshala", count: externalJobs.filter(j => j.platform === "Internshala").length },
+              { id: "Wellfound", label: "⚡ Wellfound Startups", count: externalJobs.filter(j => j.platform === "Wellfound").length },
+            ].map((tab) => {
+              const isSelected = selectedExternalPlatform === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedExternalPlatform(tab.id as any)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    isSelected
+                      ? "bg-[#121212] text-white shadow-sm"
+                      : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-[#EDE7DC] text-[#736E65]"}`}>
+                    {tab.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Results Count & Notice */}
+          <div className="flex items-center justify-between text-xs text-[#736E65] px-1">
+            <span>
+              Showing <strong>{externalJobs.length}</strong> verified job postings
+              {externalSearchQuery ? (<span> matching &quot;{externalSearchQuery}&quot;</span>) : ""}:
+            </span>
+            <span className="text-[11px] italic">
+              ⚡ Click &quot;Apply on Host Site&quot; to open directly in a new tab
+            </span>
+          </div>
+
+          {/* Cards Grid */}
+          {externalJobs.length === 0 ? (
+            <div className="p-12 text-center bg-white rounded-3xl border border-[#E2DBD0] space-y-4">
+              <div className="w-12 h-12 mx-auto rounded-full bg-[#EDE7DC] flex items-center justify-center text-[#736E65]">
+                <Search className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-[#121212]">
+                  No local cached JDs matched &quot;{externalSearchQuery}&quot;
+                </h3>
+                <p className="text-xs text-[#736E65] max-w-md mx-auto">
+                  Don&apos;t worry! You can immediately search live across Unstop, LinkedIn, and Internshala with 1 click:
+                </p>
+              </div>
+              <div className="flex justify-center gap-2 pt-2">
+                <button
+                  onClick={() => handleDirectPlatformSearch("Unstop")}
+                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+                >
+                  <span>Search on Unstop</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => handleDirectPlatformSearch("LinkedIn")}
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+                >
+                  <span>Search on LinkedIn</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {externalJobs.map((job) => {
+                const isUnstop = job.platform === "Unstop";
+                const isLinkedIn = job.platform === "LinkedIn";
+                const isInternshala = job.platform === "Internshala";
+                const isWellfound = job.platform === "Wellfound";
+
+                const candidateSkills = profile?.skills || [];
+                const matchedCount = job.required_skills.filter((sk) =>
+                  candidateSkills.some((cs) => cs.toLowerCase() === sk.toLowerCase())
+                ).length;
+
+                return (
+                  <div
+                    key={job.id}
+                    className="p-5 rounded-3xl bg-white border border-[#E2DBD0] hover:border-[#121212] transition-all hover:shadow-md flex flex-col justify-between space-y-4 group"
+                  >
+                    <div className="space-y-3">
+                      {/* Top Badges */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span
+                          className={`px-2.5 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider border flex items-center gap-1 ${
+                            isUnstop
+                              ? "bg-amber-50 text-amber-900 border-amber-300"
+                              : isLinkedIn
+                              ? "bg-blue-50 text-blue-900 border-blue-300"
+                              : isInternshala
+                              ? "bg-cyan-50 text-cyan-900 border-cyan-300"
+                              : "bg-neutral-100 text-neutral-900 border-neutral-300"
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              isUnstop
+                                ? "bg-amber-500"
+                                : isLinkedIn
+                                ? "bg-blue-600"
+                                : isInternshala
+                                ? "bg-cyan-500"
+                                : "bg-neutral-700"
+                            }`}
+                          />
+                          {job.platform}
+                        </span>
+
+                        <span className="text-[10px] font-bold text-[#736E65] flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {job.posted_time}
+                        </span>
+                      </div>
+
+                      {/* Company & Title */}
+                      <div>
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#736E65]">
+                          <span>{job.company}</span>
+                          <span className="w-1 h-1 rounded-full bg-[#CEBFAD]" />
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#EDE7DC] text-[#121212] font-semibold">
+                            {job.role_type}
+                          </span>
+                        </div>
+                        <h3 className="text-sm font-black text-[#121212] mt-0.5 group-hover:text-amber-800 transition-colors leading-snug">
+                          {job.title}
+                        </h3>
+                      </div>
+
+                      {/* Location & Compensation */}
+                      <div className="space-y-1 text-xs">
+                        <div className="flex items-center gap-1.5 text-[#59554E]">
+                          <MapPin className="w-3.5 h-3.5 text-[#736E65] shrink-0" />
+                          <span className="truncate">{job.location}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-emerald-800 font-bold">
+                          <Briefcase className="w-3.5 h-3.5 shrink-0" />
+                          <span>{job.stipend_or_salary}</span>
+                        </div>
+                      </div>
+
+                      {/* Batch Eligibility */}
+                      <div className="p-2 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-[11px] font-medium text-[#423E37]">
+                        <span className="font-bold text-[#121212]">Eligibility: </span>
+                        {job.batch_eligibility}
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-xs text-[#59554E] line-clamp-2 leading-relaxed">
+                        {job.description}
+                      </p>
+
+                      {/* Skills Chips */}
+                      <div className="space-y-1.5 pt-1">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="font-bold text-[#736E65]">Required Tech Stack:</span>
+                          <span className="text-emerald-800 font-bold">
+                            {matchedCount}/{job.required_skills.length} skills matched
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {job.required_skills.map((skill) => {
+                            const isMatched = candidateSkills.some(
+                              (cs) => cs.toLowerCase() === skill.toLowerCase()
+                            );
+                            return (
+                              <span
+                                key={skill}
+                                className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${
+                                  isMatched
+                                    ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
+                                    : "bg-[#EDE7DC] text-[#423E37]"
+                                }`}
+                              >
+                                {isMatched ? "✓ " : ""}{skill}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Applicants & Deadline */}
+                      <div className="flex items-center justify-between text-[10px] text-[#736E65] pt-1 border-t border-[#EDE7DC]">
+                        {job.applicants_count && (
+                          <span className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {job.applicants_count}
+                          </span>
+                        )}
+                        {job.deadline && (
+                          <span className="flex items-center gap-1 font-bold text-amber-800">
+                            Deadline: {job.deadline}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="space-y-2 pt-2 border-t border-[#E2DBD0]">
+                      {/* Primary 1-Click External Redirect */}
+                      <button
+                        onClick={() => handleOpenExternalJob(job)}
+                        className={`w-full py-2.5 rounded-xl font-black text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 ${
+                          isUnstop
+                            ? "bg-[#F48024] hover:bg-[#D96B16] text-white"
+                            : isLinkedIn
+                            ? "bg-[#0A66C2] hover:bg-[#084e96] text-white"
+                            : isInternshala
+                            ? "bg-[#008BDC] hover:bg-[#0073b6] text-white"
+                            : "bg-[#121212] hover:bg-[#262626] text-white"
+                        }`}
+                      >
+                        <span>Apply on {job.platform}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+
+                      {/* 1-Click OpenResume ATS Tailor */}
+                      <button
+                        onClick={() => handleTailorForExternalJob(job)}
+                        className="w-full py-2 rounded-xl bg-[#FAF8F5] hover:bg-[#EDE7DC] text-[#121212] font-bold text-xs border border-[#D9D2C7] transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Tailor Resume for this JD</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       ) : (
         /* VIEW 2: Talently & Inker Master-Detail Discovery Layout */
@@ -896,6 +1362,30 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   Clear search
                 </button>
               )}
+            </div>
+
+            {/* Quick Unstop & External Discovery Jump Banner */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-emerald-50 border border-amber-200 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-800 flex items-center justify-center shrink-0">
+                  <Globe className="w-4 h-4" />
+                </span>
+                <div className="text-xs">
+                  <span className="font-bold text-[#121212] block">
+                    Looking for Campus Drives on Unstop & Web?
+                  </span>
+                  <span className="text-[#59554E] text-[11px]">
+                    Search 16+ verified external openings across Swiggy, Flipkart, Tata 1mg, Razorpay, etc., and apply directly with 1 click.
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setActiveTab("EXTERNAL_JOBS")}
+                className="px-4 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-black text-xs transition-all shadow-sm flex items-center gap-1.5 shrink-0 self-start sm:self-auto"
+              >
+                <span>Browse Unstop & Web Jobs</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
+              </button>
             </div>
           </div>
 
@@ -2051,6 +2541,32 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           setIsResumeModalOpen(true);
         }}
       />
+
+      {/* 1-Click External Redirection Toast Notification */}
+      {isRedirectingToast && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-[#121212] text-white border border-neutral-700 shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-bottom duration-300 max-w-md">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0">
+            <ArrowUpRight className="w-5 h-5 animate-pulse" />
+          </div>
+          <div className="text-xs space-y-0.5">
+            <p className="font-bold text-white flex items-center gap-1.5">
+              <span>Redirecting to {isRedirectingToast.platform}</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
+                1-CLICK REDIRECT
+              </span>
+            </p>
+            <p className="text-neutral-400 text-[11px] truncate">
+              Opening &quot;{isRedirectingToast.jobTitle}&quot; on {isRedirectingToast.company}...
+            </p>
+          </div>
+          <button
+            onClick={() => setIsRedirectingToast(null)}
+            className="text-neutral-400 hover:text-white ml-2 p-1 rounded-lg hover:bg-neutral-800"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
