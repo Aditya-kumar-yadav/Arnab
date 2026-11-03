@@ -334,6 +334,13 @@ def seed_database():
         db.commit()
         print("[SUCCESS] PATHFINDER AI Database seeded successfully!")
 
+        # Also populate authentic real-world company placement opportunities
+        try:
+            from populate_real_opportunities import populate_real_opportunities
+            populate_real_opportunities()
+        except Exception as pe:
+            print(f"[INFO] Real opportunities populator notice: {pe}")
+
     except Exception as e:
         db.rollback()
         print(f"[ERROR] Error seeding database: {e}")

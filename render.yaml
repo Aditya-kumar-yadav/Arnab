@@ -1,0 +1,85 @@
+# ==============================================================================
+# PATHFINDER AI - Render Blueprint (Infrastructure as Code)
+# Docs: https://render.com/docs/blueprint-spec
+# ==============================================================================
+# In Render Dashboard:
+# Click "Blueprints" -> "New Blueprint Instance" -> Connect your GitHub repo.
+# Render will automatically provision both services and prompt for private keys!
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. FastAPI Python Backend Web Service
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: pathfinder-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt && python seed.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PROJECT_NAME
+        value: PATHFINDER AI
+      - key: VERSION
+        value: 1.0.0
+      - key: API_V1_STR
+        value: /api/v1
+      - key: DATABASE_URL
+        value: sqlite:///./pathfinder.db
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      - key: CLERK_WEBHOOK_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+  # ----------------------------------------------------------------------------
+  # 2. Next.js Frontend Web Service
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: pathfinder-frontend
+    runtime: node
+    rootDir: frontend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      - key: NEXT_PUBLIC_CLERK_SIGN_IN_URL
+        value: /sign-in
+      - key: NEXT_PUBLIC_CLERK_SIGN_UP_URL
+        value: /sign-up
+      - key: NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL
+        value: /
+      - key: NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL
+        value: /
+      - key: NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL
+        value: /
+      - key: NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL
+        value: /
+      - key: NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL
+        value: /
+      - key: NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL
+        value: /
+

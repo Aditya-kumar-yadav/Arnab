@@ -16,7 +16,16 @@ import {
   UserRole
 } from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+const getApiBase = (): string => {
+  let url = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
+  url = url.trim().replace(/\/+$/, "");
+  if (!url.endsWith("/api/v1")) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+};
+
+const API_BASE = getApiBase();
 
 export interface CandidateApplication {
   id: string;
