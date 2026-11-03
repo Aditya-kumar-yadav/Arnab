@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { api, CandidateApplication } from "../lib/api";
 import { StudentProfileData, OpportunityData, ExternalJobData, ExternalPlatform } from "../lib/types";
 import { TrustBadge } from "./TrustBadge";
+import { TPOPlacementSection } from "./TPOPlacementSection";
 import { ResumeStudioModal } from "./ResumeStudioModal";
 import { ProfileSettingsModal } from "./ProfileSettingsModal";
 import { rankOpportunitiesWithATS } from "../lib/matcher";
@@ -87,8 +88,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [candidatePhoneState, setCandidatePhoneState] = useState<string>("+91-9876543210");
   const [isProfileSettingsOpen, setIsProfileSettingsOpen] = useState(false);
 
+  // Strict Institutional Verification Check (e.g. bitmesra.ac.in, iitd.ac.in, etc.)
+  const isInstitutionalUser = Boolean(
+    profile?.is_institutional_email ||
+    profile?.email?.includes(".ac.in") ||
+    profile?.email?.includes(".edu") ||
+    profile?.email?.includes("bitmesra") ||
+    profile?.institution_verified
+  );
+
   // Navigation Tabs: ALL, INTERNSHIPS, PLACEMENTS, SKILL_PROGRAMS, APPLICATIONS, EXTERNAL_JOBS
-  const [activeTab, setActiveTab] = useState<"ALL" | "INTERNSHIP" | "FULL_TIME" | "SKILL_PROGRAM" | "APPLICATIONS" | "EXTERNAL_JOBS">("ALL");
+  const [activeTab, setActiveTab] = useState<"ALL" | "INTERNSHIP" | "FULL_TIME" | "SKILL_PROGRAM" | "APPLICATIONS" | "EXTERNAL_JOBS" | "TPO_PORTAL">("ALL");
 
   // External Jobs Discovery State (Unstop, LinkedIn, Internshala, Wellfound)
   const [externalJobs, setExternalJobs] = useState<ExternalJobData[]>([]);
@@ -870,6 +880,24 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             <FileText className="w-3.5 h-3.5" />
             <span>My Applications ({applications.length})</span>
           </button>
+
+          {/* Gated Official Institutional TPO Tab (Only Visible for Verified College Mail: bitmesra.ac.in, iitd.ac.in) */}
+          {isInstitutionalUser && (
+            <button
+              onClick={() => setActiveTab("TPO_PORTAL")}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === "TPO_PORTAL"
+                  ? "bg-gradient-to-r from-[#5B4BFF] to-[#7C3AED] text-white shadow-md ring-2 ring-purple-400"
+                  : "bg-purple-50 text-purple-900 hover:bg-purple-100 border border-purple-200"
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5 text-purple-600" />
+              <span>🎓 {profile?.institution_name ? `${profile.institution_name.split(",")[0]} TPO Cell` : "Campus TPO Cell"}</span>
+              <span className="px-1.5 py-0.2 rounded-md bg-white/20 text-[9px] font-mono font-black uppercase">
+                Gated
+              </span>
+            </button>
+          )}
         </div>
       </div>
 

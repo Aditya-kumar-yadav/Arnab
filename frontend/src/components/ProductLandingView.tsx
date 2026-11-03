@@ -4,7 +4,6 @@ import React from "react";
 import { ProductHeroSection } from "./ProductHeroSection";
 import { AIMatchingSimulator } from "./AIMatchingSimulator";
 import { OpportunityShowcase } from "./OpportunityShowcase";
-import { TPOPlacementSection } from "./TPOPlacementSection";
 import { ExplainableAISection } from "./ExplainableAISection";
 import { CareerRoadmapSection } from "./CareerRoadmapSection";
 import { Compass, ShieldCheck, ArrowRight, Heart } from "lucide-react";
@@ -40,9 +39,6 @@ export const ProductLandingView: React.FC<ProductLandingViewProps> = ({
         onSelectOpportunity={() => onOpenAuthModal("STUDENT", "LOGIN")}
         onExploreAll={() => onOpenAuthModal("STUDENT", "LOGIN")}
       />
-
-      {/* Official TPO Cell: BIT Mesra Placement Listings */}
-      <TPOPlacementSection onApplyOrLogin={() => onOpenAuthModal("STUDENT", "LOGIN")} />
 
       {/* Section C: Explainable AI (XAI) Deep Dive */}
       <ExplainableAISection />
