@@ -9,23 +9,18 @@ interface NodeItem {
   label: string;
   sub: string;
   badge?: string;
-  x: number; // percentage
-  y: number; // percentage
   color: string;
   activeMatch?: number;
   explanation?: string;
 }
 
-const NODES: NodeItem[] = [
-  // Student nodes (Left column)
+const CANDIDATES: NodeItem[] = [
   {
     id: "std-1",
     type: "student",
     label: "Aarav Verma",
     sub: "BIT Mesra • B.Tech CSE",
-    badge: "Verified Institutional",
-    x: 12,
-    y: 22,
+    badge: "Institutional Verified",
     color: "#5B4BFF",
     activeMatch: 97,
     explanation: "4/4 verified skills match RuralTech Social Impact Fellowship. 0% college prestige penalty applied. Top 3% ClearHire match.",
@@ -36,8 +31,6 @@ const NODES: NodeItem[] = [
     label: "Rahul Kumar",
     sub: "Tier-3 Rural Scholar • Python",
     badge: "Affirmative Boost +10%",
-    x: 10,
-    y: 52,
     color: "#10B981",
     activeMatch: 96,
     explanation: "First-generation rural scholar affirmative equity boost applied (+10%). Direct Python & FastAPI microservices vector alignment with RuralTech Labs.",
@@ -47,22 +40,19 @@ const NODES: NodeItem[] = [
     type: "student",
     label: "Priya Sharma",
     sub: "IIT Delhi • Machine Learning",
-    badge: "Verified Institutional",
-    x: 12,
-    y: 80,
+    badge: "Institutional Verified",
     color: "#5B4BFF",
     activeMatch: 95,
     explanation: "PyTorch & Transformers direct vector alignment with Google DeepMind Research Lab.",
   },
+];
 
-  // Skills middle-left
+const LEFT_SKILLS: NodeItem[] = [
   {
     id: "sk-1",
     type: "skill",
     label: "Python & FastAPI",
     sub: "Backend Vector",
-    x: 32,
-    y: 34,
     color: "#8B5CF6",
   },
   {
@@ -70,19 +60,16 @@ const NODES: NodeItem[] = [
     type: "skill",
     label: "React & Next.js",
     sub: "Frontend Vector",
-    x: 34,
-    y: 68,
     color: "#8B5CF6",
   },
+];
 
-  // Skills middle-right
+const RIGHT_SKILLS: NodeItem[] = [
   {
     id: "sk-3",
     type: "skill",
     label: "Distributed Systems",
     sub: "Systems Vector",
-    x: 66,
-    y: 32,
     color: "#06B6D4",
   },
   {
@@ -90,20 +77,17 @@ const NODES: NodeItem[] = [
     type: "skill",
     label: "Machine Learning",
     sub: "AI Vector",
-    x: 68,
-    y: 66,
     color: "#EC4899",
   },
+];
 
-  // Company / Opportunity nodes (Right column)
+const EMPLOYERS: NodeItem[] = [
   {
     id: "opp-1",
     type: "opportunity",
     label: "RuralTech Labs",
     sub: "Impact Software Fellow",
     badge: "Verified Employer",
-    x: 88,
-    y: 20,
     color: "#10B981",
     activeMatch: 97,
     explanation: "Blind Mode review active. Skill-verified offer pipeline ready with 97% ClearHire compatibility and +10% rural parity boost.",
@@ -114,8 +98,6 @@ const NODES: NodeItem[] = [
     label: "Microsoft Research",
     sub: "Distributed Systems Intern",
     badge: "Enterprise Verified",
-    x: 90,
-    y: 50,
     color: "#0D0B2D",
     activeMatch: 93,
     explanation: "Multi-cluster synchronization & SQL competencies exceed enterprise hiring threshold.",
@@ -126,56 +108,155 @@ const NODES: NodeItem[] = [
     label: "Google DeepMind",
     sub: "AI Engineering Fellow",
     badge: "Enterprise Verified",
-    x: 88,
-    y: 82,
     color: "#5B4BFF",
     activeMatch: 95,
     explanation: "Direct match against natural language & embedding retrieval benchmarks.",
   },
 ];
 
-interface Connection {
-  from: string;
-  to: string;
-  strength: number;
-  curveOffset?: number;
-  color?: "default" | "rural" | "systems" | "ai";
-  label?: string;
-  activeFor?: string[];
+interface PathConnection {
+  id: string;
+  d: string;
+  colorType: "rural" | "purple" | "cyan" | "pink" | "inactive";
+  activeFor: string[];
+  dur: string;
 }
 
-const CONNECTIONS: Connection[] = [
-  // 1. Students to skills
-  { from: "std-1", to: "sk-1", strength: 0.92, activeFor: ["std-1", "opp-1"] },
-  { from: "std-1", to: "sk-2", strength: 0.95, activeFor: ["std-1", "opp-1"] },
-  { from: "std-2", to: "sk-1", strength: 0.94, activeFor: ["std-2", "opp-1", "opp-2"] },
-  { from: "std-2", to: "center", strength: 0.98, curveOffset: -25, color: "rural", label: "Affirmative Rural Boost +10%", activeFor: ["std-2", "opp-1"] },
-  { from: "std-3", to: "sk-4", strength: 0.98, activeFor: ["std-3", "opp-3"] },
-  { from: "std-3", to: "sk-3", strength: 0.85, activeFor: ["std-3", "opp-2"] },
+// Exactly-calculated Bezier paths connecting port-to-port in 100x100 viewBox
+const NETWORK_PATHS: PathConnection[] = [
+  // 1. Aarav Verma (right port: 24, 20) -> Python & FastAPI (left port: 28, 32)
+  {
+    id: "std1-sk1",
+    d: "M 24 20 C 26 20, 26 32, 28 32",
+    colorType: "purple",
+    activeFor: ["std-1", "opp-1"],
+    dur: "2.4s",
+  },
+  // Python & FastAPI (right port: 43, 32) -> AI Match Core (left top port: 44, 42)
+  {
+    id: "sk1-core",
+    d: "M 43 32 C 43.5 32, 43.5 42, 44 42",
+    colorType: "purple",
+    activeFor: ["std-1", "std-2", "opp-1"],
+    dur: "2.2s",
+  },
 
-  // 2. Skills to AI Match Core (center)
-  { from: "sk-1", to: "center", strength: 0.92, activeFor: ["std-1", "std-2", "opp-1"] },
-  { from: "sk-2", to: "center", strength: 0.88, activeFor: ["std-1", "opp-1"] },
-  { from: "sk-3", to: "center", strength: 0.91, activeFor: ["std-3", "opp-2"] },
-  { from: "sk-4", to: "center", strength: 0.96, activeFor: ["std-3", "opp-3"] },
+  // 2. Rahul Kumar (right port: 24, 50) -> AI Match Core (left middle port: 44, 50) - Direct Horizontal Parity Bridge
+  {
+    id: "std2-core-direct",
+    d: "M 24 50 C 34 50, 34 50, 44 50",
+    colorType: "rural",
+    activeFor: ["std-2", "opp-1", "opp-2"],
+    dur: "2.0s",
+  },
+  // Rahul Kumar (right port: 24, 48) -> Python & FastAPI (left port: 28, 32)
+  {
+    id: "std2-sk1",
+    d: "M 24 48 C 26 48, 26 32, 28 32",
+    colorType: "rural",
+    activeFor: ["std-2", "opp-1"],
+    dur: "2.3s",
+  },
 
-  // 3. AI MATCH CORE TO RURALTECH LABS (Multi-Lane High-Tech Streams)
-  // Lane 1: Primary ClearHire Neural Match Vector (97% Match)
-  { from: "center", to: "opp-1", strength: 0.97, curveOffset: 0, color: "default", label: "97% ClearHire Primary Match", activeFor: ["std-1", "std-2", "opp-1"] },
-  // Lane 2: RuralTech Affirmative Equity Stream (Arced upward in Glowing Emerald)
-  { from: "center", to: "opp-1", strength: 0.96, curveOffset: -40, color: "rural", label: "Affirmative Equity Stream (Rural Parity)", activeFor: ["std-1", "std-2", "opp-1"] },
-  // Lane 3: Code Quality & Proof-of-Work Verification Stream (Arced downward in Cyan/Indigo)
-  { from: "center", to: "opp-1", strength: 0.93, curveOffset: 40, color: "systems", label: "Verified Code & Proof-of-Work Vector", activeFor: ["std-1", "std-2", "opp-1"] },
-  // Lane 4: Direct Skill Bridge from Python & FastAPI to RuralTech Labs
-  { from: "sk-1", to: "opp-1", strength: 0.92, curveOffset: -18, color: "rural", activeFor: ["std-1", "std-2", "opp-1"] },
-  // Lane 5: Systems Architecture Pipeline to RuralTech Labs
-  { from: "sk-3", to: "opp-1", strength: 0.89, curveOffset: 18, color: "systems", activeFor: ["std-1", "std-2", "opp-1"] },
+  // 3. Priya Sharma (right port: 24, 80) -> React & Next.js (left port: 28, 68)
+  {
+    id: "std3-sk2",
+    d: "M 24 80 C 26 80, 26 68, 28 68",
+    colorType: "pink",
+    activeFor: ["std-3", "opp-3"],
+    dur: "2.6s",
+  },
+  // React & Next.js (right port: 43, 68) -> AI Match Core (left bottom port: 44, 58)
+  {
+    id: "sk2-core",
+    d: "M 43 68 C 43.5 68, 43.5 58, 44 58",
+    colorType: "purple",
+    activeFor: ["std-3", "opp-3"],
+    dur: "2.4s",
+  },
 
-  // 4. AI MATCH CORE TO ENTERPRISE PARTNERS
-  { from: "center", to: "opp-2", strength: 0.93, curveOffset: 0, color: "systems", activeFor: ["std-3", "opp-2"] },
-  { from: "sk-3", to: "opp-2", strength: 0.93, activeFor: ["std-3", "opp-2"] },
-  { from: "center", to: "opp-3", strength: 0.95, curveOffset: 0, color: "ai", activeFor: ["std-3", "opp-3"] },
-  { from: "sk-4", to: "opp-3", strength: 0.95, activeFor: ["std-3", "opp-3"] },
+  // ============================================================
+  // AI MATCH CORE TO RURALTECH LABS (Multi-Lane High-Tech Streams)
+  // ============================================================
+  // Lane A: Primary ClearHire Neural Vector (97% Match)
+  // Core (right port: 56, 42) -> RuralTech Labs (left port: 76, 20)
+  {
+    id: "core-rural-primary",
+    d: "M 56 42 C 66 42, 66 20, 76 20",
+    colorType: "purple",
+    activeFor: ["std-1", "std-2", "opp-1"],
+    dur: "2.2s",
+  },
+  // Lane B: RuralTech Affirmative Equity Stream (Arced upward in Glowing Emerald)
+  // Core (right port: 56, 38) -> RuralTech Labs (left port: 76, 17)
+  {
+    id: "core-rural-affirmative",
+    d: "M 56 38 C 64 24, 68 17, 76 17",
+    colorType: "rural",
+    activeFor: ["std-1", "std-2", "opp-1"],
+    dur: "1.9s",
+  },
+  // Lane C: Core (right port: 56, 46) -> Distributed Systems (left port: 59, 32)
+  {
+    id: "core-sk3",
+    d: "M 56 46 C 57.5 46, 57.5 32, 59 32",
+    colorType: "cyan",
+    activeFor: ["std-1", "std-2", "opp-1", "opp-2"],
+    dur: "2.1s",
+  },
+  // Distributed Systems (right port: 74, 32) -> RuralTech Labs (left port: 76, 23)
+  {
+    id: "sk3-rural",
+    d: "M 74 32 C 75 32, 75 23, 76 23",
+    colorType: "cyan",
+    activeFor: ["std-1", "std-2", "opp-1"],
+    dur: "2.3s",
+  },
+
+  // ============================================================
+  // AI MATCH CORE TO MICROSOFT RESEARCH & GOOGLE DEEPMIND
+  // ============================================================
+  // Core (right port: 56, 50) -> Microsoft Research (left port: 76, 50) - Clean Horizontal Stream
+  {
+    id: "core-msft",
+    d: "M 56 50 C 66 50, 66 50, 76 50",
+    colorType: "cyan",
+    activeFor: ["std-2", "std-3", "opp-2"],
+    dur: "2.5s",
+  },
+  // Distributed Systems (right port: 74, 32) -> Microsoft Research (left port: 76, 48)
+  {
+    id: "sk3-msft",
+    d: "M 74 32 C 75 32, 75 48, 76 48",
+    colorType: "cyan",
+    activeFor: ["std-3", "opp-2"],
+    dur: "2.4s",
+  },
+
+  // Core (right port: 56, 58) -> Google DeepMind (left port: 76, 80)
+  {
+    id: "core-deepmind",
+    d: "M 56 58 C 66 58, 66 80, 76 80",
+    colorType: "pink",
+    activeFor: ["std-3", "opp-3"],
+    dur: "2.3s",
+  },
+  // Core (right port: 56, 62) -> Machine Learning (left port: 59, 68)
+  {
+    id: "core-sk4",
+    d: "M 56 62 C 57.5 62, 57.5 68, 59 68",
+    colorType: "pink",
+    activeFor: ["std-3", "opp-3"],
+    dur: "2.5s",
+  },
+  // Machine Learning (right port: 74, 68) -> Google DeepMind (left port: 76, 78)
+  {
+    id: "sk4-deepmind",
+    d: "M 74 68 C 75 68, 75 78, 76 78",
+    colorType: "pink",
+    activeFor: ["std-3", "opp-3"],
+    dur: "2.2s",
+  },
 ];
 
 export const HeroMatchingNetwork: React.FC = () => {
@@ -189,13 +270,8 @@ export const HeroMatchingNetwork: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const selectedNode = NODES.find((n) => n.id === selectedNodeId) || NODES[1];
-
-  const getNodeCoord = (id: string) => {
-    if (id === "center") return { x: 50, y: 50 };
-    const n = NODES.find((node) => node.id === id);
-    return n ? { x: n.x, y: n.y } : { x: 50, y: 50 };
-  };
+  const allNodes = [...CANDIDATES, ...LEFT_SKILLS, ...RIGHT_SKILLS, ...EMPLOYERS];
+  const selectedNode = allNodes.find((n) => n.id === selectedNodeId) || CANDIDATES[1];
 
   return (
     <div className="relative w-full rounded-3xl bg-white/95 border border-[#DDD6FE] shadow-[0_12px_44px_rgba(91,75,255,0.08)] p-4 sm:p-6 lg:p-7 overflow-hidden">
@@ -235,16 +311,16 @@ export const HeroMatchingNetwork: React.FC = () => {
         </div>
       </div>
 
-      {/* SVG Canvas and Interactive Nodes Visualization */}
-      <div className="relative z-10 w-full h-[370px] sm:h-[410px] mt-3 rounded-2xl bg-[#F7F8FF]/85 border border-[#DDD6FE]/80 overflow-hidden select-none">
-        {/* SVG Bezier Connection Lines */}
+      {/* 5-Column High-Tech Visualizer Canvas with Pixel-Exact Port-to-Port Connections */}
+      <div className="relative z-10 w-full h-[390px] sm:h-[430px] mt-3 rounded-2xl bg-[#F7F8FF]/85 border border-[#DDD6FE]/80 overflow-hidden select-none">
+        {/* SVG Bezier Connection Lines (viewBox 0 0 100 100 perfectly matches CSS % layout) */}
         <svg
-          viewBox="0 0 1000 400"
+          viewBox="0 0 100 100"
           preserveAspectRatio="none"
-          className="absolute inset-0 w-full h-full pointer-events-none"
+          className="absolute inset-0 w-full h-full pointer-events-none z-10"
         >
           <defs>
-            <linearGradient id="activeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#5B4BFF" stopOpacity="0.95" />
               <stop offset="50%" stopColor="#8B5CF6" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#5B4BFF" stopOpacity="0.95" />
@@ -254,245 +330,292 @@ export const HeroMatchingNetwork: React.FC = () => {
               <stop offset="50%" stopColor="#059669" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#5B4BFF" stopOpacity="0.95" />
             </linearGradient>
-            <linearGradient id="systemsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#5B4BFF" stopOpacity="0.95" />
               <stop offset="50%" stopColor="#06B6D4" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.95" />
             </linearGradient>
-            <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#5B4BFF" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#EC4899" stopOpacity="0.95" />
             </linearGradient>
             <linearGradient id="inactiveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#DDD6FE" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#DDD6FE" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#DDD6FE" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#DDD6FE" stopOpacity="0.25" />
             </linearGradient>
           </defs>
 
-          {/* Render Connections */}
-          {CONNECTIONS.map((c, i) => {
-            const fromCoord = getNodeCoord(c.from);
-            const toCoord = getNodeCoord(c.to);
+          {/* Render All Geometric Network Paths */}
+          {NETWORK_PATHS.map((p) => {
+            const isActive = p.activeFor.includes(selectedNodeId);
 
-            const x1 = fromCoord.x * 10;
-            const y1 = fromCoord.y * 4;
-            const x2 = toCoord.x * 10;
-            const y2 = toCoord.y * 4;
-
-            const mx = (x1 + x2) / 2;
-            const offset = (c.curveOffset || 0) * 1.5;
-
-            const d = `M ${x1} ${y1} C ${mx} ${y1 + offset}, ${mx} ${y2 + offset}, ${x2} ${y2}`;
-
-            const isActive = c.activeFor?.includes(selectedNodeId);
-
-            const strokeGrad =
-              c.color === "rural"
+            const strokeColor =
+              !isActive
+                ? "url(#inactiveGrad)"
+                : p.colorType === "rural"
                 ? "url(#ruralGrad)"
-                : c.color === "systems"
-                ? "url(#systemsGrad)"
-                : c.color === "ai"
-                ? "url(#aiGrad)"
-                : "url(#activeGrad)";
+                : p.colorType === "cyan"
+                ? "url(#cyanGrad)"
+                : p.colorType === "pink"
+                ? "url(#pinkGrad)"
+                : "url(#purpleGrad)";
 
-            const particleColor =
-              c.color === "rural"
+            const particleFill =
+              p.colorType === "rural"
                 ? "#10B981"
-                : c.color === "systems"
+                : p.colorType === "cyan"
                 ? "#06B6D4"
-                : c.color === "ai"
+                : p.colorType === "pink"
                 ? "#EC4899"
                 : "#5B4BFF";
 
             return (
-              <g key={i}>
-                {/* Background Connection Path */}
+              <g key={p.id}>
+                {/* Clean Path Stroke */}
                 <path
-                  d={d}
+                  d={p.d}
                   fill="none"
-                  stroke={isActive ? strokeGrad : "url(#inactiveGrad)"}
-                  strokeWidth={isActive ? (c.color === "rural" ? 3 : 2.5) : 1}
-                  strokeDasharray={isActive ? "none" : "4,4"}
-                  className="transition-all duration-500"
+                  stroke={strokeColor}
+                  vectorEffect="non-scaling-stroke"
+                  strokeWidth={isActive ? (p.colorType === "rural" ? 3 : 2.5) : 1}
+                  strokeDasharray={isActive ? "none" : "3,3"}
+                  className="transition-all duration-300"
                 />
 
-                {/* Animated Glowing Flow Packets on Active Paths */}
+                {/* Flow Packet Animated on Active Streams */}
                 {isActive && (
                   <circle
-                    r={c.color === "rural" ? "4.5" : "3.5"}
-                    fill={particleColor}
-                    className="filter drop-shadow-[0_0_8px_currentColor]"
+                    r="1.2"
+                    fill={particleFill}
+                    className="filter drop-shadow-[0_0_6px_currentColor]"
                   >
-                    <animateMotion
-                      path={d}
-                      dur={c.color === "rural" ? "2.2s" : c.color === "systems" ? "2.8s" : "2.5s"}
-                      repeatCount="indefinite"
-                    />
+                    <animateMotion path={p.d} dur={p.dur} repeatCount="indefinite" />
                   </circle>
                 )}
               </g>
             );
           })}
-
-          {/* Professional Technical Telemetry Flow Badges on the AI to RuralTech Lines */}
-          <g className="transition-opacity duration-300">
-            {/* RuralTech Parity Stream Tag */}
-            <rect
-              x="620"
-              y="68"
-              width="180"
-              height="20"
-              rx="6"
-              fill="#ECFDF5"
-              fillOpacity="0.9"
-              stroke="#10B981"
-              strokeWidth="0.8"
-            />
-            <text x="626" y="82" fill="#047857" fontSize="8.5" fontFamily="monospace" fontWeight="bold">
-              ⚡ Affirmative Vector: +10% Boost
-            </text>
-
-            {/* Neural Primary Match Vector Tag */}
-            <rect
-              x="620"
-              y="144"
-              width="175"
-              height="20"
-              rx="6"
-              fill="#F5F3FF"
-              fillOpacity="0.9"
-              stroke="#8B5CF6"
-              strokeWidth="0.8"
-            />
-            <text x="626" y="158" fill="#5B4BFF" fontSize="8.5" fontFamily="monospace" fontWeight="bold">
-              ◈ ClearHire Match: 97% Direct
-            </text>
-          </g>
         </svg>
 
-        {/* Central AI Matching Core Node */}
+        {/* ============================================================ */}
+        {/* COLUMN 1: CANDIDATES (Left 2% to 24%, Out Port at 24%)      */}
+        {/* ============================================================ */}
+        {CANDIDATES.map((cand, idx) => {
+          const isSelected = selectedNodeId === cand.id;
+          const topPercent = idx === 0 ? "20%" : idx === 1 ? "50%" : "80%";
+
+          return (
+            <div
+              key={cand.id}
+              onClick={() => setSelectedNodeId(cand.id)}
+              style={{ left: "2%", width: "22%", top: topPercent, transform: "translateY(-50%)" }}
+              className={`absolute z-20 cursor-pointer transition-all duration-200 select-none ${
+                isSelected ? "scale-[1.02] z-30" : "hover:scale-[1.01] opacity-90 hover:opacity-100"
+              }`}
+            >
+              <div
+                className={`relative px-2.5 sm:px-3 py-2 rounded-2xl border shadow-sm transition-all flex items-center gap-2 ${
+                  isSelected
+                    ? "bg-white border-[#5B4BFF] shadow-[0_6px_18px_rgba(91,75,255,0.18)] ring-2 ring-[#5B4BFF]/25"
+                    : "bg-white/95 border-[#DDD6FE] hover:border-[#5B4BFF]"
+                }`}
+              >
+                {/* Physical Output Port Socket (Exact X: 24%) */}
+                <span className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#5B4BFF] border-2 border-white shadow-xs z-30" />
+
+                <div
+                  className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+                    cand.id === "std-2" ? "bg-emerald-100 text-emerald-800" : "bg-[#E6E0FF] text-[#5B4BFF]"
+                  }`}
+                >
+                  {cand.label[0]}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1">
+                    <span className="font-extrabold text-xs text-[#0D0B2D] truncate leading-tight">
+                      {cand.label}
+                    </span>
+                    <ShieldCheck
+                      className={`w-3.5 h-3.5 shrink-0 ${
+                        cand.id === "std-2" ? "text-[#10B981]" : "text-[#5B4BFF]"
+                      }`}
+                    />
+                  </div>
+                  <span className="text-[9px] text-[#77758F] font-medium block truncate leading-tight mt-0.5">
+                    {cand.sub}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* ============================================================ */}
+        {/* COLUMN 2: CANDIDATE SKILLS (Left 28% to 43%, Ports: 28% & 43%) */}
+        {/* ============================================================ */}
+        {LEFT_SKILLS.map((sk, idx) => {
+          const isSelected = selectedNodeId === "std-1" || selectedNodeId === "std-2";
+          const topPercent = idx === 0 ? "32%" : "68%";
+
+          return (
+            <div
+              key={sk.id}
+              onClick={() => setSelectedNodeId(idx === 0 ? "std-2" : "std-3")}
+              style={{ left: "28%", width: "15%", top: topPercent, transform: "translateY(-50%)" }}
+              className="absolute z-20 cursor-pointer select-none"
+            >
+              <div
+                className={`relative px-2 py-1.5 rounded-xl border text-[9.5px] font-bold font-mono transition-all flex items-center justify-center gap-1 shadow-2xs ${
+                  isSelected
+                    ? "bg-[#5B4BFF] text-white border-[#5B4BFF] shadow-xs"
+                    : "bg-white/95 text-[#0D0B2D] border-[#DDD6FE] hover:bg-[#E6E0FF]"
+                }`}
+              >
+                {/* Input Socket (Exact X: 28%) */}
+                <span className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#8B5CF6] border border-white" />
+                {/* Output Socket (Exact X: 43%) */}
+                <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#8B5CF6] border border-white" />
+
+                <Zap className="w-2.5 h-2.5 shrink-0 text-amber-300" />
+                <span className="truncate">{sk.label}</span>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* ============================================================ */}
+        {/* COLUMN 3: CENTRAL AI MATCH CORE (Left 44% to 56%, Center 50) */}
+        {/* ============================================================ */}
         <div
           style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
-          className="absolute z-20 flex flex-col items-center justify-center cursor-pointer group"
+          className="absolute z-30 flex flex-col items-center justify-center cursor-pointer group select-none"
           onClick={() => setSelectedNodeId("opp-1")}
         >
           {/* Animated Quantum Rings */}
           <div className="absolute w-28 h-28 rounded-full border border-[#5B4BFF]/30 animate-spin-slow pointer-events-none" />
           <div className="absolute w-20 h-20 rounded-full border border-[#10B981]/40 border-dashed animate-reverse-spin pointer-events-none" />
 
-          {/* Central Glowing Orb */}
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0D0B2D] via-[#5B4BFF] to-[#10B981] text-white flex items-center justify-center shadow-[0_8px_24px_rgba(91,75,255,0.4)] group-hover:scale-110 transition-transform">
-            <Cpu className="w-7 h-7 text-white animate-pulse" />
+          {/* Core Hub Frame with Hardware Sockets */}
+          <div className="relative">
+            {/* Left Input Sockets */}
+            <span className="absolute -left-1.5 top-[25%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#5B4BFF] border-2 border-white shadow-xs z-40" />
+            <span className="absolute -left-1.5 top-[50%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#10B981] border-2 border-white shadow-xs z-40" />
+            <span className="absolute -left-1.5 top-[75%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#EC4899] border-2 border-white shadow-xs z-40" />
+
+            {/* Right Output Sockets */}
+            <span className="absolute -right-1.5 top-[25%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#10B981] border-2 border-white shadow-xs z-40" />
+            <span className="absolute -right-1.5 top-[50%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#5B4BFF] border-2 border-white shadow-xs z-40" />
+            <span className="absolute -right-1.5 top-[75%] -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#EC4899] border-2 border-white shadow-xs z-40" />
+
+            {/* Central Glowing Orb */}
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0D0B2D] via-[#5B4BFF] to-[#10B981] text-white flex items-center justify-center shadow-[0_8px_24px_rgba(91,75,255,0.4)] group-hover:scale-105 transition-transform">
+              <Cpu className="w-7 h-7 text-white animate-pulse" />
+            </div>
           </div>
 
-          <div className="mt-2 text-center bg-white/95 px-2.5 py-1 rounded-xl border border-[#DDD6FE] shadow-sm">
-            <span className="text-[10px] font-black text-[#0D0B2D] tracking-tight block">
+          <div className="mt-1.5 text-center bg-white/95 px-2.5 py-0.5 rounded-xl border border-[#DDD6FE] shadow-sm">
+            <span className="text-[9.5px] font-black text-[#0D0B2D] tracking-tight block">
               AI MATCH CORE
             </span>
-            <span className="text-[9px] font-mono text-[#5B4BFF] font-bold">ClearHire XAI</span>
+            <span className="text-[8.5px] font-mono text-[#5B4BFF] font-bold">ClearHire XAI</span>
           </div>
         </div>
 
-        {/* Render Interactive Nodes (Students, Skills, Opportunities) */}
-        {NODES.map((node) => {
-          const isSelected = selectedNodeId === node.id;
-          const isOpp = node.type === "opportunity";
-          const isStudent = node.type === "student";
-          const isSkill = node.type === "skill";
+        {/* Floating Telemetry Micro-Pills in the Open Channel (Never Collides with Cards) */}
+        <div className="absolute left-[65%] top-[11%] -translate-x-1/2 -translate-y-1/2 z-20 px-2 py-0.5 rounded-full bg-[#ECFDF5] border border-[#10B981]/50 text-[#047857] text-[8.5px] font-mono font-bold shadow-xs flex items-center gap-1 pointer-events-none">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+          <span>⚡ Affirmative: +10% Boost</span>
+        </div>
+        <div className="absolute left-[65%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 px-2 py-0.5 rounded-full bg-[#F5F3FF] border border-[#5B4BFF]/40 text-[#4338CA] text-[8.5px] font-mono font-bold shadow-xs flex items-center gap-1 pointer-events-none">
+          <span>◈ ClearHire: 97% Direct</span>
+        </div>
+
+        {/* ============================================================ */}
+        {/* COLUMN 4: TARGET SKILLS (Left 59% to 74%, Ports: 59% & 74%)   */}
+        {/* ============================================================ */}
+        {RIGHT_SKILLS.map((sk, idx) => {
+          const isSelected = selectedNodeId === "std-1" || selectedNodeId === "std-2" || selectedNodeId === "opp-1";
+          const topPercent = idx === 0 ? "32%" : "68%";
 
           return (
             <div
-              key={node.id}
-              onClick={() => setSelectedNodeId(node.id)}
-              style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-              className={`absolute z-20 cursor-pointer transition-all duration-300 ${
-                isSelected ? "scale-105 z-30" : "hover:scale-105 opacity-90 hover:opacity-100"
+              key={sk.id}
+              onClick={() => setSelectedNodeId(idx === 0 ? "opp-1" : "opp-3")}
+              style={{ left: "59%", width: "15%", top: topPercent, transform: "translateY(-50%)" }}
+              className="absolute z-20 cursor-pointer select-none"
+            >
+              <div
+                className={`relative px-2 py-1.5 rounded-xl border text-[9.5px] font-bold font-mono transition-all flex items-center justify-center gap-1 shadow-2xs ${
+                  isSelected
+                    ? "bg-[#06B6D4] text-white border-[#06B6D4] shadow-xs"
+                    : "bg-white/95 text-[#0D0B2D] border-[#DDD6FE] hover:bg-[#E6E0FF]"
+                }`}
+              >
+                {/* Input Socket (Exact X: 59%) */}
+                <span className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#06B6D4] border border-white" />
+                {/* Output Socket (Exact X: 74%) */}
+                <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#06B6D4] border border-white" />
+
+                <Zap className="w-2.5 h-2.5 shrink-0 text-white" />
+                <span className="truncate">{sk.label}</span>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* ============================================================ */}
+        {/* COLUMN 5: EMPLOYERS (Left 76% to 98%, In Port at 76%)        */}
+        {/* ============================================================ */}
+        {EMPLOYERS.map((emp, idx) => {
+          const isSelected = selectedNodeId === emp.id || (selectedNodeId === "std-2" && emp.id === "opp-1");
+          const topPercent = idx === 0 ? "20%" : idx === 1 ? "50%" : "80%";
+
+          return (
+            <div
+              key={emp.id}
+              onClick={() => setSelectedNodeId(emp.id)}
+              style={{ left: "76%", width: "22%", top: topPercent, transform: "translateY(-50%)" }}
+              className={`absolute z-20 cursor-pointer transition-all duration-200 select-none ${
+                isSelected ? "scale-[1.02] z-30" : "hover:scale-[1.01] opacity-90 hover:opacity-100"
               }`}
             >
-              {isStudent && (
-                <div
-                  className={`px-3 py-2 rounded-2xl border shadow-sm transition-all flex items-center gap-2.5 ${
-                    isSelected
-                      ? "bg-white border-[#5B4BFF] shadow-[0_8px_20px_rgba(91,75,255,0.18)] ring-2 ring-[#5B4BFF]/20"
-                      : "bg-white/95 border-[#DDD6FE] hover:border-[#5B4BFF]"
-                  }`}
-                >
-                  <div className="w-7 h-7 rounded-xl bg-[#E6E0FF] text-[#5B4BFF] flex items-center justify-center font-black text-xs">
-                    {node.label[0]}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-extrabold text-xs text-[#0D0B2D] leading-none">
-                        {node.label}
-                      </span>
-                      {node.badge && (
-                        <ShieldCheck className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                      )}
-                    </div>
-                    <span className="text-[9.5px] text-[#77758F] font-medium block mt-0.5 leading-none">
-                      {node.sub}
-                    </span>
-                  </div>
-                </div>
-              )}
+              <div
+                className={`relative px-2.5 sm:px-3 py-2 rounded-2xl border shadow-sm transition-all flex items-center gap-2 ${
+                  isSelected
+                    ? "bg-white border-[#10B981] shadow-[0_6px_18px_rgba(16,185,129,0.22)] ring-2 ring-[#10B981]/25"
+                    : "bg-white/95 border-[#DDD6FE] hover:border-[#10B981]"
+                }`}
+              >
+                {/* Physical Input Port Socket (Exact X: 76%) */}
+                <span className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#10B981] border-2 border-white shadow-xs z-30" />
 
-              {isSkill && (
                 <div
-                  className={`px-2.5 py-1 rounded-xl border text-[10px] font-bold font-mono transition-all flex items-center gap-1 ${
-                    isSelected
-                      ? "bg-[#5B4BFF] text-white border-[#5B4BFF] shadow-sm"
-                      : "bg-white/90 text-[#0D0B2D] border-[#DDD6FE] hover:bg-[#E6E0FF]"
+                  className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs shrink-0 text-white ${
+                    emp.id === "opp-1" ? "bg-gradient-to-br from-[#059669] to-[#10B981]" : "bg-[#0D0B2D]"
                   }`}
                 >
-                  <Zap className="w-2.5 h-2.5 text-[#5B4BFF]" />
-                  <span>{node.label}</span>
+                  {emp.label[0]}
                 </div>
-              )}
-
-              {isOpp && (
-                <div
-                  className={`px-3 py-2 rounded-2xl border shadow-sm transition-all flex items-center gap-2.5 ${
-                    isSelected
-                      ? "bg-white border-[#10B981] shadow-[0_8px_20px_rgba(16,185,129,0.2)] ring-2 ring-[#10B981]/25"
-                      : "bg-white/95 border-[#DDD6FE] hover:border-[#10B981]"
-                  }`}
-                >
-                  <div
-                    className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs text-white ${
-                      node.id === "opp-1"
-                        ? "bg-gradient-to-br from-[#059669] to-[#10B981]"
-                        : "bg-[#0D0B2D]"
-                    }`}
-                  >
-                    {node.label[0]}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-extrabold text-xs text-[#0D0B2D] leading-none">
-                        {node.label}
-                      </span>
-                      {node.activeMatch && (
-                        <span
-                          className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-md ${
-                            node.id === "opp-1"
-                              ? "bg-emerald-100 text-emerald-800"
-                              : "bg-[#E6E0FF] text-[#5B4BFF]"
-                          }`}
-                        >
-                          {node.activeMatch}% Match
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[9.5px] text-[#77758F] font-medium block mt-0.5 leading-none">
-                      {node.sub}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="font-extrabold text-xs text-[#0D0B2D] truncate leading-tight">
+                      {emp.label}
                     </span>
+                    {emp.activeMatch && (
+                      <span
+                        className={`text-[8.5px] font-mono font-bold px-1.5 py-0.2 rounded-md shrink-0 ${
+                          emp.id === "opp-1" ? "bg-emerald-100 text-emerald-800" : "bg-[#E6E0FF] text-[#5B4BFF]"
+                        }`}
+                      >
+                        {emp.activeMatch}%
+                      </span>
+                    )}
                   </div>
+                  <span className="text-[9px] text-[#77758F] font-medium block truncate leading-tight mt-0.5">
+                    {emp.sub}
+                  </span>
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
@@ -511,7 +634,9 @@ export const HeroMatchingNetwork: React.FC = () => {
                   ClearHire™ Real-Time Neural Explainability Diagnostics
                 </span>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
-                  {selectedNode.activeMatch ? `${selectedNode.activeMatch}% Match to ${selectedNode.type === "student" ? "RuralTech Labs" : selectedNode.label}` : "Vector Active"}
+                  {selectedNode.activeMatch
+                    ? `${selectedNode.activeMatch}% Match to ${selectedNode.type === "student" ? "RuralTech Labs" : selectedNode.label}`
+                    : "Vector Active"}
                 </span>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#5B4BFF] border border-[#DDD6FE]">
                   AFFIRMATIVE EQUITY: +10% VERIFIED
