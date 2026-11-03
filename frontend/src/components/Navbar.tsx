@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { UserResponse } from "../lib/types";
 import { UserButton, useUser } from "@clerk/nextjs";
 import {
@@ -47,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <div className="flex items-center gap-3">
-          <a href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-[#5B4BFF] to-[#A78BFA] text-white shadow-md shadow-[#5B4BFF]/20 group-hover:scale-105 transition-transform">
               <Compass className="w-5 h-5 text-white" />
             </div>
@@ -59,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 AI
               </span>
             </div>
-          </a>
+          </Link>
         </div>
 
         {/* Center Editorial Navigation Links (Desktop) */}
