@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { api } from "../lib/api";
 import { UserResponse, UserRole } from "../lib/types";
 import { Navbar } from "../components/Navbar";
-import { AuthLanding } from "../components/AuthLanding";
+import { ProductLandingView } from "../components/ProductLandingView";
+import { AuthModal } from "../components/AuthModal";
 import { StudentDashboard } from "../components/StudentDashboard";
 import { RecruiterDashboard } from "../components/RecruiterDashboard";
 import { AdminDashboard } from "../components/AdminDashboard";
@@ -19,9 +20,14 @@ import { useUser } from "@clerk/nextjs";
 export default function Home() {
   const { user: clerkUser, isLoaded: clerkLoaded, isSignedIn: clerkSignedIn } = useUser();
   const [currentUser, setCurrentUser] = useState<UserResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [isTestModalOpen, setIsTestModalOpen] = useState<boolean>(false);
   const [lowBandwidthMode, setLowBandwidthMode] = useState<boolean>(false);
+
+  // Authentication Modal State
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [authModalRole, setAuthModalRole] = useState<"STUDENT" | "RECRUITER">("STUDENT");
+  const [authModalMode, setAuthModalMode] = useState<"LOGIN" | "REGISTER">("LOGIN");
 
   // Dynamic Onboarding Modals State
   const [showRoleSelectModal, setShowRoleSelectModal] = useState<boolean>(false);
@@ -233,6 +239,9 @@ export default function Home() {
 
   const handleAuthSuccess = (tokenData: any) => {
     setCurrentUser(tokenData.user);
+    if (tokenData.user?.role) {
+      localStorage.setItem("pathfinder_user_role", tokenData.user.role);
+    }
   };
 
   const handleLogout = () => {
@@ -288,11 +297,17 @@ export default function Home() {
     }
   };
 
+  const handleOpenAuthModal = (role: "STUDENT" | "RECRUITER" = "STUDENT", mode: "LOGIN" | "REGISTER" = "LOGIN") => {
+    setAuthModalRole(role);
+    setAuthModalMode(mode);
+    setIsAuthModalOpen(true);
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center text-[#121212]">
-        <div className="w-10 h-10 border-2 border-[#121212] border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-xs text-[#736E65] font-mono tracking-wide font-bold">
+      <div className="min-h-screen bg-[#F7F8FF] flex flex-col items-center justify-center text-[#0D0B2D]">
+        <div className="w-10 h-10 border-2 border-[#DDD6FE] border-t-[#5B4BFF] rounded-full animate-spin mb-4" />
+        <p className="text-xs text-[#77758F] font-mono tracking-wide font-bold">
           PATHFINDER AI • Synchronizing Verified Opportunity Graph...
         </p>
       </div>
@@ -301,7 +316,7 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen bg-[#FAF8F5] text-[#121212] selection:bg-[#121212] selection:text-white font-sans ${
+      className={`min-h-screen bg-[#F7F8FF] text-[#0D0B2D] selection:bg-[#5B4BFF] selection:text-white font-sans ${
         lowBandwidthMode ? "rural-data-saver" : ""
       }`}
     >
@@ -309,6 +324,7 @@ export default function Home() {
       <Navbar
         user={currentUser}
         onLogout={handleLogout}
+        onOpenAuthModal={handleOpenAuthModal}
         onOpenProfileSettings={() => setIsGlobalProfileSettingsOpen(true)}
         onOpenResumeEditor={() => setIsGlobalResumeModalOpen(true)}
       />
@@ -316,8 +332,8 @@ export default function Home() {
       {/* Main Content Router */}
       <main>
         {!currentUser ? (
-          <AuthLanding
-            onAuthSuccess={handleAuthSuccess}
+          <ProductLandingView
+            onOpenAuthModal={handleOpenAuthModal}
             onOpenTestModal={() => setIsTestModalOpen(true)}
           />
         ) : currentUser.role === "STUDENT" ? (
@@ -327,9 +343,19 @@ export default function Home() {
         ) : currentUser.role === "ADMIN" ? (
           <AdminDashboard onOpenTestModal={() => setIsTestModalOpen(true)} />
         ) : (
-          <div className="p-12 text-center text-[#736E65]">Unknown role context</div>
+          <div className="p-12 text-center text-[#77758F]">Unknown role context</div>
         )}
       </main>
+
+
+      {/* Distinctive Authentication Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+        initialRole={authModalRole}
+        initialMode={authModalMode}
+      />
 
       {/* Global Profile & Skills Settings Modal (accessible from Navbar) */}
       <ProfileSettingsModal

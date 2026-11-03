@@ -337,43 +337,43 @@ export const AcceptanceTestRunnerModal: React.FC<AcceptanceTestRunnerModalProps>
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white border border-[#CEBFAD] rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in-95 text-[#121212]">
+    <div className="fixed inset-0 z-50 bg-[#0D0B2D]/60 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-white border border-[#DDD6FE] rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in-95 text-[#0D0B2D]">
         {/* Header */}
-        <div className="p-5 border-b border-[#E2DBD0] flex items-center justify-between">
+        <div className="p-5 border-b border-[#DDD6FE] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7]">
+            <div className="p-2.5 rounded-2xl bg-gradient-to-br from-[#5B4BFF] to-[#A78BFA] text-white shadow-md shadow-[#5B4BFF]/20">
               <FlaskConical className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-black text-[#121212] flex items-center gap-2">
+              <h2 className="text-base font-black text-[#0D0B2D] flex items-center gap-2">
                 Judge Acceptance Test Suite (PS-22)
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#121212] text-white font-bold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#5B4BFF] font-bold border border-[#DDD6FE]">
                   12 Scenarios
                 </span>
               </h2>
-              <p className="text-xs text-[#736E65] font-medium">
+              <p className="text-xs text-[#77758F] font-medium">
                 Live automated end-to-end verification against the FastAPI backend
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#736E65] hover:text-[#121212] hover:bg-[#FAF8F5]"
+            className="p-1.5 rounded-lg text-[#77758F] hover:text-[#0D0B2D] hover:bg-[#F7F8FF]"
           >
             ✕
           </button>
         </div>
 
         {/* Action Toolbar */}
-        <div className="p-4 bg-[#FAF8F5] border-b border-[#E2DBD0] flex items-center justify-between">
-          <div className="text-xs text-[#59554E] font-medium">
+        <div className="p-4 bg-[#F7F8FF] border-b border-[#DDD6FE] flex items-center justify-between">
+          <div className="text-xs text-[#77758F] font-medium">
             Click &quot;Execute All Acceptance Tests&quot; to test all 12 edge cases live on screen.
           </div>
           <button
             onClick={handleRunAll}
             disabled={runningAll}
-            className="px-4 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white font-bold text-xs transition-all shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 flex items-center gap-1.5 disabled:opacity-50"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>{runningAll ? "Executing Suite..." : "Execute All Acceptance Tests"}</span>
@@ -385,34 +385,34 @@ export const AcceptanceTestRunnerModal: React.FC<AcceptanceTestRunnerModalProps>
           {tests.map((test) => (
             <div
               key={test.id}
-              className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] flex flex-col gap-2"
+              className="p-3.5 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] flex flex-col gap-2"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-xs font-bold text-[#121212] flex items-center gap-2">
+                  <div className="text-xs font-bold text-[#0D0B2D] flex items-center gap-2">
                     {test.title}
                     {test.status === "PASSED" && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#121212] text-white font-bold flex items-center gap-1">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#16A36A] text-white font-bold flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" /> PASS
                       </span>
                     )}
                     {test.status === "FAILED" && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#DC2626] text-white font-bold flex items-center gap-1">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E5484D] text-white font-bold flex items-center gap-1">
                         <XCircle className="w-3 h-3" /> FAIL
                       </span>
                     )}
                     {test.status === "RUNNING" && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F4EFE6] text-[#736E65] font-bold animate-pulse">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#5B4BFF] font-bold animate-pulse">
                         RUNNING...
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-[#736E65] mt-0.5 font-medium">{test.description}</p>
+                  <p className="text-[11px] text-[#77758F] mt-0.5 font-medium">{test.description}</p>
                 </div>
 
                 <button
                   onClick={() => runTest(test.id)}
-                  className="px-2.5 py-1 bg-white hover:bg-[#F4EFE6] text-[#121212] text-[11px] font-bold rounded-lg shrink-0 border border-[#D9D2C7]"
+                  className="px-2.5 py-1 bg-white hover:bg-[#E6E0FF]/50 text-[#0D0B2D] text-[11px] font-bold rounded-lg shrink-0 border border-[#DDD6FE] transition-colors"
                 >
                   Run Single
                 </button>
@@ -422,7 +422,7 @@ export const AcceptanceTestRunnerModal: React.FC<AcceptanceTestRunnerModalProps>
                 <div
                   className={`p-2 rounded-xl text-[10px] font-mono font-medium ${
                     test.status === "PASSED"
-                      ? "bg-white text-[#121212] border border-[#D9D2C7]"
+                      ? "bg-white text-[#0D0B2D] border border-[#DDD6FE]"
                       : "bg-[#FDF2F2] text-[#991B1B] border border-[#F87171]"
                   }`}
                 >
@@ -434,11 +434,11 @@ export const AcceptanceTestRunnerModal: React.FC<AcceptanceTestRunnerModalProps>
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[#E2DBD0] bg-[#FAF8F5] flex items-center justify-between text-xs text-[#736E65]">
+        <div className="p-4 border-t border-[#DDD6FE] bg-[#F7F8FF] flex items-center justify-between text-xs text-[#77758F]">
           <span className="font-medium">PATHFINDER AI Verification Suite • Hackathon Ready</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-xl bg-[#121212] text-white font-bold text-xs"
+            className="px-4 py-1.5 rounded-xl bg-[#0D0B2D] hover:bg-[#5B4BFF] text-white font-bold text-xs transition-colors"
           >
             Close Sandbox
           </button>

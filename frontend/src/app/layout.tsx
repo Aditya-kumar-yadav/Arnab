@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "PATHFINDER AI | Campus-to-Employment Opportunity Matcher",
@@ -26,8 +15,16 @@ export default function RootLayout({
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+            rel="stylesheet"
+          />
+        </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#FAF8F5] text-[#121212] min-h-screen selection:bg-[#121212] selection:text-[#FAF8F5]`}
+          className="font-sans antialiased bg-[#F7F8FF] text-[#0D0B2D] min-h-screen selection:bg-[#5B4BFF] selection:text-white"
         >
           {children}
         </body>

@@ -1,45 +1,157 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #0D0B2D;
+  --color-accent: #5B4BFF;
+  --color-secondary: #A78BFA;
+  --color-surface: #E6E0FF;
+  --color-background: #F7F8FF;
+  --color-muted: #77758F;
+  --color-border: #DDD6FE;
+  --color-success: #16A36A;
+  --color-error: #E5484D;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 :root {
-  --background: #FAF8F5;
-  --foreground: #121212;
-  --card: #FFFFFF;
-  --card-border: #E8E3DA;
+  --primary: #0D0B2D;
+  --accent: #5B4BFF;
+  --secondary: #A78BFA;
+  --surface: #E6E0FF;
+  --background: #F7F8FF;
+  --muted: #77758F;
+  --border: #DDD6FE;
+  --success: #16A36A;
+  --error: #E5484D;
 }
 
-body {
-  background-color: #FAF8F5;
-  color: #121212;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+/* Base Headings - Space Grotesk for Distinctive AI Architecture & Tech Precision */
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01", "ss02", "cv01";
 }
 
-/* Custom Beige & Ink Aesthetic Helpers */
-.bg-beige-canvas {
-  background-color: #FAF8F5;
+/* Base Body - Outfit for Ultra-Refined Geometric Elegance */
+body, .font-sans {
+  font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.01em;
+  background-color: #F7F8FF;
+  background-image: 
+    radial-gradient(circle at 15% 18%, rgba(167, 139, 250, 0.16), transparent 35%),
+    radial-gradient(circle at 85% 72%, rgba(91, 75, 255, 0.09), transparent 38%),
+    radial-gradient(circle at 50% 50%, rgba(230, 224, 255, 0.25), transparent 60%);
+  background-attachment: fixed;
+  color: #0D0B2D;
 }
 
-.bg-beige-surface {
-  background-color: #F4EFE6;
+/* Technical Telemetry & Scores - JetBrains Mono */
+code, kbd, samp, pre, .font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: -0.02em;
 }
 
-.bg-beige-subtle {
-  background-color: #EDE7DC;
+/* Atmospheric Lavender Background */
+.bg-atmospheric {
+  background-color: #F7F8FF;
+  background-image: 
+    radial-gradient(circle at 15% 18%, rgba(167, 139, 250, 0.16), transparent 35%),
+    radial-gradient(circle at 85% 72%, rgba(91, 75, 255, 0.09), transparent 38%);
 }
 
-.border-beige-border {
-  border-color: #E2DBD0;
+/* Gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, #5B4BFF 0%, #A78BFA 100%);
 }
 
-.border-beige-dark {
-  border-color: #CEBFAD;
+.gradient-soft-lavender {
+  background: linear-gradient(135deg, #F7F8FF 0%, #E6E0FF 100%);
 }
 
-.shadow-beige-soft {
-  box-shadow: 0 4px 20px -2px rgba(18, 18, 18, 0.05), 0 2px 6px -1px rgba(18, 18, 18, 0.03);
+.gradient-accent {
+  background: linear-gradient(135deg, #A78BFA 0%, #5B4BFF 100%);
 }
 
-.shadow-beige-elevated {
-  box-shadow: 0 10px 30px -4px rgba(18, 18, 18, 0.08), 0 4px 10px -2px rgba(18, 18, 18, 0.04);
+.gradient-card-glow {
+  background: radial-gradient(circle at top left, rgba(167, 139, 250, 0.15), transparent 70%);
+}
+
+/* Glassmorphism Cards & Panels */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  box-shadow: 0 8px 30px rgba(91, 75, 255, 0.06);
+}
+
+.glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 12px 36px rgba(91, 75, 255, 0.1);
+}
+
+/* Interactive Card Hover */
+.card-hover-purple {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-purple:hover {
+  transform: translateY(-2px);
+  border-color: #A78BFA;
+  box-shadow: 0 14px 36px -4px rgba(91, 75, 255, 0.12), 0 4px 12px -2px rgba(167, 139, 250, 0.08);
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  background-color: #5B4BFF;
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(91, 75, 255, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  background-color: #4D3DF5;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(91, 75, 255, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button Styling */
+.btn-secondary {
+  background-color: #E6E0FF;
+  color: #0D0B2D;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #DDD6FE;
+}
+
+/* Outline Button */
+.btn-outline {
+  background-color: transparent;
+  color: #0D0B2D;
+  border: 1px solid #DDD6FE;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(230, 224, 255, 0.5);
+  border-color: #A78BFA;
 }
 
 /* Rural Data-Saver Mode */
@@ -48,8 +160,10 @@ body {
   transition: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
+  background-image: none !important;
 }
 
+/* Floating animation */
 @keyframes float-slow {
   0%, 100% {
     transform: translateY(0px);
@@ -61,4 +175,65 @@ body {
 
 .animate-float-slow {
   animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Subtle pulse glow */
+@keyframes purple-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-purple-glow {
+  animation: purple-glow 4s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes reverse-spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-reverse-spin {
+  animation: reverse-spin 15s linear infinite;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F8FF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DDD6FE;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A78BFA;
 }

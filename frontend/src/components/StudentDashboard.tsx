@@ -561,7 +561,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const getApplicationStatusBadge = (status: CandidateApplication["status"]) => {
     switch (status) {
       case "APPLIED":
-        return { label: "Applied • In Queue", bg: "bg-[#EDE7DC] text-[#121212] border-[#D9D2C7]" };
+        return { label: "Applied • In Queue", bg: "bg-[#E6E0FF] text-[#0D0B2D] border-[#DDD6FE]" };
       case "BLIND_REVIEW":
         return { label: "Blind Skill Review (In Progress)", bg: "bg-blue-50 text-blue-900 border-blue-200" };
       case "INTERVIEW_SCHEDULED":
@@ -578,8 +578,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <div className="inline-block w-8 h-8 border-2 border-[#121212] border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-[#736E65] text-sm font-medium">
+        <div className="inline-block w-8 h-8 border-2 border-[#5B4BFF] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-[#77758F] text-sm font-medium">
           Personalizing your verified opportunity matrix & explainable matches...
         </p>
       </div>
@@ -590,11 +590,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
         <AlertCircle className="w-12 h-12 text-[#DC2626] mx-auto mb-3" />
-        <h2 className="text-lg font-bold text-[#121212]">Unable to load student profile</h2>
-        <p className="text-[#736E65] text-sm mt-1">{error}</p>
+        <h2 className="text-lg font-bold text-[#0D0B2D]">Unable to load student profile</h2>
+        <p className="text-[#77758F] text-sm mt-1">{error}</p>
         <button
           onClick={loadData}
-          className="mt-4 px-4 py-2 bg-[#121212] text-white text-xs font-bold rounded-xl"
+          className="mt-4 px-4 py-2 bg-[#5B4BFF] text-white text-xs font-bold rounded-xl"
         >
           Retry
         </button>
@@ -603,7 +603,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-[#121212]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-[#0D0B2D]">
       {/* Toast Alert for Blind Application Submission */}
       {applicationSuccessMsg && (
         <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-center justify-between shadow-sm animate-fade-in">
@@ -621,24 +621,24 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       )}
 
       {/* Candidate Profile Header Card */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm relative overflow-hidden space-y-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm relative overflow-hidden space-y-6">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2.5">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#121212] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-[#0D0B2D] tracking-tight">
                 {realDisplayName}
               </h1>
-              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#121212] text-white">
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#5B4BFF] text-white">
                 Candidate Hub
               </span>
-              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#EDE7DC] text-[#423E37] border border-[#D9D2C7]">
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#E6E0FF] text-[#0D0B2D] border border-[#DDD6FE]">
                 🎓 {profile.preferred_domain || "Software Engineering"}
               </span>
             </div>
 
-            <div className="text-xs text-[#59554E] flex flex-wrap items-center gap-3 font-medium">
-              <span className="flex items-center gap-1.5 font-bold text-[#121212]">
-                <GraduationCap className="w-4 h-4 text-[#121212]" />
+            <div className="text-xs text-[#77758F] flex flex-wrap items-center gap-3 font-medium">
+              <span className="flex items-center gap-1.5 font-bold text-[#0D0B2D]">
+                <GraduationCap className="w-4 h-4 text-[#0D0B2D]" />
                 {profile.institution_name || "Birla Institute of Technology, Mesra"}
               </span>
               <span>•</span>
@@ -646,24 +646,24 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 {profile.degree} in {profile.branch} ({profile.academic_year})
               </span>
               <span>•</span>
-              <span className="font-mono text-[#736E65]">{clerkUser?.primaryEmailAddress?.emailAddress || profile.email}</span>
+              <span className="font-mono text-[#77758F]">{clerkUser?.primaryEmailAddress?.emailAddress || profile.email}</span>
               <span>•</span>
-              <span className="font-mono text-[#736E65]">{candidatePhoneState}</span>
+              <span className="font-mono text-[#77758F]">{candidatePhoneState}</span>
             </div>
 
             {/* Verified Skills Tags */}
             <div className="pt-1 flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-bold text-[#736E65] mr-1">Skills:</span>
+              <span className="text-[11px] font-bold text-[#77758F] mr-1">Skills:</span>
               {profile.skills.slice(0, 7).map((sk) => (
                 <span
                   key={sk}
-                  className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-lg bg-[#FAF8F5] text-[#121212] border border-[#E2DBD0]"
+                  className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-lg bg-[#F7F8FF] text-[#0D0B2D] border border-[#DDD6FE]"
                 >
                   {sk}
                 </span>
               ))}
               {profile.skills.length > 7 && (
-                <span className="text-[10px] font-mono text-[#736E65] px-1.5 py-0.5">
+                <span className="text-[10px] font-mono text-[#77758F] px-1.5 py-0.5">
                   +{profile.skills.length - 7} more
                 </span>
               )}
@@ -672,8 +672,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
           {/* Candidate ATS Verified Status Badge */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="px-4 py-2 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] text-right">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#736E65] block">
+            <div className="px-4 py-2 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] text-right">
+              <span className="text-[10px] font-mono uppercase font-bold text-[#77758F] block">
                 ATS Readiness
               </span>
               <span className="text-xs font-black text-emerald-700 flex items-center gap-1 justify-end">
@@ -684,46 +684,46 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </div>
 
         {/* Active Resume Status Strip (Clean & Informative) */}
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#121212] text-white flex items-center justify-center font-bold shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-[#5B4BFF] text-white flex items-center justify-center font-bold shrink-0">
               <FileText className="w-4 h-4 text-emerald-400" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-[#121212]">
+                <span className="text-xs font-black text-[#0D0B2D]">
                   Active Document: <span className="font-mono text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-md font-bold">{candidateResumeName}</span>
                 </span>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300">
                   ✓ Verified Single-Column ATS Format
                 </span>
               </div>
-              <p className="text-[11px] text-[#736E65] mt-0.5">
-                Target Role: <span className="font-semibold text-[#121212]">{profile.preferred_domain || "Full Stack Development"}</span> • {profile.skills.length} Technical Skills Verified • ClearHire ATS 98%
+              <p className="text-[11px] text-[#77758F] mt-0.5">
+                Target Role: <span className="font-semibold text-[#0D0B2D]">{profile.preferred_domain || "Full Stack Development"}</span> • {profile.skills.length} Technical Skills Verified • ClearHire ATS 98%
               </p>
             </div>
           </div>
 
-          <div className="text-[11px] text-[#736E65] font-mono flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#E2DBD0]">
+          <div className="text-[11px] text-[#77758F] font-mono flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#DDD6FE]">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>Pre-loaded for Instant 1-Click Apply</span>
           </div>
         </div>
 
         {/* REAL DATA METRICS ROW: APPLIED, IN REVIEW, SELECTED, ATS MATCH READINESS */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-[#F4EFE6]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-[#DDD6FE]/60">
           <div
             onClick={() => setActiveTab("APPLICATIONS")}
-            className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] hover:border-[#121212] cursor-pointer transition-all space-y-1"
+            className="p-3.5 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] hover:border-[#5B4BFF] cursor-pointer transition-all space-y-1"
           >
-            <span className="text-[10px] uppercase font-bold text-[#736E65] block">
+            <span className="text-[10px] uppercase font-bold text-[#77758F] block">
               Total Applied
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl font-black text-[#121212]">
+              <span className="text-xl font-black text-[#0D0B2D]">
                 {applications.length}
               </span>
-              <span className="text-[11px] font-semibold text-[#736E65]">Opportunities</span>
+              <span className="text-[11px] font-semibold text-[#77758F]">Opportunities</span>
             </div>
           </div>
 
@@ -757,8 +757,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-1">
-            <span className="text-[10px] uppercase font-bold text-[#736E65] block">
+          <div className="p-3.5 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] space-y-1">
+            <span className="text-[10px] uppercase font-bold text-[#77758F] block">
               ATS Match Readiness
             </span>
             <div className="flex items-baseline gap-1.5">
@@ -770,14 +770,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       </div>
 
       {/* Main Navigation Tabs: All, Placements, Internships, Skill Programs, Applications */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2DBD0] pb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DDD6FE] pb-2">
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setActiveTab("ALL")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "ALL"
-                ? "bg-[#121212] text-white shadow-sm"
-                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                ? "bg-[#5B4BFF] text-white shadow-sm"
+                : "bg-white text-[#77758F] hover:text-[#0D0B2D] border border-[#DDD6FE]"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -788,8 +788,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             onClick={() => setActiveTab("FULL_TIME")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "FULL_TIME"
-                ? "bg-[#121212] text-white shadow-sm"
-                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                ? "bg-[#5B4BFF] text-white shadow-sm"
+                : "bg-white text-[#77758F] hover:text-[#0D0B2D] border border-[#DDD6FE]"
             }`}
           >
             <Briefcase className="w-3.5 h-3.5" />
@@ -800,8 +800,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             onClick={() => setActiveTab("INTERNSHIP")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "INTERNSHIP"
-                ? "bg-[#121212] text-white shadow-sm"
-                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                ? "bg-[#5B4BFF] text-white shadow-sm"
+                : "bg-white text-[#77758F] hover:text-[#0D0B2D] border border-[#DDD6FE]"
             }`}
           >
             <GraduationCap className="w-3.5 h-3.5" />
@@ -812,8 +812,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             onClick={() => setActiveTab("SKILL_PROGRAM")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "SKILL_PROGRAM"
-                ? "bg-[#121212] text-white shadow-sm"
-                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                ? "bg-[#5B4BFF] text-white shadow-sm"
+                : "bg-white text-[#77758F] hover:text-[#0D0B2D] border border-[#DDD6FE]"
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
@@ -839,8 +839,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             onClick={() => setActiveTab("APPLICATIONS")}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "APPLICATIONS"
-                ? "bg-[#121212] text-white shadow-sm"
-                : "bg-white text-[#59554E] hover:text-[#121212] border border-[#E2DBD0]"
+                ? "bg-[#5B4BFF] text-white shadow-sm"
+                : "bg-white text-[#77758F] hover:text-[#0D0B2D] border border-[#DDD6FE]"
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -852,12 +852,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       {/* VIEW 1: Applications Tracker Tab */}
       {activeTab === "APPLICATIONS" ? (
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0]">
-            <h2 className="text-sm font-black text-[#121212] flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#121212]" />
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE]">
+            <h2 className="text-sm font-black text-[#0D0B2D] flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#0D0B2D]" />
               Live Candidate Application Lifecycle
             </h2>
-            <p className="text-xs text-[#736E65] mt-0.5">
+            <p className="text-xs text-[#77758F] mt-0.5">
               Transparent tracking of your blind submissions. Recruiters evaluate submissions based solely on your code and skills.
             </p>
           </div>
@@ -868,20 +868,20 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               return (
                 <div
                   key={app.id}
-                  className="p-5 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-4"
+                  className="p-5 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-4"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#EDE7DC] text-[#121212]">
+                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#E6E0FF] text-[#0D0B2D]">
                           {app.roleType}
                         </span>
-                        <h3 className="text-base font-black text-[#121212]">{app.opportunityTitle}</h3>
+                        <h3 className="text-base font-black text-[#0D0B2D]">{app.opportunityTitle}</h3>
                       </div>
-                      <p className="text-xs text-[#736E65] mt-1 flex items-center gap-2">
+                      <p className="text-xs text-[#77758F] mt-1 flex items-center gap-2">
                         <Building2 className="w-3.5 h-3.5" /> {app.companyName}
                         <span>•</span>
-                        <span className="font-mono font-semibold text-[#121212]">{app.stipendOrSalary}</span>
+                        <span className="font-mono font-semibold text-[#0D0B2D]">{app.stipendOrSalary}</span>
                         <span>•</span>
                         <span>Applied: {app.appliedDate}</span>
                       </p>
@@ -895,16 +895,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
 
                   {/* Stage Progress Bar */}
-                  <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-xs space-y-2">
-                    <div className="flex items-center justify-between text-[11px] font-bold text-[#59554E]">
+                  <div className="p-3.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE] text-xs space-y-2">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-[#77758F]">
                       <span>1. Blind Submission</span>
                       <span>2. Skill Benchmark</span>
                       <span>3. Practical Task</span>
                       <span>4. Offer Extended</span>
                     </div>
-                    <div className="w-full bg-[#E2DBD0] h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
                       <div
-                        className="bg-[#121212] h-full"
+                        className="bg-[#5B4BFF] h-full"
                         style={{
                           width:
                             app.status === "APPLIED"
@@ -917,7 +917,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         }}
                       />
                     </div>
-                    <p className="text-[11px] text-[#736E65] italic pt-1">{app.notes}</p>
+                    <p className="text-[11px] text-[#77758F] italic pt-1">{app.notes}</p>
                   </div>
                 </div>
               );
@@ -1278,27 +1278,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         /* VIEW 2: Talently & Inker Master-Detail Discovery Layout */
         <div className="space-y-6">
           {/* Top Search & Filter Bar (Talently Style) */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-3">
+          <div className="p-4 sm:p-5 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
               {/* Query Search */}
               <div className="sm:col-span-5 relative">
-                <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#736E65]" />
+                <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#77758F]" />
                 <input
                   type="text"
                   placeholder="Search job title, skills, or company..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#E2DBD0] bg-[#FAF8F5] text-xs font-medium text-[#121212] focus:outline-none focus:ring-1 focus:ring-[#121212]"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#DDD6FE] bg-[#F7F8FF] text-xs font-medium text-[#0D0B2D] focus:outline-none focus:ring-1 focus:ring-[#5B4BFF]/30"
                 />
               </div>
 
               {/* Location Filter */}
               <div className="sm:col-span-3 relative">
-                <MapPin className="w-4 h-4 absolute left-3.5 top-3 text-[#736E65]" />
+                <MapPin className="w-4 h-4 absolute left-3.5 top-3 text-[#77758F]" />
                 <select
                   value={locationFilter}
                   onChange={(e) => setLocationFilter(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#E2DBD0] bg-[#FAF8F5] text-xs font-semibold text-[#121212] focus:outline-none focus:ring-1 focus:ring-[#121212] appearance-none cursor-pointer"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#DDD6FE] bg-[#F7F8FF] text-xs font-semibold text-[#0D0B2D] focus:outline-none focus:ring-1 focus:ring-[#5B4BFF]/30 appearance-none cursor-pointer"
                 >
                   <option value="ALL">Anywhere (All Locations)</option>
                   <option value="REMOTE">100% Remote Only</option>
@@ -1308,11 +1308,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               {/* Hardware / Rural Support Filter */}
               <div className="sm:col-span-2 relative">
-                <SlidersHorizontal className="w-4 h-4 absolute left-3.5 top-3 text-[#736E65]" />
+                <SlidersHorizontal className="w-4 h-4 absolute left-3.5 top-3 text-[#77758F]" />
                 <select
                   value={filterHardwareOnly ? "HARDWARE" : "ALL"}
                   onChange={(e) => setFilterHardwareOnly(e.target.value === "HARDWARE")}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#E2DBD0] bg-[#FAF8F5] text-xs font-semibold text-[#121212] focus:outline-none focus:ring-1 focus:ring-[#121212] appearance-none cursor-pointer"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-2xl border border-[#DDD6FE] bg-[#F7F8FF] text-xs font-semibold text-[#0D0B2D] focus:outline-none focus:ring-1 focus:ring-[#5B4BFF]/30 appearance-none cursor-pointer"
                 >
                   <option value="ALL">All Support Models</option>
                   <option value="HARDWARE">💻 Laptop Provided</option>
@@ -1324,7 +1324,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as "MATCH" | "LATEST")}
-                  className="w-full px-3 py-2.5 rounded-2xl border border-[#E2DBD0] bg-[#FAF8F5] text-xs font-bold text-[#121212] focus:outline-none focus:ring-1 focus:ring-[#121212] appearance-none cursor-pointer"
+                  className="w-full px-3 py-2.5 rounded-2xl border border-[#DDD6FE] bg-[#F7F8FF] text-xs font-bold text-[#0D0B2D] focus:outline-none focus:ring-1 focus:ring-[#5B4BFF]/30 appearance-none cursor-pointer"
                 >
                   <option value="MATCH">Sort: Best Match ▾</option>
                   <option value="LATEST">Sort: Latest Added ▾</option>
@@ -1334,7 +1334,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
             {/* Popular Searches Pills */}
             <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-              <span className="font-bold text-[#736E65] text-[11px]">Popular searches:</span>
+              <span className="font-bold text-[#77758F] text-[11px]">Popular searches:</span>
               {[
                 "Full-Stack Developer",
                 "AI & Machine Learning",
@@ -1347,8 +1347,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   onClick={() => setSearchQuery(searchQuery === pill ? "" : pill)}
                   className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all ${
                     searchQuery === pill
-                      ? "bg-[#121212] text-white border-[#121212]"
-                      : "bg-[#FAF8F5] text-[#59554E] border-[#E2DBD0] hover:border-[#121212]"
+                      ? "bg-[#5B4BFF] text-white border-[#5B4BFF]"
+                      : "bg-[#F7F8FF] text-[#77758F] border-[#DDD6FE] hover:border-[#5B4BFF]"
                   }`}
                 >
                   {pill}
@@ -1357,7 +1357,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="text-[11px] font-bold text-[#736E65] underline hover:text-[#121212] ml-auto"
+                  className="text-[11px] font-bold text-[#77758F] underline hover:text-[#0D0B2D] ml-auto"
                 >
                   Clear search
                 </button>
@@ -1394,30 +1394,30 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             {/* LEFT / CENTER: Active Selected Job Description (Pinned in View - Never Leaves Screen) */}
             <div className="lg:col-span-7 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto pr-1 rounded-3xl">
               {selectedOpportunity ? (
-                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-6">
+                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm space-y-6">
                   {/* Best Fit Rank & Match Banner */}
                   {(() => {
                     const fitRank = sortedOpportunities.findIndex((o) => o.id === selectedOpportunity.id) + 1;
                     return (
-                      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#EDE7DC]/80 border border-[#D9D2C7]">
+                      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#E6E0FF]/80 border border-[#DDD6FE]">
                         <div className="flex items-center gap-2.5">
                           <span className="text-xl">{fitRank === 1 ? "🥇" : fitRank === 2 ? "🥈" : fitRank === 3 ? "🥉" : "🎯"}</span>
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="text-xs font-black text-[#121212]">
+                              <span className="text-xs font-black text-[#0D0B2D]">
                                 {fitRank === 1 ? "Top Recommendation: #1 Best Fit" : `Ranked #${fitRank} Best Fit Match`}
                               </span>
                               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
                                 ClearHire Verified
                               </span>
                             </div>
-                            <p className="text-[11px] text-[#59554E] mt-0.5">
+                            <p className="text-[11px] text-[#77758F] mt-0.5">
                               Evaluated against your active resume ({candidateResumeName}) across 5 ATS layers
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="px-3 py-1 rounded-full bg-[#121212] text-white font-mono font-black text-xs shadow-xs">
+                          <span className="px-3 py-1 rounded-full bg-[#5B4BFF] text-white font-mono font-black text-xs shadow-xs">
                             {selectedOpportunity.matchScore || 94}% Fit
                           </span>
                         </div>
@@ -1428,31 +1428,31 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   {/* Company Header Row */}
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3.5">
-                      <div className="w-12 h-12 rounded-2xl bg-[#121212] text-white flex items-center justify-center font-black text-lg shadow-xs shrink-0">
+                      <div className="w-12 h-12 rounded-2xl bg-[#5B4BFF] text-white flex items-center justify-center font-black text-lg shadow-xs shrink-0">
                         {selectedOpportunity.company_name.charAt(0)}
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-black text-sm text-[#121212]">
+                          <span className="font-black text-sm text-[#0D0B2D]">
                             {selectedOpportunity.company_name}
                           </span>
                           <span className="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-black">
                             ✓
                           </span>
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7] font-bold ml-1">
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F7F8FF] text-[#0D0B2D] border border-[#DDD6FE] font-bold ml-1">
                             {selectedOpportunity.role_type}
                           </span>
                         </div>
-                        <h2 className="text-xl sm:text-2xl font-black text-[#121212] tracking-tight mt-0.5">
+                        <h2 className="text-xl sm:text-2xl font-black text-[#0D0B2D] tracking-tight mt-0.5">
                           {selectedOpportunity.title}
                         </h2>
-                        <div className="text-xs text-[#736E65] flex flex-wrap items-center gap-2 mt-1 font-medium">
+                        <div className="text-xs text-[#77758F] flex flex-wrap items-center gap-2 mt-1 font-medium">
                           <span className="flex items-center gap-1">
                             <MapPin className="w-3.5 h-3.5" />
                             {selectedOpportunity.location}
                           </span>
                           <span>•</span>
-                          <span className="font-mono font-bold text-[#121212] bg-[#EDE7DC] px-2 py-0.5 rounded">
+                          <span className="font-mono font-bold text-[#0D0B2D] bg-[#E6E0FF] px-2 py-0.5 rounded">
                             {selectedOpportunity.stipend_or_salary || "Paid Stipend"}
                           </span>
                         </div>
@@ -1464,21 +1464,21 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       onClick={() => toggleBookmark(selectedOpportunity.id)}
                       className={`p-2.5 rounded-2xl border transition-all shrink-0 ${
                         bookmarkedIds.includes(selectedOpportunity.id)
-                          ? "bg-[#EDE7DC] border-[#121212] text-[#121212]"
-                          : "bg-[#FAF8F5] border-[#E2DBD0] text-[#736E65] hover:border-[#121212] hover:text-[#121212]"
+                          ? "bg-[#E6E0FF] border-[#5B4BFF] text-[#0D0B2D]"
+                          : "bg-[#F7F8FF] border-[#DDD6FE] text-[#77758F] hover:border-[#5B4BFF] hover:text-[#0D0B2D]"
                       }`}
                       title="Bookmark this role"
                     >
                       <Bookmark
                         className={`w-4 h-4 ${
-                          bookmarkedIds.includes(selectedOpportunity.id) ? "fill-[#121212]" : ""
+                          bookmarkedIds.includes(selectedOpportunity.id) ? "fill-[#5B4BFF]" : ""
                         }`}
                       />
                     </button>
                   </div>
 
                   {/* Summary Snippet */}
-                  <p className="text-xs text-[#59554E] leading-relaxed">
+                  <p className="text-xs text-[#77758F] leading-relaxed">
                     {selectedOpportunity.description}
                   </p>
 
@@ -1494,22 +1494,22 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     );
 
                     return (
-                      <div className="p-4 sm:p-5 rounded-2xl bg-[#EDE7DC]/70 border border-[#D9D2C7] space-y-3">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-[#E6E0FF]/70 border border-[#DDD6FE] space-y-3">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-lg bg-[#121212] text-white flex items-center justify-center">
+                            <div className="w-7 h-7 rounded-lg bg-[#5B4BFF] text-white flex items-center justify-center">
                               <Sparkles className="w-4 h-4 text-amber-300" />
                             </div>
                             <div>
-                              <span className="text-[10px] font-mono uppercase font-bold text-[#736E65] block">
+                              <span className="text-[10px] font-mono uppercase font-bold text-[#77758F] block">
                                 ClearHire Resume Recommendation & Improvement
                               </span>
-                              <span className="text-xs font-black text-[#121212]">
+                              <span className="text-xs font-black text-[#0D0B2D]">
                                 {selectedOpportunity.matchScore || 94}% ATS Match Score • {matched.length}/{reqSkills.length} Required Skills Found
                               </span>
                             </div>
                           </div>
-                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121212] text-white">
+                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#5B4BFF] text-white">
                             ClearHire Engine
                           </span>
                         </div>
@@ -1535,14 +1535,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
                         {/* Missing skills & 1-click infuse button */}
                         {missing.length > 0 ? (
-                          <div className="space-y-2 pt-1 border-t border-[#D9D2C7]/70">
+                          <div className="space-y-2 pt-1 border-t border-[#DDD6FE]/70">
                             <div className="flex flex-wrap items-center justify-between gap-2">
                               <span className="text-[11px] font-bold text-amber-900">
                                 💡 Missing from resume (Add to reach 98% ATS score):
                               </span>
                               <button
                                 onClick={() => handleInfuseSkills(missing)}
-                                className="px-3 py-1 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all"
+                                className="px-3 py-1 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all"
                                 title="Infuse these missing skills into your active candidate profile and boost your match rank"
                               >
                                 <Zap className="w-3.5 h-3.5 text-amber-300" />
@@ -1568,11 +1568,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         )}
 
                         {/* Suggested Experience Bullet for this JD */}
-                        <div className="pt-2 border-t border-[#D9D2C7]/70 text-[11px]">
-                          <span className="font-bold text-[#121212] block">
+                        <div className="pt-2 border-t border-[#DDD6FE]/70 text-[11px]">
+                          <span className="font-bold text-[#0D0B2D] block">
                             📝 Recommended Experience Bullet for {selectedOpportunity.title}:
                           </span>
-                          <p className="italic bg-white/80 p-2.5 rounded-xl mt-1 border border-[#D9D2C7] text-[#423E37] leading-relaxed">
+                          <p className="italic bg-white/80 p-2.5 rounded-xl mt-1 border border-[#DDD6FE] text-[#0D0B2D] leading-relaxed">
                             &ldquo;Architected and maintained robust platform services leveraging {matched[0] || "Python"}{missing.length > 0 ? `, ${missing[0]}` : ""}, improving API response times by 32% across distributed endpoints.&rdquo;
                           </p>
                         </div>
@@ -1589,7 +1589,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 ${
                         applications.some((a) => a.opportunityId === selectedOpportunity.id)
                           ? "bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default"
-                          : "bg-[#121212] hover:bg-[#262626] text-white"
+                          : "bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5"
                       }`}
                     >
                       {applications.some((a) => a.opportunityId === selectedOpportunity.id) ? (
@@ -1612,7 +1612,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         setResumeModalTab("BUILDER");
                         setIsResumeModalOpen(true);
                       }}
-                      className="px-4 py-2.5 rounded-xl bg-white hover:bg-[#FAF8F5] text-[#121212] border-2 border-[#121212] font-black text-xs flex items-center gap-2 transition-all shadow-xs"
+                      className="px-4 py-2.5 rounded-xl bg-white hover:bg-[#F7F8FF] text-[#0D0B2D] border-2 border-[#5B4BFF] font-black text-xs flex items-center gap-2 transition-all shadow-xs"
                       title="Tailor your resume bullets and competencies for this specific job in OpenResume Studio"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-amber-500" />
@@ -1622,7 +1622,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     {/* Button 3: Why Matched */}
                     <button
                       onClick={() => setSelectedOppForXAI(selectedOpportunity)}
-                      className="px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] hover:bg-[#EDE7DC] text-[#121212] border border-[#E2DBD0] text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                      className="px-3.5 py-2.5 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF] text-[#0D0B2D] border border-[#DDD6FE] text-xs font-semibold flex items-center gap-1.5 transition-colors"
                       title="Inspect transparent ClearHire 5-layer diagnostic breakdown"
                     >
                       <HelpCircle className="w-3.5 h-3.5" />
@@ -1631,45 +1631,45 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
 
                   {/* 4 Key Stats Metric Grid (Exact Talently Image 1 Cards) */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] text-xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] text-xs">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#736E65] block">Experience / Batch</span>
-                      <span className="font-bold text-[#121212] mt-0.5 block">Batch 2026 / 2027</span>
+                      <span className="text-[10px] uppercase font-bold text-[#77758F] block">Experience / Batch</span>
+                      <span className="font-bold text-[#0D0B2D] mt-0.5 block">Batch 2026 / 2027</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#736E65] block">Total Applicants</span>
-                      <span className="font-bold text-[#121212] mt-0.5 block">42+ registered</span>
+                      <span className="text-[10px] uppercase font-bold text-[#77758F] block">Total Applicants</span>
+                      <span className="font-bold text-[#0D0B2D] mt-0.5 block">42+ registered</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#736E65] block">ATS Match Score</span>
+                      <span className="text-[10px] uppercase font-bold text-[#77758F] block">ATS Match Score</span>
                       <span className="font-bold text-emerald-800 font-mono mt-0.5 block">
                         {selectedOpportunity.matchScore || 94}% Fit
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#736E65] block">Hardware Support</span>
-                      <span className="font-bold text-[#121212] mt-0.5 block">
+                      <span className="text-[10px] uppercase font-bold text-[#77758F] block">Hardware Support</span>
+                      <span className="font-bold text-[#0D0B2D] mt-0.5 block">
                         {selectedOpportunity.hardware_provided ? "Laptop Provided" : "BYOD Mode"}
                       </span>
                     </div>
                   </div>
 
                   {/* Detailed Section: About the Role */}
-                  <div className="space-y-2 pt-2 border-t border-[#F4EFE6]">
-                    <h3 className="text-xs font-black uppercase tracking-wider text-[#121212]">
+                  <div className="space-y-2 pt-2 border-t border-[#DDD6FE]/60">
+                    <h3 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D]">
                       About the Role
                     </h3>
-                    <p className="text-xs text-[#423E37] leading-relaxed">
+                    <p className="text-xs text-[#0D0B2D] leading-relaxed">
                       As a {selectedOpportunity.title} at {selectedOpportunity.company_name}, you will be part of a high-impact engineering team designing robust, resilient solutions. Evaluated strictly under Pathfinder&apos;s blind merit screening, ensuring equal access regardless of institutional pedigree.
                     </p>
                   </div>
 
                   {/* Detailed Section: Responsibilities */}
                   <div className="space-y-2">
-                    <h3 className="text-xs font-black uppercase tracking-wider text-[#121212]">
+                    <h3 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D]">
                       Key Responsibilities & Project Focus
                     </h3>
-                    <ul className="text-xs text-[#59554E] space-y-1.5 list-disc pl-4 leading-relaxed">
+                    <ul className="text-xs text-[#77758F] space-y-1.5 list-disc pl-4 leading-relaxed">
                       <li>Collaborate with distributed engineering teams on product implementation and architecture.</li>
                       <li>Write clean, modular code with unit tests and clear API documentation.</li>
                       <li>Participate in peer code reviews and sprint delivery cycles.</li>
@@ -1678,12 +1678,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
 
                   {/* Detailed Section: Required Skills & ATS Coverage */}
-                  <div className="space-y-3 pt-2 border-t border-[#F4EFE6]">
+                  <div className="space-y-3 pt-2 border-t border-[#DDD6FE]/60">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-black uppercase tracking-wider text-[#121212]">
+                      <h3 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D]">
                         Required Skills & ATS Coverage
                       </h3>
-                      <span className="text-[11px] font-mono text-[#736E65]">
+                      <span className="text-[11px] font-mono text-[#77758F]">
                         Deterministic Keyword Check
                       </span>
                     </div>
@@ -1720,10 +1720,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="p-12 text-center rounded-3xl bg-white border border-[#E2DBD0] space-y-3">
-                  <Briefcase className="w-10 h-10 text-[#736E65] mx-auto" />
-                  <h3 className="text-base font-bold text-[#121212]">No matching opportunities found</h3>
-                  <p className="text-xs text-[#736E65]">
+                <div className="p-12 text-center rounded-3xl bg-white border border-[#DDD6FE] space-y-3">
+                  <Briefcase className="w-10 h-10 text-[#77758F] mx-auto" />
+                  <h3 className="text-base font-bold text-[#0D0B2D]">No matching opportunities found</h3>
+                  <p className="text-xs text-[#77758F]">
                     Try clearing your search query or selecting a different location/support filter.
                   </p>
                   <button
@@ -1733,7 +1733,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       setFilterHardwareOnly(false);
                       setFilterRemoteOnly(false);
                     }}
-                    className="px-4 py-2 rounded-xl bg-[#121212] text-white text-xs font-bold"
+                    className="px-4 py-2 rounded-xl bg-[#5B4BFF] text-white text-xs font-bold"
                   >
                     Reset Filters
                   </button>
@@ -1745,11 +1745,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             <div className="lg:col-span-5 space-y-4">
               {/* AI Match Overview Card (Top Right Card in Talently Image 1) */}
               {selectedOpportunity && (
-                <div className="p-5 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-3">
+                <div className="p-5 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-amber-500" />
-                      <h4 className="font-black text-sm text-[#121212]">
+                      <h4 className="font-black text-sm text-[#0D0B2D]">
                         Match Score: {selectedOpportunity.matchScore || 94}% — Great Fit!
                       </h4>
                     </div>
@@ -1758,13 +1758,13 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#59554E] leading-relaxed">
+                  <p className="text-xs text-[#77758F] leading-relaxed">
                     This role strongly aligns with your profile competencies ({selectedOpportunity.required_skills?.slice(0, 3).join(", ")}) and satisfies affirmative action priority benchmarks.
                   </p>
 
                   <button
                     onClick={() => setSelectedOppForXAI(selectedOpportunity)}
-                    className="w-full py-2 px-3 rounded-xl bg-[#FAF8F5] hover:bg-[#EDE7DC] border border-[#E2DBD0] text-xs font-bold text-[#121212] flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full py-2 px-3 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF] border border-[#DDD6FE] text-xs font-bold text-[#0D0B2D] flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <HelpCircle className="w-3.5 h-3.5" />
                     <span>View AI Suggestions & Diagnostics</span>
@@ -1774,10 +1774,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               {/* Recommended Opportunities Section Header */}
               <div className="flex items-center justify-between pt-1">
-                <h3 className="font-black text-sm text-[#121212] tracking-tight">
+                <h3 className="font-black text-sm text-[#0D0B2D] tracking-tight">
                   Recommended for You
                 </h3>
-                <span className="text-[11px] font-mono text-[#736E65] font-semibold">
+                <span className="text-[11px] font-mono text-[#77758F] font-semibold">
                   {sortedOpportunities.length} opportunities
                 </span>
               </div>
@@ -1804,12 +1804,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       onClick={() => setSelectedOpportunity(opp)}
                       className={`p-4 rounded-2xl cursor-pointer transition-all space-y-2.5 ${
                         isSelected
-                          ? "bg-white border-2 border-[#121212] shadow-md ring-2 ring-[#121212]/5"
-                          : "bg-white border border-[#E2DBD0] hover:border-[#121212] shadow-xs"
+                          ? "bg-white border-2 border-[#5B4BFF] shadow-md ring-2 ring-[#5B4BFF]/20"
+                          : "bg-white border border-[#DDD6FE] hover:border-[#5B4BFF] shadow-xs"
                       }`}
                     >
                       {/* Best Fit Rank & Match Pill */}
-                      <div className="flex items-center justify-between gap-1 pb-1.5 border-b border-[#F4EFE6]">
+                      <div className="flex items-center justify-between gap-1 pb-1.5 border-b border-[#DDD6FE]/60">
                         <div className="flex items-center gap-1.5">
                           <span
                             className={`text-[10px] font-mono font-black px-2 py-0.5 rounded-full flex items-center gap-1 ${
@@ -1819,7 +1819,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                                 ? "bg-teal-500/15 text-teal-900 border border-teal-400"
                                 : fitRank === 3
                                 ? "bg-amber-500/15 text-amber-900 border border-amber-400"
-                                : "bg-[#EDE7DC] text-[#423E37] border border-[#D9D2C7]"
+                                : "bg-[#E6E0FF] text-[#0D0B2D] border border-[#DDD6FE]"
                             }`}
                           >
                             <span>
@@ -1833,7 +1833,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                             </span>
                             <span>({opp.matchScore || 90}% Match)</span>
                           </span>
-                          <span className="text-[10px] font-mono text-[#736E65] font-semibold">
+                          <span className="text-[10px] font-mono text-[#77758F] font-semibold">
                             {matched.length}/{reqSkills.length} Matched
                           </span>
                         </div>
@@ -1848,19 +1848,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       {/* Middle Row: Company Avatar + Name + Bookmark */}
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-xl bg-[#121212] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-9 h-9 rounded-xl bg-[#5B4BFF] text-white flex items-center justify-center font-bold text-xs shrink-0">
                             {opp.company_name.charAt(0)}
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5">
-                              <span className="font-bold text-xs text-[#121212]">
+                              <span className="font-bold text-xs text-[#0D0B2D]">
                                 {opp.company_name}
                               </span>
                               <span className="w-3.5 h-3.5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[8px] font-black">
                                 ✓
                               </span>
                             </div>
-                            <h4 className="font-bold text-xs sm:text-sm text-[#121212] line-clamp-1 mt-0.5">
+                            <h4 className="font-bold text-xs sm:text-sm text-[#0D0B2D] line-clamp-1 mt-0.5">
                               {opp.title}
                             </h4>
                           </div>
@@ -1871,18 +1871,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                             e.stopPropagation();
                             toggleBookmark(opp.id);
                           }}
-                          className="text-[#736E65] hover:text-[#121212] p-1"
+                          className="text-[#77758F] hover:text-[#0D0B2D] p-1"
                           title="Bookmark"
                         >
                           <Bookmark
-                            className={`w-4 h-4 ${isBookmarked ? "fill-[#121212] text-[#121212]" : ""}`}
+                            className={`w-4 h-4 ${isBookmarked ? "fill-[#5B4BFF] text-[#0D0B2D]" : ""}`}
                           />
                         </button>
                       </div>
 
                       {/* Metadata Row */}
-                      <div className="text-[11px] text-[#736E65] flex flex-wrap items-center gap-2">
-                        <span className="font-mono px-1.5 py-0.5 rounded bg-[#FAF8F5] border border-[#E2DBD0] text-[#121212] font-semibold">
+                      <div className="text-[11px] text-[#77758F] flex flex-wrap items-center gap-2">
+                        <span className="font-mono px-1.5 py-0.5 rounded bg-[#F7F8FF] border border-[#DDD6FE] text-[#0D0B2D] font-semibold">
                           {opp.role_type}
                         </span>
                         <span>•</span>
@@ -1922,8 +1922,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       )}
 
                       {/* Compensation & Action Buttons */}
-                      <div className="flex items-center justify-between pt-1 border-t border-[#F4EFE6] text-xs">
-                        <span className="font-mono font-bold text-[#121212]">
+                      <div className="flex items-center justify-between pt-1 border-t border-[#DDD6FE]/60 text-xs">
+                        <span className="font-mono font-bold text-[#0D0B2D]">
                           {opp.stipend_or_salary || "Paid"}
                         </span>
 
@@ -1936,7 +1936,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                               setResumeModalTab("BUILDER");
                               setIsResumeModalOpen(true);
                             }}
-                            className="px-2.5 py-1 rounded-lg bg-[#FAF8F5] hover:bg-[#121212] hover:text-white text-[#121212] border border-[#D9D2C7] text-[10px] font-bold flex items-center gap-1 transition-all"
+                            className="px-2.5 py-1 rounded-lg bg-[#F7F8FF] hover:bg-[#5B4BFF] hover:text-white text-[#0D0B2D] border border-[#DDD6FE] text-[10px] font-bold flex items-center gap-1 transition-all"
                             title="Tailor resume specifically for this opening in OpenResume Studio"
                           >
                             <Sparkles className="w-3 h-3 text-amber-500" />
@@ -1953,7 +1953,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                             className={`px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-all ${
                               hasApplied
                                 ? "bg-emerald-50 text-emerald-800 border border-emerald-200 cursor-default"
-                                : "bg-[#121212] hover:bg-[#262626] text-white"
+                                : "bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5"
                             }`}
                             title="1-Click Blind Apply"
                           >
@@ -1968,9 +1968,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
 
               {/* Verified Skills Management (Preserved in clean collapsible card) */}
-              <div className="p-5 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm space-y-3">
+              <div className="p-5 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-black text-xs uppercase tracking-wider text-[#121212] flex items-center gap-1.5">
+                  <h4 className="font-black text-xs uppercase tracking-wider text-[#0D0B2D] flex items-center gap-1.5">
                     <Code2 className="w-3.5 h-3.5" /> Your Verified Skills ({profile.skills.length})
                   </h4>
                 </div>
@@ -1979,7 +1979,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   {profile.skills.map((skill, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded-lg bg-[#FAF8F5] border border-[#E2DBD0] text-xs font-mono font-semibold text-[#121212]"
+                      className="px-2 py-0.5 rounded-lg bg-[#F7F8FF] border border-[#DDD6FE] text-xs font-mono font-semibold text-[#0D0B2D]"
                     >
                       {skill}
                     </span>
@@ -1994,11 +1994,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     value={newSkill}
                     onChange={(e) => setNewSkill(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleAddSkill()}
-                    className="flex-1 px-3 py-1.5 text-xs rounded-xl border border-[#E2DBD0] bg-white text-[#121212] focus:outline-none focus:ring-1 focus:ring-[#121212]"
+                    className="flex-1 px-3 py-1.5 text-xs rounded-xl border border-[#DDD6FE] bg-white text-[#0D0B2D] focus:outline-none focus:ring-1 focus:ring-[#5B4BFF]/30"
                   />
                   <button
                     onClick={handleAddSkill}
-                    className="px-3 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold"
+                    className="px-3 py-1.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold"
                   >
                     + Add
                   </button>
@@ -2011,51 +2011,51 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* FULL JOB DESCRIPTION (JD) MODAL */}
       {activeJD && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#121212]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-[#FAF8F5] rounded-3xl border border-[#E2DBD0] shadow-2xl p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#5B4BFF]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
+          <div className="relative w-full max-w-2xl bg-[#F7F8FF] rounded-3xl border border-[#DDD6FE] shadow-2xl p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-4 border-b border-[#E2DBD0] pb-4">
+            <div className="flex items-start justify-between gap-4 border-b border-[#DDD6FE] pb-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#121212] text-white">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#5B4BFF] text-white">
                     {activeJD.role_type}
                   </span>
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#EDE7DC] text-[#121212]">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#E6E0FF] text-[#0D0B2D]">
                     Match Score: {activeJD.matchScore || 95}%
                   </span>
                 </div>
-                <h2 className="text-xl font-black text-[#121212] tracking-tight mt-1.5">
+                <h2 className="text-xl font-black text-[#0D0B2D] tracking-tight mt-1.5">
                   {activeJD.title}
                 </h2>
-                <p className="text-xs text-[#736E65] flex items-center gap-2 mt-1">
+                <p className="text-xs text-[#77758F] flex items-center gap-2 mt-1">
                   <Building2 className="w-3.5 h-3.5" /> {activeJD.company_name}
                   <span>•</span>
                   <MapPin className="w-3.5 h-3.5" /> {activeJD.location}
                   <span>•</span>
-                  <span className="font-mono font-bold text-[#121212]">{activeJD.stipend_or_salary}</span>
+                  <span className="font-mono font-bold text-[#0D0B2D]">{activeJD.stipend_or_salary}</span>
                 </p>
               </div>
 
               <button
                 onClick={() => setActiveJD(null)}
-                className="w-8 h-8 rounded-full bg-white border border-[#E2DBD0] flex items-center justify-center hover:bg-[#EDE7DC]"
+                className="w-8 h-8 rounded-full bg-white border border-[#DDD6FE] flex items-center justify-center hover:bg-[#E6E0FF]"
               >
-                <X className="w-4 h-4 text-[#121212]" />
+                <X className="w-4 h-4 text-[#0D0B2D]" />
               </button>
             </div>
 
             {/* Description & Overview */}
             <div className="space-y-4">
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#59554E]">Role Overview</h4>
-                <p className="text-xs text-[#121212] leading-relaxed mt-1">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#77758F]">Role Overview</h4>
+                <p className="text-xs text-[#0D0B2D] leading-relaxed mt-1">
                   {activeJD.description}
                 </p>
               </div>
 
               {/* Skills Comparison: Required vs You Have */}
-              <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#59554E]">
+              <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#77758F]">
                   Skill Match & Diagnostics
                 </h4>
                 <div className="space-y-2">
@@ -2066,9 +2066,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     return (
                       <div
                         key={reqSkill}
-                        className="flex items-center justify-between p-2 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-xs"
+                        className="flex items-center justify-between p-2 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE] text-xs"
                       >
-                        <span className="font-mono font-bold text-[#121212]">{reqSkill}</span>
+                        <span className="font-mono font-bold text-[#0D0B2D]">{reqSkill}</span>
                         {matched ? (
                           <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
                             <Check className="w-3 h-3 stroke-[3]" /> Verified Match
@@ -2086,37 +2086,37 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               {/* Resume-Matcher Deterministic ATS Diagnostics Card */}
               {activeJD.atsMatch && (
-                <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-3">
+                <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#59554E] flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#121212]" />
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#77758F] flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#0D0B2D]" />
                       Resume-Matcher ATS Compatibility Breakdown
                     </h4>
-                    <span className="text-xs font-mono font-black text-[#121212] bg-[#EDE7DC] px-2 py-0.5 rounded border border-[#D9D2C7]">
+                    <span className="text-xs font-mono font-black text-[#0D0B2D] bg-[#E6E0FF] px-2 py-0.5 rounded border border-[#DDD6FE]">
                       Overall: {activeJD.atsMatch.overall_score}%
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                      <span className="text-[10px] text-[#736E65] block font-semibold">Keywords (40%)</span>
-                      <span className="text-xs font-bold font-mono text-[#121212]">{activeJD.atsMatch.sub_scores.keyword_match}%</span>
+                    <div className="p-2.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                      <span className="text-[10px] text-[#77758F] block font-semibold">Keywords (40%)</span>
+                      <span className="text-xs font-bold font-mono text-[#0D0B2D]">{activeJD.atsMatch.sub_scores.keyword_match}%</span>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                      <span className="text-[10px] text-[#736E65] block font-semibold">Skills (20%)</span>
-                      <span className="text-xs font-bold font-mono text-[#121212]">{activeJD.atsMatch.sub_scores.skills_coverage}%</span>
+                    <div className="p-2.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                      <span className="text-[10px] text-[#77758F] block font-semibold">Skills (20%)</span>
+                      <span className="text-xs font-bold font-mono text-[#0D0B2D]">{activeJD.atsMatch.sub_scores.skills_coverage}%</span>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                      <span className="text-[10px] text-[#736E65] block font-semibold">Title (15%)</span>
-                      <span className="text-xs font-bold font-mono text-[#121212]">{activeJD.atsMatch.sub_scores.title_match}%</span>
+                    <div className="p-2.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                      <span className="text-[10px] text-[#77758F] block font-semibold">Title (15%)</span>
+                      <span className="text-xs font-bold font-mono text-[#0D0B2D]">{activeJD.atsMatch.sub_scores.title_match}%</span>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                      <span className="text-[10px] text-[#736E65] block font-semibold">Sections (15%)</span>
-                      <span className="text-xs font-bold font-mono text-[#121212]">{activeJD.atsMatch.sub_scores.section_completeness}%</span>
+                    <div className="p-2.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                      <span className="text-[10px] text-[#77758F] block font-semibold">Sections (15%)</span>
+                      <span className="text-xs font-bold font-mono text-[#0D0B2D]">{activeJD.atsMatch.sub_scores.section_completeness}%</span>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                      <span className="text-[10px] text-[#736E65] block font-semibold">Dates (10%)</span>
-                      <span className="text-xs font-bold font-mono text-[#121212]">{activeJD.atsMatch.sub_scores.date_consistency}%</span>
+                    <div className="p-2.5 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                      <span className="text-[10px] text-[#77758F] block font-semibold">Dates (10%)</span>
+                      <span className="text-xs font-bold font-mono text-[#0D0B2D]">{activeJD.atsMatch.sub_scores.date_consistency}%</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
                       <span className="text-[10px] text-emerald-800 block font-semibold">Equity Boost</span>
@@ -2125,8 +2125,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </div>
 
                   {activeJD.atsMatch.recommendations.length > 0 && (
-                    <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-[11px] text-[#59554E] space-y-1">
-                      <span className="font-bold text-[#121212] block">AI Matching Insights:</span>
+                    <div className="p-3 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE] text-[11px] text-[#77758F] space-y-1">
+                      <span className="font-bold text-[#0D0B2D] block">AI Matching Insights:</span>
                       <ul className="list-disc pl-4 space-y-0.5">
                         {activeJD.atsMatch.recommendations.map((rec, rIdx) => (
                           <li key={rIdx}>{rec}</li>
@@ -2139,15 +2139,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               {/* Hardware & Remote Benefits */}
               <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-white border border-[#E2DBD0]">
-                  <span className="text-[11px] text-[#736E65] block">Work Arrangement</span>
-                  <span className="font-bold text-[#121212]">
+                <div className="p-3 rounded-xl bg-white border border-[#DDD6FE]">
+                  <span className="text-[11px] text-[#77758F] block">Work Arrangement</span>
+                  <span className="font-bold text-[#0D0B2D]">
                     {activeJD.is_remote ? "100% Remote (Work from anywhere)" : "On-Site Office"}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-white border border-[#E2DBD0]">
-                  <span className="text-[11px] text-[#736E65] block">Hardware Grant</span>
-                  <span className="font-bold text-[#121212]">
+                <div className="p-3 rounded-xl bg-white border border-[#DDD6FE]">
+                  <span className="text-[11px] text-[#77758F] block">Hardware Grant</span>
+                  <span className="font-bold text-[#0D0B2D]">
                     {activeJD.hardware_provided ? "Laptop & Wi-Fi Subsidy Shipped" : "Standard BYOD"}
                   </span>
                 </div>
@@ -2155,7 +2155,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
 
             {/* Modal Actions */}
-            <div className="pt-4 border-t border-[#E2DBD0] flex flex-wrap items-center justify-end gap-3">
+            <div className="pt-4 border-t border-[#DDD6FE] flex flex-wrap items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => {
@@ -2165,7 +2165,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   setResumeModalTab("BUILDER");
                   setIsResumeModalOpen(true);
                 }}
-                className="px-4 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-[#FAF8F5] text-[#121212] border-2 border-[#121212] shadow-xs flex items-center gap-1.5 transition-all"
+                className="px-4 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-[#F7F8FF] text-[#0D0B2D] border-2 border-[#5B4BFF] shadow-xs flex items-center gap-1.5 transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 <span>✏️ Tailor Resume for this Role</span>
@@ -2173,7 +2173,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
               <button
                 onClick={() => setActiveJD(null)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-[#736E65] hover:text-[#121212]"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#77758F] hover:text-[#0D0B2D]"
               >
                 Close
               </button>
@@ -2182,7 +2182,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   handleApply(activeJD);
                   setActiveJD(null);
                 }}
-                className="px-6 py-2.5 rounded-xl text-xs font-bold bg-[#121212] hover:bg-[#262626] text-white shadow-md flex items-center gap-2"
+                className="px-6 py-2.5 rounded-xl text-xs font-bold bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 shadow-md flex items-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Submit Blind Application</span>
@@ -2207,59 +2207,59 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         const skillMatchPct = Math.round((matched.length / (reqSkills.length || 1)) * 100);
 
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#121212]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
-            <div className="relative w-full max-w-xl bg-[#FAF8F5] rounded-3xl border border-[#E2DBD0] shadow-2xl p-6 sm:p-8 space-y-5 my-auto max-h-[92vh] overflow-y-auto">
-              <div className="flex items-center justify-between border-b border-[#E2DBD0] pb-3">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#5B4BFF]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
+            <div className="relative w-full max-w-xl bg-[#F7F8FF] rounded-3xl border border-[#DDD6FE] shadow-2xl p-6 sm:p-8 space-y-5 my-auto max-h-[92vh] overflow-y-auto">
+              <div className="flex items-center justify-between border-b border-[#DDD6FE] pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-[#121212] text-white flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-xl bg-[#5B4BFF] text-white flex items-center justify-center">
                     <Sparkles className="w-4 h-4 text-amber-300" />
                   </div>
                   <div>
-                    <h3 className="font-black text-base text-[#121212]">
+                    <h3 className="font-black text-base text-[#0D0B2D]">
                       Explainable AI (XAI) Match Breakdown
                     </h3>
-                    <span className="text-[11px] text-[#736E65]">
+                    <span className="text-[11px] text-[#77758F]">
                       ClearHire 5-Layer Deterministic Ranking Engine
                     </span>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedOppForXAI(null)}
-                  className="w-7 h-7 rounded-full bg-white border border-[#E2DBD0] flex items-center justify-center hover:bg-[#EDE7DC]"
+                  className="w-7 h-7 rounded-full bg-white border border-[#DDD6FE] flex items-center justify-center hover:bg-[#E6E0FF]"
                 >
-                  <X className="w-4 h-4 text-[#121212]" />
+                  <X className="w-4 h-4 text-[#0D0B2D]" />
                 </button>
               </div>
 
               {/* Job Title & Candidate Info Header */}
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E2DBD0] flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-white border border-[#DDD6FE] flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-black text-[#121212]">
+                    <span className="text-xs font-black text-[#0D0B2D]">
                       {selectedOppForXAI.title}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#D9D2C7] font-bold">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F7F8FF] border border-[#DDD6FE] font-bold">
                       {selectedOppForXAI.company_name}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#736E65] mt-0.5">
-                    Candidate: <strong>{realDisplayName}</strong> • Active Resume: <span className="font-mono text-[#121212]">{candidateResumeName}</span>
+                  <p className="text-[11px] text-[#77758F] mt-0.5">
+                    Candidate: <strong>{realDisplayName}</strong> • Active Resume: <span className="font-mono text-[#0D0B2D]">{candidateResumeName}</span>
                   </p>
                 </div>
                 <div className="text-right">
                   <span className="text-lg font-black font-mono text-emerald-800">
                     {selectedOppForXAI.matchScore || 94}%
                   </span>
-                  <span className="text-[10px] font-mono block text-[#736E65] font-bold">
+                  <span className="text-[10px] font-mono block text-[#77758F] font-bold">
                     Rank #{fitRank} Fit
                   </span>
                 </div>
               </div>
 
               {/* Live Skills Breakdown */}
-              <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-3">
+              <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#121212]">
+                  <span className="font-bold text-[#0D0B2D]">
                     Competency Alignment: {matched.length}/{reqSkills.length} Required Skills Matched
                   </span>
                   <span className="font-mono font-bold text-emerald-700">
@@ -2268,9 +2268,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full bg-[#EDE7DC] h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-[#E6E0FF] h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-[#121212] h-full transition-all duration-500"
+                    className="bg-[#5B4BFF] h-full transition-all duration-500"
                     style={{ width: `${Math.max(15, skillMatchPct)}%` }}
                   />
                 </div>
@@ -2296,14 +2296,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
                 {/* Missing skills */}
                 {missing.length > 0 && (
-                  <div className="space-y-1.5 pt-1 border-t border-[#F4EFE6]">
+                  <div className="space-y-1.5 pt-1 border-t border-[#DDD6FE]/60">
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] font-bold text-amber-900">
                         ⚠️ Missing Skills (Add to reach 98% ATS):
                       </span>
                       <button
                         onClick={() => handleInfuseSkills(missing)}
-                        className="px-2.5 py-1 rounded-lg bg-[#121212] hover:bg-[#262626] text-white text-[10px] font-bold flex items-center gap-1 transition-all"
+                        className="px-2.5 py-1 rounded-lg bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-[10px] font-bold flex items-center gap-1 transition-all"
                       >
                         <Zap className="w-3 h-3 text-amber-300" />
                         <span>⚡ 1-Click Infuse</span>
@@ -2324,49 +2324,49 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
 
               {/* 5-Layer ClearHire Breakdown */}
-              <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] space-y-2.5 text-xs">
-                <span className="font-bold text-[#121212] block">
+              <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] space-y-2.5 text-xs">
+                <span className="font-bold text-[#0D0B2D] block">
                   ClearHire 5-Layer ATS Evaluation
                 </span>
 
                 <div className="space-y-2">
                   <div>
-                    <div className="flex justify-between text-[11px] font-semibold text-[#121212] mb-0.5">
+                    <div className="flex justify-between text-[11px] font-semibold text-[#0D0B2D] mb-0.5">
                       <span>1. Taxonomy Skill Overlap (30%)</span>
                       <span className="font-mono">{skillMatchPct}%</span>
                     </div>
-                    <div className="w-full bg-[#EDE7DC] h-1.5 rounded-full overflow-hidden">
-                      <div className="bg-[#121212] h-full" style={{ width: `${skillMatchPct}%` }} />
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-[#5B4BFF] h-full" style={{ width: `${skillMatchPct}%` }} />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-[11px] font-semibold text-[#121212] mb-0.5">
+                    <div className="flex justify-between text-[11px] font-semibold text-[#0D0B2D] mb-0.5">
                       <span>2. Role & Title Alignment (20%)</span>
                       <span className="font-mono">92%</span>
                     </div>
-                    <div className="w-full bg-[#EDE7DC] h-1.5 rounded-full overflow-hidden">
-                      <div className="bg-[#121212] h-full" style={{ width: "92%" }} />
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-[#5B4BFF] h-full" style={{ width: "92%" }} />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-[11px] font-semibold text-[#121212] mb-0.5">
+                    <div className="flex justify-between text-[11px] font-semibold text-[#0D0B2D] mb-0.5">
                       <span>3. Academic & Institutional Integrity (15%)</span>
                       <span className="font-mono">95%</span>
                     </div>
-                    <div className="w-full bg-[#EDE7DC] h-1.5 rounded-full overflow-hidden">
-                      <div className="bg-[#121212] h-full" style={{ width: "95%" }} />
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-[#5B4BFF] h-full" style={{ width: "95%" }} />
                     </div>
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-[11px] font-semibold text-[#121212] mb-0.5">
+                    <div className="flex justify-between text-[11px] font-semibold text-[#0D0B2D] mb-0.5">
                       <span>4. Project Depth & Quantified Verbs (20%)</span>
                       <span className="font-mono">90%</span>
                     </div>
-                    <div className="w-full bg-[#EDE7DC] h-1.5 rounded-full overflow-hidden">
-                      <div className="bg-[#121212] h-full" style={{ width: "90%" }} />
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-[#5B4BFF] h-full" style={{ width: "90%" }} />
                     </div>
                   </div>
 
@@ -2375,7 +2375,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                       <span>5. Equity & Anti-Bias Blind Evaluation (15%)</span>
                       <span className="font-mono">98%</span>
                     </div>
-                    <div className="w-full bg-[#EDE7DC] h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-[#E6E0FF] h-1.5 rounded-full overflow-hidden">
                       <div className="bg-emerald-600 h-full" style={{ width: "98%" }} />
                     </div>
                   </div>
@@ -2383,7 +2383,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </div>
 
               {/* Bias Protection Notice */}
-              <div className="p-3 rounded-2xl bg-[#EDE7DC] border border-[#D9D2C7] text-[11px] text-[#423E37] leading-relaxed">
+              <div className="p-3 rounded-2xl bg-[#E6E0FF] border border-[#DDD6FE] text-[11px] text-[#0D0B2D] leading-relaxed">
                 <strong>Anti-Bias Merit Guarantee:</strong> Your application is presented to recruiters with college tier, name, gender, and personal identifiers masked. Selection is strictly determined by verified proof-of-work.
               </div>
 
@@ -2398,7 +2398,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     setResumeModalTab("BUILDER");
                     setIsResumeModalOpen(true);
                   }}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white hover:bg-[#FAF8F5] text-[#121212] border-2 border-[#121212] flex items-center gap-1.5 transition-all shadow-xs"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white hover:bg-[#F7F8FF] text-[#0D0B2D] border-2 border-[#5B4BFF] flex items-center gap-1.5 transition-all shadow-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>Tailor in OpenResume</span>
@@ -2414,7 +2414,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   className={`px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-sm ${
                     isApplied
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default"
-                      : "bg-[#121212] hover:bg-[#262626] text-white"
+                      : "bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5"
                   }`}
                 >
                   {isApplied ? (
@@ -2437,20 +2437,20 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* ID CARD UPLOAD MODAL */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#121212]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
-          <div className="relative w-full max-w-md bg-[#FAF8F5] rounded-3xl border border-[#E2DBD0] shadow-2xl p-6 sm:p-8 space-y-5 my-auto">
-            <div className="flex items-center justify-between border-b border-[#E2DBD0] pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#5B4BFF]/60 backdrop-blur-md p-4 sm:p-6 overflow-y-auto">
+          <div className="relative w-full max-w-md bg-[#F7F8FF] rounded-3xl border border-[#DDD6FE] shadow-2xl p-6 sm:p-8 space-y-5 my-auto">
+            <div className="flex items-center justify-between border-b border-[#DDD6FE] pb-3">
               <div className="flex items-center gap-2">
-                <UploadCloud className="w-5 h-5 text-[#121212]" />
-                <h3 className="font-black text-base text-[#121212]">
+                <UploadCloud className="w-5 h-5 text-[#0D0B2D]" />
+                <h3 className="font-black text-base text-[#0D0B2D]">
                   Upload College ID for Verification
                 </h3>
               </div>
               <button
                 onClick={() => setShowUploadModal(false)}
-                className="w-7 h-7 rounded-full bg-white border border-[#E2DBD0] flex items-center justify-center hover:bg-[#EDE7DC]"
+                className="w-7 h-7 rounded-full bg-white border border-[#DDD6FE] flex items-center justify-center hover:bg-[#E6E0FF]"
               >
-                <X className="w-4 h-4 text-[#121212]" />
+                <X className="w-4 h-4 text-[#0D0B2D]" />
               </button>
             </div>
 
@@ -2462,7 +2462,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             ) : (
               <form onSubmit={handleUploadId} className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-wider text-[#59554E]">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#77758F]">
                     Student ID Document URL / File Reference
                   </label>
                   <input
@@ -2470,9 +2470,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     required
                     value={idCardUrl}
                     onChange={(e) => setIdCardUrl(e.target.value)}
-                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-mono text-[#121212]"
+                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-mono text-[#0D0B2D]"
                   />
-                  <p className="text-[11px] text-[#736E65] mt-1">
+                  <p className="text-[11px] text-[#77758F] mt-1">
                     Upload your physical ID card or semester registration slip for administrative audit.
                   </p>
                 </div>
@@ -2481,13 +2481,13 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowUploadModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-[#736E65]"
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-[#77758F]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#121212] text-white"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#5B4BFF] text-white"
                   >
                     Submit for Verification
                   </button>

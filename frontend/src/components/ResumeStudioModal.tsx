@@ -719,37 +719,37 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#121212]/70 backdrop-blur-md p-2 sm:p-4 overflow-y-auto print:p-0 print:bg-white">
-      <div className="relative w-full max-w-7xl h-[94vh] bg-[#FAF8F5] rounded-3xl border border-[#E2DBD0] shadow-2xl flex flex-col overflow-hidden my-auto print:border-none print:shadow-none print:h-auto print:rounded-none">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0D0B2D]/70 backdrop-blur-md p-2 sm:p-4 overflow-y-auto print:p-0 print:bg-white">
+      <div className="relative w-full max-w-7xl h-[94vh] bg-[#F7F8FF] rounded-3xl border border-[#DDD6FE] shadow-2xl flex flex-col overflow-hidden my-auto print:border-none print:shadow-none print:h-auto print:rounded-none">
         {/* Top Control Bar */}
-        <div className="p-4 sm:px-6 bg-white border-b border-[#E2DBD0] flex flex-wrap items-center justify-between gap-3 shrink-0 print:hidden">
+        <div className="p-4 sm:px-6 bg-white border-b border-[#DDD6FE] flex flex-wrap items-center justify-between gap-3 shrink-0 print:hidden">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#121212] text-white flex items-center justify-center font-bold text-sm">
+            <div className="w-9 h-9 rounded-xl bg-[#5B4BFF] text-white flex items-center justify-center font-bold text-sm">
               <FileText className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-black text-sm tracking-tight text-[#121212]">
-                  OpenResume <span className="font-light text-[#736E65]">ATS Studio</span>
+                <span className="font-black text-sm tracking-tight text-[#0D0B2D]">
+                  OpenResume <span className="font-light text-[#77758F]">ATS Studio</span>
                 </span>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#EDE7DC] text-[#423E37]">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#0D0B2D]">
                   ATS Readability 100%
                 </span>
               </div>
-              <p className="text-[11px] text-[#736E65]">
+              <p className="text-[11px] text-[#77758F]">
                 Parse existing resumes with pdf.js and edit ATS-friendly single-column layouts.
               </p>
             </div>
           </div>
 
           {/* Mode Switcher Tabs */}
-          <div className="flex items-center gap-2 bg-[#FAF8F5] p-1 rounded-2xl border border-[#E2DBD0]">
+          <div className="flex items-center gap-2 bg-[#F7F8FF] p-1 rounded-2xl border border-[#DDD6FE]">
             <button
               onClick={() => setActiveTab("PARSER")}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === "PARSER"
-                  ? "bg-[#121212] text-white shadow-sm"
-                  : "text-[#59554E] hover:text-[#121212]"
+                  ? "bg-[#5B4BFF] text-white shadow-sm"
+                  : "text-[#77758F] hover:text-[#0D0B2D]"
               }`}
             >
               <UploadCloud className="w-3.5 h-3.5" />
@@ -759,8 +759,8 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               onClick={() => setActiveTab("BUILDER")}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === "BUILDER"
-                  ? "bg-[#121212] text-white shadow-sm"
-                  : "text-[#59554E] hover:text-[#121212]"
+                  ? "bg-[#5B4BFF] text-white shadow-sm"
+                  : "text-[#77758F] hover:text-[#0D0B2D]"
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -772,10 +772,10 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="px-3.5 py-1.5 rounded-xl bg-white text-[#121212] border border-[#121212] hover:bg-[#FAF8F5] text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
+              className="px-3.5 py-1.5 rounded-xl bg-white text-[#0D0B2D] border border-[#DDD6FE] hover:bg-[#F7F8FF] text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
               title="Upload or change resume file from your computer folder"
             >
-              <UploadCloud className="w-3.5 h-3.5 text-[#121212]" />
+              <UploadCloud className="w-3.5 h-3.5 text-[#0D0B2D]" />
               <span>📁 Change File</span>
             </button>
             <button
@@ -787,7 +787,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
             </button>
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-full bg-[#FAF8F5] hover:bg-[#EDE7DC] border border-[#E2DBD0] flex items-center justify-center text-[#121212] transition-colors"
+              className="w-8 h-8 rounded-full bg-[#F7F8FF] hover:bg-[#E6E0FF] border border-[#DDD6FE] flex items-center justify-center text-[#0D0B2D] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -808,14 +808,14 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
         {activeTab === "PARSER" && (
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 overflow-hidden print:hidden">
             {/* Left Col: PDF Preview Container */}
-            <div className="p-6 bg-[#F4EFE6]/60 border-r border-[#E2DBD0] flex flex-col justify-between overflow-y-auto">
+            <div className="p-6 bg-[#E6E0FF]/40 border-r border-[#DDD6FE] flex flex-col justify-between overflow-y-auto">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#121212] uppercase tracking-wider font-mono">
+                  <span className="text-xs font-bold text-[#0D0B2D] uppercase tracking-wider font-mono">
                     Source PDF Document
                   </span>
                   <div className="flex gap-2">
-                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-[#121212] text-white font-bold flex items-center gap-1.5">
+                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-[#5B4BFF] text-white font-bold flex items-center gap-1.5">
                       <FileText className="w-3.5 h-3.5 text-amber-300" />
                       <span>{selectedResumeFile}</span>
                     </span>
@@ -823,7 +823,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 </div>
 
                 {/* Simulated High-Fidelity PDF Preview Container */}
-                <div className="bg-white rounded-2xl border border-[#D9D2C7] shadow-md p-6 aspect-[8.5/11] max-w-lg mx-auto overflow-y-auto text-black font-serif text-[11px] leading-relaxed">
+                <div className="bg-white rounded-2xl border border-[#DDD6FE] shadow-md p-6 aspect-[8.5/11] max-w-lg mx-auto overflow-y-auto text-black font-serif text-[11px] leading-relaxed">
                   <div className="text-center border-b pb-2 mb-3">
                     <h2 className="text-base font-bold tracking-wide">
                       {currentParsedResume.profile.name}
@@ -926,16 +926,16 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className={`mt-4 p-4 border-2 border-dashed rounded-2xl text-center cursor-pointer transition-all ${
                   isDragging
-                    ? "border-[#121212] bg-[#FAF8F5] scale-[1.01]"
-                    : "border-[#CEBFAD] bg-white/80 hover:border-[#121212] hover:bg-white"
+                    ? "border-[#DDD6FE] bg-[#F7F8FF] scale-[1.01]"
+                    : "border-[#A78BFA] bg-white/80 hover:border-[#5B4BFF] hover:bg-white"
                 }`}
               >
-                <UploadCloud className="w-6 h-6 mx-auto mb-1 text-[#121212]" />
-                <p className="text-xs font-bold text-[#121212]">
+                <UploadCloud className="w-6 h-6 mx-auto mb-1 text-[#0D0B2D]" />
+                <p className="text-xs font-bold text-[#0D0B2D]">
                   📁 Drag & Drop Resume (.PDF, .DOCX, .TXT) from folder
                 </p>
-                <p className="text-[11px] text-[#736E65] mt-0.5">
-                  or <span className="text-[#121212] underline font-bold">click to browse from files</span> • Current: {selectedResumeFile}
+                <p className="text-[11px] text-[#77758F] mt-0.5">
+                  or <span className="text-[#0D0B2D] underline font-bold">click to browse from files</span> • Current: {selectedResumeFile}
                 </p>
               </div>
             </div>
@@ -943,13 +943,13 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
             {/* Right Col: Structured Resume Parsing Results Table (Exact Image 1 Table) */}
             <div className="p-6 overflow-y-auto bg-white flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-[#E2DBD0] mb-4">
-                  <h3 className="text-base font-black text-[#121212] tracking-tight">
+                <div className="flex items-center justify-between pb-3 border-b border-[#DDD6FE] mb-4">
+                  <h3 className="text-base font-black text-[#0D0B2D] tracking-tight">
                     Resume Parsing Results
                   </h3>
                   <button
                     onClick={handleApplyParsedToEditor}
-                    className="px-3.5 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
+                    className="px-3.5 py-1.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold flex items-center gap-1.5 shadow-sm"
                   >
                     <span>Edit in Live Builder</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -957,101 +957,101 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 </div>
 
                 {/* Parsing Results Table */}
-                <div className="border border-[#E2DBD0] rounded-2xl overflow-hidden text-xs">
+                <div className="border border-[#DDD6FE] rounded-2xl overflow-hidden text-xs">
                   <table className="w-full text-left border-collapse">
-                    <tbody className="divide-y divide-[#E2DBD0]">
+                    <tbody className="divide-y divide-[#DDD6FE]">
                       {/* Section: Profile */}
-                      <tr className="bg-[#FAF8F5]">
-                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#121212]">
+                      <tr className="bg-[#F7F8FF]">
+                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#0D0B2D]">
                           Profile
                         </th>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] w-1/4 border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] w-1/4 border-r border-[#DDD6FE]">
                           Name
                         </th>
-                        <td className="px-4 py-2 font-medium text-[#121212]">
+                        <td className="px-4 py-2 font-medium text-[#0D0B2D]">
                           {currentParsedResume.profile.name}
                         </td>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Email
                         </th>
-                        <td className="px-4 py-2 font-mono text-[#121212]">
+                        <td className="px-4 py-2 font-mono text-[#0D0B2D]">
                           {currentParsedResume.profile.email}
                         </td>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Phone
                         </th>
-                        <td className="px-4 py-2 font-mono text-[#121212]">
+                        <td className="px-4 py-2 font-mono text-[#0D0B2D]">
                           {currentParsedResume.profile.phone}
                         </td>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Location
                         </th>
-                        <td className="px-4 py-2 font-medium text-[#121212]">
+                        <td className="px-4 py-2 font-medium text-[#0D0B2D]">
                           {currentParsedResume.profile.location}
                         </td>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Link
                         </th>
-                        <td className="px-4 py-2 font-mono text-[#121212] text-[11px]">
+                        <td className="px-4 py-2 font-mono text-[#0D0B2D] text-[11px]">
                           {currentParsedResume.profile.url}
                         </td>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Summary
                         </th>
-                        <td className="px-4 py-2 font-medium text-[#121212] leading-relaxed">
+                        <td className="px-4 py-2 font-medium text-[#0D0B2D] leading-relaxed">
                           {currentParsedResume.profile.summary}
                         </td>
                       </tr>
 
                       {/* Section: Education */}
-                      <tr className="bg-[#FAF8F5]">
-                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#121212]">
+                      <tr className="bg-[#F7F8FF]">
+                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#0D0B2D]">
                           Education
                         </th>
                       </tr>
                       {currentParsedResume.educations.map((edu, idx) => (
                         <React.Fragment key={idx}>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               School
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{edu.school}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{edu.school}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Degree
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{edu.degree}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{edu.degree}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               GPA
                             </th>
-                            <td className="px-4 py-2 font-mono text-[#121212]">{edu.gpa}</td>
+                            <td className="px-4 py-2 font-mono text-[#0D0B2D]">{edu.gpa}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Date
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{edu.date}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{edu.date}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Descriptions
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">
                               {edu.descriptions.map((d, di) => (
                                 <div key={di}>• {d}</div>
                               ))}
@@ -1061,36 +1061,36 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                       ))}
 
                       {/* Section: Work Experience */}
-                      <tr className="bg-[#FAF8F5]">
-                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#121212]">
+                      <tr className="bg-[#F7F8FF]">
+                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#0D0B2D]">
                           Work Experience
                         </th>
                       </tr>
                       {currentParsedResume.workExperiences.map((exp, idx) => (
                         <React.Fragment key={idx}>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Company
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{exp.company}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{exp.company}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Job Title
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{exp.jobTitle}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{exp.jobTitle}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Date
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">{exp.date}</td>
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">{exp.date}</td>
                           </tr>
                           <tr>
-                            <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                            <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                               Descriptions
                             </th>
-                            <td className="px-4 py-2 font-medium text-[#121212]">
+                            <td className="px-4 py-2 font-medium text-[#0D0B2D]">
                               {exp.descriptions.map((desc, di) => (
                                 <div key={di}>• {desc}</div>
                               ))}
@@ -1100,16 +1100,16 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                       ))}
 
                       {/* Section: Skills */}
-                      <tr className="bg-[#FAF8F5]">
-                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#121212]">
+                      <tr className="bg-[#F7F8FF]">
+                        <th colSpan={2} className="px-4 py-2 text-xs font-black text-[#0D0B2D]">
                           Skills & Competencies
                         </th>
                       </tr>
                       <tr>
-                        <th className="px-4 py-2 font-bold text-[#59554E] border-r border-[#E2DBD0]">
+                        <th className="px-4 py-2 font-bold text-[#77758F] border-r border-[#DDD6FE]">
                           Competencies
                         </th>
-                        <td className="px-4 py-2 font-medium text-[#121212]">
+                        <td className="px-4 py-2 font-medium text-[#0D0B2D]">
                           {currentParsedResume.skills.descriptions.map((s, si) => (
                             <div key={si}>• {s}</div>
                           ))}
@@ -1121,13 +1121,13 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               </div>
 
               {/* Bottom Transfer Call-to-action */}
-              <div className="mt-4 pt-4 border-t border-[#E2DBD0] flex items-center justify-between">
-                <span className="text-xs text-[#736E65]">
+              <div className="mt-4 pt-4 border-t border-[#DDD6FE] flex items-center justify-between">
+                <span className="text-xs text-[#77758F]">
                   ATS Compatibility: <strong>Zero parsing errors detected.</strong>
                 </span>
                 <button
                   onClick={handleApplyParsedToEditor}
-                  className="px-5 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold"
+                  className="px-5 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold"
                 >
                   Load into Resume Builder →
                 </button>
@@ -1142,29 +1142,29 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
         {activeTab === "BUILDER" && (
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 overflow-hidden print:block">
             {/* Left Col: Form Editor */}
-            <div className="p-6 overflow-y-auto space-y-6 bg-white border-r border-[#E2DBD0] print:hidden">
+            <div className="p-6 overflow-y-auto space-y-6 bg-white border-r border-[#DDD6FE] print:hidden">
               {/* JD Tailoring Assistant Banner */}
               {tailoringJD && (
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border-2 border-[#121212] shadow-sm space-y-3">
+                <div className="p-4 rounded-2xl bg-[#F7F8FF] border-2 border-[#DDD6FE] shadow-sm space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#121212] text-white">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#5B4BFF] text-white">
                           🎯 Tailoring Assistant Active
                         </span>
                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
                           {getTailoringKeywordStats().score}% ATS Compatibility
                         </span>
                       </div>
-                      <h4 className="text-xs font-black text-[#121212]">
-                        {tailoringJD.title} &bull; <span className="text-[#59554E] font-medium">{tailoringJD.company_name}</span>
+                      <h4 className="text-xs font-black text-[#0D0B2D]">
+                        {tailoringJD.title} &bull; <span className="text-[#77758F] font-medium">{tailoringJD.company_name}</span>
                       </h4>
                     </div>
 
                     <button
                       type="button"
                       onClick={handleInfuseKeywords}
-                      className="px-3 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                       <span>⚡ 1-Click Infuse Missing Keywords</span>
@@ -1172,10 +1172,10 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                   </div>
 
                   {/* Target Keywords breakdown */}
-                  <div className="space-y-1.5 pt-1 border-t border-[#E2DBD0]">
+                  <div className="space-y-1.5 pt-1 border-t border-[#DDD6FE]">
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-bold text-[#59554E]">JD Required Keywords:</span>
-                      <span className="font-mono text-[#736E65]">
+                      <span className="font-bold text-[#77758F]">JD Required Keywords:</span>
+                      <span className="font-mono text-[#77758F]">
                         {getTailoringKeywordStats().matched.length} of {tailoringJD.required_skills?.length || 0} matched
                       </span>
                     </div>
@@ -1202,12 +1202,12 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               )}
 
               {/* Profile Card */}
-              <div className="space-y-3 p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                <h4 className="text-xs font-black uppercase tracking-wider text-[#121212]">
+              <div className="space-y-3 p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                <h4 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D]">
                   Profile Information
                 </h4>
                 <div>
-                  <label className="text-[11px] font-bold text-[#59554E]">Full Name</label>
+                  <label className="text-[11px] font-bold text-[#77758F]">Full Name</label>
                   <input
                     type="text"
                     value={resumeData.profile.name}
@@ -1217,11 +1217,11 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                         profile: { ...resumeData.profile, name: e.target.value },
                       })
                     }
-                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-semibold text-[#121212]"
+                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-semibold text-[#0D0B2D]"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-bold text-[#59554E]">Objective / Summary</label>
+                  <label className="text-[11px] font-bold text-[#77758F]">Objective / Summary</label>
                   <textarea
                     rows={2}
                     value={resumeData.profile.summary}
@@ -1231,12 +1231,12 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                         profile: { ...resumeData.profile, summary: e.target.value },
                       })
                     }
-                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                    className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-bold text-[#59554E]">Email</label>
+                    <label className="text-[11px] font-bold text-[#77758F]">Email</label>
                     <input
                       type="email"
                       value={resumeData.profile.email}
@@ -1246,11 +1246,11 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           profile: { ...resumeData.profile, email: e.target.value },
                         })
                       }
-                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-mono text-[#121212]"
+                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-mono text-[#0D0B2D]"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-bold text-[#59554E]">Phone</label>
+                    <label className="text-[11px] font-bold text-[#77758F]">Phone</label>
                     <input
                       type="text"
                       value={resumeData.profile.phone}
@@ -1260,13 +1260,13 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           profile: { ...resumeData.profile, phone: e.target.value },
                         })
                       }
-                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-mono text-[#121212]"
+                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-mono text-[#0D0B2D]"
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-bold text-[#59554E]">Website / GitHub</label>
+                    <label className="text-[11px] font-bold text-[#77758F]">Website / GitHub</label>
                     <input
                       type="text"
                       value={resumeData.profile.url}
@@ -1276,11 +1276,11 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           profile: { ...resumeData.profile, url: e.target.value },
                         })
                       }
-                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-mono text-[#121212]"
+                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-mono text-[#0D0B2D]"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-bold text-[#59554E]">Location</label>
+                    <label className="text-[11px] font-bold text-[#77758F]">Location</label>
                     <input
                       type="text"
                       value={resumeData.profile.location}
@@ -1290,7 +1290,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           profile: { ...resumeData.profile, location: e.target.value },
                         })
                       }
-                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                      className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                     />
                   </div>
                 </div>
@@ -1299,12 +1299,12 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               {/* Work Experience Section */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#121212] flex items-center gap-1.5">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D] flex items-center gap-1.5">
                     <Briefcase className="w-3.5 h-3.5" /> Work Experience
                   </h4>
                   <button
                     onClick={addWorkExperience}
-                    className="px-2.5 py-1 rounded-lg bg-[#EDE7DC] hover:bg-[#D9D2C7] text-[#121212] text-xs font-bold flex items-center gap-1"
+                    className="px-2.5 py-1 rounded-lg bg-[#E6E0FF] hover:bg-[#DDD6FE] text-[#0D0B2D] text-xs font-bold flex items-center gap-1"
                   >
                     <Plus className="w-3 h-3" /> Add Experience
                   </button>
@@ -1313,10 +1313,10 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 {resumeData.workExperiences.map((exp, expIdx) => (
                   <div
                     key={expIdx}
-                    className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-3 relative group"
+                    className="p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] space-y-3 relative group"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#121212]">
+                      <span className="text-xs font-bold text-[#0D0B2D]">
                         Role #{expIdx + 1}
                       </span>
                       <button
@@ -1329,7 +1329,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[11px] font-bold text-[#59554E]">Company</label>
+                        <label className="text-[11px] font-bold text-[#77758F]">Company</label>
                         <input
                           type="text"
                           value={exp.company}
@@ -1338,11 +1338,11 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                             updated[expIdx].company = e.target.value;
                             setResumeData({ ...resumeData, workExperiences: updated });
                           }}
-                          className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-semibold text-[#121212]"
+                          className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-semibold text-[#0D0B2D]"
                         />
                       </div>
                       <div>
-                        <label className="text-[11px] font-bold text-[#59554E]">Job Title</label>
+                        <label className="text-[11px] font-bold text-[#77758F]">Job Title</label>
                         <input
                           type="text"
                           value={exp.jobTitle}
@@ -1351,13 +1351,13 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                             updated[expIdx].jobTitle = e.target.value;
                             setResumeData({ ...resumeData, workExperiences: updated });
                           }}
-                          className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-semibold text-[#121212]"
+                          className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-semibold text-[#0D0B2D]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-bold text-[#59554E]">Dates Employed</label>
+                      <label className="text-[11px] font-bold text-[#77758F]">Dates Employed</label>
                       <input
                         type="text"
                         value={exp.date}
@@ -1366,19 +1366,19 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           updated[expIdx].date = e.target.value;
                           setResumeData({ ...resumeData, workExperiences: updated });
                         }}
-                        className="w-full mt-1 px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                        className="w-full mt-1 px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                       />
                     </div>
 
                     {/* Bullet Descriptions */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <label className="text-[11px] font-bold text-[#59554E]">
+                        <label className="text-[11px] font-bold text-[#77758F]">
                           Bullet Descriptions (ATS Action Verbs)
                         </label>
                         <button
                           onClick={() => addBulletPoint(expIdx)}
-                          className="text-[10px] font-bold text-[#121212] hover:underline"
+                          className="text-[10px] font-bold text-[#0D0B2D] hover:underline"
                         >
                           + Add Bullet
                         </button>
@@ -1393,7 +1393,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                               updated[expIdx].descriptions[dIdx] = e.target.value;
                               setResumeData({ ...resumeData, workExperiences: updated });
                             }}
-                            className="flex-1 px-3 py-1.5 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                            className="flex-1 px-3 py-1.5 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                           />
                           <button
                             onClick={() => removeBulletPoint(expIdx, dIdx)}
@@ -1409,8 +1409,8 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               </div>
 
               {/* Education Section */}
-              <div className="space-y-3 p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0]">
-                <h4 className="text-xs font-black uppercase tracking-wider text-[#121212] flex items-center gap-1.5">
+              <div className="space-y-3 p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE]">
+                <h4 className="text-xs font-black uppercase tracking-wider text-[#0D0B2D] flex items-center gap-1.5">
                   <GraduationCap className="w-3.5 h-3.5" /> Education
                 </h4>
                 {resumeData.educations.map((edu, eIdx) => (
@@ -1424,7 +1424,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                         setResumeData({ ...resumeData, educations: updated });
                       }}
                       placeholder="University / College"
-                      className="w-full px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs font-semibold text-[#121212]"
+                      className="w-full px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs font-semibold text-[#0D0B2D]"
                     />
                     <div className="grid grid-cols-2 gap-2">
                       <input
@@ -1436,7 +1436,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           setResumeData({ ...resumeData, educations: updated });
                         }}
                         placeholder="Degree"
-                        className="px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                        className="px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                       />
                       <input
                         type="text"
@@ -1447,7 +1447,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                           setResumeData({ ...resumeData, educations: updated });
                         }}
                         placeholder="GPA"
-                        className="px-3 py-2 rounded-xl border border-[#E2DBD0] bg-white text-xs text-[#121212]"
+                        className="px-3 py-2 rounded-xl border border-[#DDD6FE] bg-white text-xs text-[#0D0B2D]"
                       />
                     </div>
                   </div>
@@ -1456,7 +1456,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
             </div>
 
             {/* Right Col: Live Rendered ATS-Optimized Resume Document (Exact Image 2) */}
-            <div className="p-6 bg-[#F4EFE6]/80 flex flex-col justify-between overflow-y-auto">
+            <div className="p-6 bg-[#E6E0FF]/40 flex flex-col justify-between overflow-y-auto">
               <div className="overflow-x-auto flex justify-center">
                 {/* Clean ATS Resume Page (8.5 x 11 Standard) */}
                 <div
@@ -1563,9 +1563,9 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
               </div>
 
               {/* Bottom Resume Control Bar (As in Image 2) */}
-              <div className="mt-4 p-3 bg-white rounded-2xl border border-[#E2DBD0] shadow-sm flex flex-wrap items-center justify-between gap-3 shrink-0 print:hidden">
+              <div className="mt-4 p-3 bg-white rounded-2xl border border-[#DDD6FE] shadow-sm flex flex-wrap items-center justify-between gap-3 shrink-0 print:hidden">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-[#736E65] font-semibold flex items-center gap-1">
+                  <span className="text-xs text-[#77758F] font-semibold flex items-center gap-1">
                     <ZoomIn className="w-3.5 h-3.5" /> Zoom:
                   </span>
                   <input
@@ -1576,13 +1576,13 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                     onChange={(e) => setZoomLevel(Number(e.target.value))}
                     className="w-24 accent-[#121212]"
                   />
-                  <span className="text-xs font-mono font-bold text-[#121212]">{zoomLevel}%</span>
-                  <label className="flex items-center gap-1.5 text-xs text-[#59554E] cursor-pointer ml-2">
+                  <span className="text-xs font-mono font-bold text-[#0D0B2D]">{zoomLevel}%</span>
+                  <label className="flex items-center gap-1.5 text-xs text-[#77758F] cursor-pointer ml-2">
                     <input
                       type="checkbox"
                       checked={autoScale}
                       onChange={(e) => setAutoScale(e.target.checked)}
-                      className="rounded border-[#E2DBD0]"
+                      className="rounded border-[#DDD6FE]"
                     />
                     <span>Autoscale</span>
                   </label>
@@ -1591,7 +1591,7 @@ export const ResumeStudioModal: React.FC<ResumeStudioModalProps> = ({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handlePrintDownload}
-                    className="px-4 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+                    className="px-4 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Resume PDF</span>

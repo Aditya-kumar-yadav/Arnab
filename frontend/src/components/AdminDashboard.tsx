@@ -123,26 +123,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
   if (loading && !stats) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <div className="inline-block w-8 h-8 border-2 border-[#121212] border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-[#736E65] text-sm font-medium">Authenticating Chief Administrator session...</p>
+        <div className="inline-block w-8 h-8 border-2 border-[#5B4BFF] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-[#77758F] text-sm font-medium">Authenticating Chief Administrator session...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-[#121212]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-[#0D0B2D]">
       {/* Admin Header */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E2DBD0] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#DDD6FE] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-3xl font-black text-[#121212] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#0D0B2D] tracking-tight">
               Administration & Governance Console
             </h1>
-            <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#121212] text-white">
+            <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#5B4BFF] text-white">
               Root Authority
             </span>
           </div>
-          <p className="text-xs text-[#736E65] mt-1 font-medium">
+          <p className="text-xs text-[#77758F] mt-1 font-medium">
             Institutional domain governance, corporate authorization audits, and immutable logs.
           </p>
         </div>
@@ -150,14 +150,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenTestModal}
-            className="px-4 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
           >
             <Sparkles className="w-4 h-4 text-white" />
             <span>Judge Test Runner</span>
           </button>
           <button
             onClick={loadAll}
-            className="p-2 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#121212] border border-[#D9D2C7]"
+            className="p-2 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF]/40 text-[#0D0B2D] border border-[#DDD6FE]"
             title="Refresh System State"
           >
             <RotateCcw className="w-4 h-4" />
@@ -168,58 +168,58 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
       {/* 6 OVERVIEW STATS CARDS */}
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <Users className="w-3.5 h-3.5 text-[#121212]" /> Total Students
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <Users className="w-3.5 h-3.5 text-[#0D0B2D]" /> Total Students
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.total_students}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.total_students}</div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <Briefcase className="w-3.5 h-3.5 text-[#121212]" /> Total Recruiters
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <Briefcase className="w-3.5 h-3.5 text-[#0D0B2D]" /> Total Recruiters
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.total_recruiters}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.total_recruiters}</div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <Building2 className="w-3.5 h-3.5 text-[#121212]" /> Verified Companies
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <Building2 className="w-3.5 h-3.5 text-[#0D0B2D]" /> Verified Companies
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.verified_companies}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.verified_companies}</div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-[#121212]" /> Pending Recruiters
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5 text-[#0D0B2D]" /> Pending Recruiters
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.pending_recruiters}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.pending_recruiters}</div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#121212]" /> Pending Inst. Verifs
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#0D0B2D]" /> Pending Inst. Verifs
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.pending_institution_verifications}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.pending_institution_verifications}</div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-1">
-            <span className="text-[11px] text-[#736E65] font-semibold flex items-center gap-1">
-              <Ban className="w-3.5 h-3.5 text-[#121212]" /> Suspended Accounts
+          <div className="p-4 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-1">
+            <span className="text-[11px] text-[#77758F] font-semibold flex items-center gap-1">
+              <Ban className="w-3.5 h-3.5 text-[#0D0B2D]" /> Suspended Accounts
             </span>
-            <div className="text-2xl font-black font-mono text-[#121212]">{stats.suspended_accounts}</div>
+            <div className="text-2xl font-black font-mono text-[#0D0B2D]">{stats.suspended_accounts}</div>
           </div>
         </div>
       )}
 
       {/* Tabs Menu */}
-      <div className="flex border-b border-[#E2DBD0] gap-4 text-xs font-bold">
+      <div className="flex border-b border-[#DDD6FE] gap-4 text-xs font-bold">
         <button
           onClick={() => setActiveTab("STUDENTS")}
           className={`pb-3 px-1 transition-all ${
             activeTab === "STUDENTS"
-              ? "text-[#121212] border-b-2 border-[#121212]"
-              : "text-[#736E65] hover:text-[#121212]"
+              ? "text-[#0D0B2D] border-b-2 border-[#5B4BFF]"
+              : "text-[#77758F] hover:text-[#0D0B2D]"
           }`}
         >
           A. Student Management ({students.length})
@@ -228,8 +228,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
           onClick={() => setActiveTab("RECRUITERS")}
           className={`pb-3 px-1 transition-all ${
             activeTab === "RECRUITERS"
-              ? "text-[#121212] border-b-2 border-[#121212]"
-              : "text-[#736E65] hover:text-[#121212]"
+              ? "text-[#0D0B2D] border-b-2 border-[#5B4BFF]"
+              : "text-[#77758F] hover:text-[#0D0B2D]"
           }`}
         >
           B. Recruiter & Company Review ({recruiters.length})
@@ -238,8 +238,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
           onClick={() => setActiveTab("INSTITUTIONS")}
           className={`pb-3 px-1 transition-all ${
             activeTab === "INSTITUTIONS"
-              ? "text-[#121212] border-b-2 border-[#121212]"
-              : "text-[#736E65] hover:text-[#121212]"
+              ? "text-[#0D0B2D] border-b-2 border-[#5B4BFF]"
+              : "text-[#77758F] hover:text-[#0D0B2D]"
           }`}
         >
           C. Institution & Exact Domain Engine ({institutions.length})
@@ -248,8 +248,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
           onClick={() => setActiveTab("AUDIT")}
           className={`pb-3 px-1 transition-all ${
             activeTab === "AUDIT"
-              ? "text-[#121212] border-b-2 border-[#121212]"
-              : "text-[#736E65] hover:text-[#121212]"
+              ? "text-[#0D0B2D] border-b-2 border-[#5B4BFF]"
+              : "text-[#77758F] hover:text-[#0D0B2D]"
           }`}
         >
           D. Immutable Audit Logs ({auditLogs.length})
@@ -266,15 +266,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search students by name or email..."
-                className="w-full px-3.5 py-2 bg-white border border-[#D9D2C7] rounded-xl text-xs text-[#121212] pl-9 outline-none focus:border-[#121212]"
+                className="w-full px-3.5 py-2 bg-white border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] pl-9 outline-none focus:border-[#5B4BFF]"
               />
-              <Search className="w-4 h-4 text-[#736E65] absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-[#77758F] absolute left-3 top-2.5" />
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-3xl border border-[#E2DBD0] bg-white shadow-sm">
-            <table className="w-full text-left text-xs text-[#121212]">
-              <thead className="bg-[#FAF8F5] text-[#59554E] font-mono text-[11px] border-b border-[#E2DBD0] uppercase">
+          <div className="overflow-x-auto rounded-3xl border border-[#DDD6FE] bg-white shadow-sm">
+            <table className="w-full text-left text-xs text-[#0D0B2D]">
+              <thead className="bg-[#F7F8FF] text-[#77758F] font-mono text-[11px] border-b border-[#DDD6FE] uppercase">
                 <tr>
                   <th className="py-3 px-4">Student</th>
                   <th className="py-3 px-4">College</th>
@@ -284,41 +284,41 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F4EFE6]">
+              <tbody className="divide-y divide-[#DDD6FE]/60">
                 {students.map((s) => (
-                  <tr key={s.id} className="hover:bg-[#FAF8F5] transition-colors">
+                  <tr key={s.id} className="hover:bg-[#F7F8FF] transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-bold text-[#121212]">{s.full_name}</div>
-                      <div className="font-mono text-[10px] text-[#736E65]">{s.email}</div>
+                      <div className="font-bold text-[#0D0B2D]">{s.full_name}</div>
+                      <div className="font-mono text-[10px] text-[#77758F]">{s.email}</div>
                       {s.is_first_generation && (
-                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#FAF8F5] text-[#121212] font-semibold border border-[#D9D2C7] mr-1">
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F7F8FF] text-[#0D0B2D] font-semibold border border-[#DDD6FE] mr-1">
                           First-Gen
                         </span>
                       )}
                       {s.is_rural_or_disadvantaged && (
-                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#FAF8F5] text-[#121212] font-semibold border border-[#D9D2C7]">
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#F7F8FF] text-[#0D0B2D] font-semibold border border-[#DDD6FE]">
                           Rural
                         </span>
                       )}
                     </td>
-                    <td className="py-3 px-4 text-[#423E37]">
-                      {s.institution_name || <span className="text-[#8C877D] italic">Self-Directed</span>}
+                    <td className="py-3 px-4 text-[#0D0B2D]">
+                      {s.institution_name || <span className="text-[#77758F] italic">Self-Directed</span>}
                     </td>
                     <td className="py-3 px-4">
                       {s.email_verified ? (
-                        <span className="text-[#121212] font-bold flex items-center gap-1 font-mono text-[11px]">
+                        <span className="text-[#0D0B2D] font-bold flex items-center gap-1 font-mono text-[11px]">
                           <CheckCircle2 className="w-3.5 h-3.5" /> Verified
                         </span>
                       ) : (
-                        <span className="text-[#736E65] font-mono text-[11px]">Unverified</span>
+                        <span className="text-[#77758F] font-mono text-[11px]">Unverified</span>
                       )}
                     </td>
                     <td className="py-3 px-4 font-mono">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           s.verification_status === "VERIFIED"
-                            ? "bg-[#121212] text-white"
-                            : "bg-[#F4EFE6] text-[#736E65]"
+                            ? "bg-[#5B4BFF] text-white"
+                            : "bg-[#E6E0FF]/40 text-[#77758F]"
                         }`}
                       >
                         {s.verification_status}
@@ -328,7 +328,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                       <span
                         className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
                           s.account_status === "ACTIVE"
-                            ? "bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7]"
+                            ? "bg-[#F7F8FF] text-[#0D0B2D] border border-[#DDD6FE]"
                             : "bg-[#FDF2F2] text-[#991B1B]"
                         }`}
                       >
@@ -339,7 +339,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                       {s.verification_status !== "VERIFIED" && (
                         <button
                           onClick={() => handleApproveStudent(s.id)}
-                          className="px-2.5 py-1 bg-[#121212] hover:bg-[#262626] text-white font-bold rounded-lg text-[11px]"
+                          className="px-2.5 py-1 bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 font-bold rounded-lg text-[11px]"
                         >
                           Approve ID
                         </button>
@@ -348,8 +348,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                         onClick={() => handleSuspendUser(s.user_id, s.account_status)}
                         className={`px-2 py-1 rounded-lg text-[11px] font-bold border ${
                           s.account_status === "SUSPENDED"
-                            ? "bg-[#121212] text-white"
-                            : "border-[#D9D2C7] text-[#736E65] hover:border-[#121212]"
+                            ? "bg-[#5B4BFF] text-white"
+                            : "border-[#DDD6FE] text-[#77758F] hover:border-[#5B4BFF]"
                         }`}
                       >
                         {s.account_status === "SUSPENDED" ? "Reactivate" : "Suspend"}
@@ -365,9 +365,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
 
       {/* TAB B: RECRUITER & COMPANY REVIEW */}
       {activeTab === "RECRUITERS" && (
-        <div className="overflow-x-auto rounded-3xl border border-[#E2DBD0] bg-white shadow-sm">
-          <table className="w-full text-left text-xs text-[#121212]">
-            <thead className="bg-[#FAF8F5] text-[#59554E] font-mono text-[11px] border-b border-[#E2DBD0] uppercase">
+        <div className="overflow-x-auto rounded-3xl border border-[#DDD6FE] bg-white shadow-sm">
+          <table className="w-full text-left text-xs text-[#0D0B2D]">
+            <thead className="bg-[#F7F8FF] text-[#77758F] font-mono text-[11px] border-b border-[#DDD6FE] uppercase">
               <tr>
                 <th className="py-3 px-4">Recruiter</th>
                 <th className="py-3 px-4">Company & Website</th>
@@ -376,26 +376,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                 <th className="py-3 px-4 text-right">Verification Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F4EFE6]">
+            <tbody className="divide-y divide-[#DDD6FE]/60">
               {recruiters.map((r) => {
                 const isApproved =
                   r.recruiter_verification_status === "VERIFIED" &&
                   r.company_verification_status === "VERIFIED";
 
                 return (
-                  <tr key={r.id} className="hover:bg-[#FAF8F5] transition-colors">
+                  <tr key={r.id} className="hover:bg-[#F7F8FF] transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-bold text-[#121212]">{r.full_name}</div>
-                      <div className="text-[11px] text-[#736E65]">{r.designation}</div>
-                      <div className="font-mono text-[10px] text-[#8C877D]">{r.work_email}</div>
+                      <div className="font-bold text-[#0D0B2D]">{r.full_name}</div>
+                      <div className="text-[11px] text-[#77758F]">{r.designation}</div>
+                      <div className="font-mono text-[10px] text-[#77758F]">{r.work_email}</div>
                     </td>
                     <td className="py-3 px-4">
-                      <div className="font-bold text-[#121212]">{r.company_name}</div>
+                      <div className="font-bold text-[#0D0B2D]">{r.company_name}</div>
                       <a
                         href={r.company_website}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[#121212] underline underline-offset-2 flex items-center gap-1 text-[11px] font-mono font-bold"
+                        className="text-[#0D0B2D] underline underline-offset-2 flex items-center gap-1 text-[11px] font-mono font-bold"
                       >
                         {r.company_website} <ExternalLink className="w-2.5 h-2.5" />
                       </a>
@@ -404,8 +404,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           r.company_verification_status === "VERIFIED"
-                            ? "bg-[#121212] text-white"
-                            : "bg-[#F4EFE6] text-[#736E65]"
+                            ? "bg-[#5B4BFF] text-white"
+                            : "bg-[#E6E0FF]/40 text-[#77758F]"
                         }`}
                       >
                         {r.company_verification_status}
@@ -415,8 +415,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           r.recruiter_verification_status === "VERIFIED"
-                            ? "bg-[#121212] text-white"
-                            : "bg-[#F4EFE6] text-[#736E65]"
+                            ? "bg-[#5B4BFF] text-white"
+                            : "bg-[#E6E0FF]/40 text-[#77758F]"
                         }`}
                       >
                         {r.recruiter_verification_status}
@@ -426,7 +426,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                       {!isApproved && (
                         <button
                           onClick={() => handleApproveRecruiter(r.id, r.company_id)}
-                          className="px-2.5 py-1 bg-[#121212] hover:bg-[#262626] text-white font-bold rounded-lg text-[11px]"
+                          className="px-2.5 py-1 bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 font-bold rounded-lg text-[11px]"
                         >
                           Approve Recruiter & Company
                         </button>
@@ -435,8 +435,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                         onClick={() => handleSuspendUser(r.user_id, r.account_status)}
                         className={`px-2 py-1 rounded-lg text-[11px] font-bold border ${
                           r.account_status === "SUSPENDED"
-                            ? "bg-[#121212] text-white"
-                            : "border-[#D9D2C7] text-[#736E65] hover:border-[#121212]"
+                            ? "bg-[#5B4BFF] text-white"
+                            : "border-[#DDD6FE] text-[#77758F] hover:border-[#5B4BFF]"
                         }`}
                       >
                         {r.account_status === "SUSPENDED" ? "Reactivate" : "Suspend"}
@@ -454,12 +454,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
       {activeTab === "INSTITUTIONS" && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div className="text-xs text-[#736E65] font-medium">
+            <div className="text-xs text-[#77758F] font-medium">
               Exact domain validation prevents spoofing. Substring domains like <code>fakebitmesra.ac.in</code> are strictly prohibited.
             </div>
             <button
               onClick={() => setShowAddInstModal(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm"
+              className="px-3.5 py-1.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 font-bold text-xs flex items-center gap-1.5 shadow-sm"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Verified College</span>
@@ -470,21 +470,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
             {institutions.map((inst) => (
               <div
                 key={inst.id}
-                className="p-5 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm space-y-2.5"
+                className="p-5 rounded-2xl bg-white border border-[#DDD6FE] shadow-sm space-y-2.5"
               >
                 <div className="flex items-start justify-between">
-                  <div className="font-black text-[#121212] text-sm">{inst.institution_name}</div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#121212] text-white font-bold">
+                  <div className="font-black text-[#0D0B2D] text-sm">{inst.institution_name}</div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#5B4BFF] text-white font-bold">
                     VERIFIED
                   </span>
                 </div>
-                <div className="text-xs text-[#736E65] font-mono font-medium">{inst.official_website}</div>
-                <div className="pt-2 border-t border-[#F4EFE6] flex flex-wrap items-center gap-1.5">
-                  <span className="text-[10px] text-[#8C877D] font-mono font-semibold">Authorized Domains:</span>
+                <div className="text-xs text-[#77758F] font-mono font-medium">{inst.official_website}</div>
+                <div className="pt-2 border-t border-[#DDD6FE]/60 flex flex-wrap items-center gap-1.5">
+                  <span className="text-[10px] text-[#77758F] font-mono font-semibold">Authorized Domains:</span>
                   {inst.domains.map((dom, dIdx) => (
                     <span
                       key={dIdx}
-                      className="px-2 py-0.5 rounded-md bg-[#FAF8F5] border border-[#D9D2C7] text-[#121212] font-mono font-bold text-[11px]"
+                      className="px-2 py-0.5 rounded-md bg-[#F7F8FF] border border-[#DDD6FE] text-[#0D0B2D] font-mono font-bold text-[11px]"
                     >
                       @{dom}
                     </span>
@@ -499,12 +499,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
       {/* TAB D: IMMUTABLE AUDIT LOGS */}
       {activeTab === "AUDIT" && (
         <div className="space-y-3">
-          <div className="text-xs text-[#736E65] font-medium">
+          <div className="text-xs text-[#77758F] font-medium">
             Real-time, cryptographically linked security and administrative audit trail.
           </div>
-          <div className="overflow-x-auto rounded-3xl border border-[#E2DBD0] bg-white shadow-sm">
-            <table className="w-full text-left text-xs text-[#121212] font-mono">
-              <thead className="bg-[#FAF8F5] text-[#59554E] text-[10px] border-b border-[#E2DBD0] uppercase">
+          <div className="overflow-x-auto rounded-3xl border border-[#DDD6FE] bg-white shadow-sm">
+            <table className="w-full text-left text-xs text-[#0D0B2D] font-mono">
+              <thead className="bg-[#F7F8FF] text-[#77758F] text-[10px] border-b border-[#DDD6FE] uppercase">
                 <tr>
                   <th className="py-2.5 px-4">Timestamp</th>
                   <th className="py-2.5 px-4">Action Event</th>
@@ -513,14 +513,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                   <th className="py-2.5 px-4">Details</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F4EFE6] text-[11px]">
+              <tbody className="divide-y divide-[#DDD6FE]/60 text-[11px]">
                 {auditLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-[#FAF8F5]">
-                    <td className="py-2 px-4 text-[#8C877D]">{new Date(log.created_at).toLocaleTimeString()}</td>
-                    <td className="py-2 px-4 font-bold text-[#121212]">{log.action}</td>
-                    <td className="py-2 px-4 text-[#423E37]">{log.admin_id ? `Admin #${log.admin_id}` : "System"}</td>
-                    <td className="py-2 px-4 text-[#736E65]">{log.target_user_id ? `User #${log.target_user_id}` : "—"}</td>
-                    <td className="py-2 px-4 text-[#736E65] max-w-xs truncate">{log.details}</td>
+                  <tr key={log.id} className="hover:bg-[#F7F8FF]">
+                    <td className="py-2 px-4 text-[#77758F]">{new Date(log.created_at).toLocaleTimeString()}</td>
+                    <td className="py-2 px-4 font-bold text-[#0D0B2D]">{log.action}</td>
+                    <td className="py-2 px-4 text-[#0D0B2D]">{log.admin_id ? `Admin #${log.admin_id}` : "System"}</td>
+                    <td className="py-2 px-4 text-[#77758F]">{log.target_user_id ? `User #${log.target_user_id}` : "—"}</td>
+                    <td className="py-2 px-4 text-[#77758F] max-w-xs truncate">{log.details}</td>
                   </tr>
                 ))}
               </tbody>
@@ -534,48 +534,48 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <form
             onSubmit={handleAddInstitution}
-            className="bg-white border border-[#CEBFAD] rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in-95"
+            className="bg-white border border-[#A78BFA] rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in-95"
           >
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-base font-black text-[#121212]">Add Recognized College</h3>
-                <p className="text-xs text-[#736E65]">Configure exact verified email domains</p>
+                <h3 className="text-base font-black text-[#0D0B2D]">Add Recognized College</h3>
+                <p className="text-xs text-[#77758F]">Configure exact verified email domains</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowAddInstModal(false)}
-                className="text-[#736E65] hover:text-[#121212]"
+                className="text-[#77758F] hover:text-[#0D0B2D]"
               >
                 ✕
               </button>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">Institution Name</label>
+              <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Institution Name</label>
               <input
                 type="text"
                 required
                 value={newInstName}
                 onChange={(e) => setNewInstName(e.target.value)}
                 placeholder="e.g. National Institute of Technology, Rourkela"
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">Official Website</label>
+              <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Official Website</label>
               <input
                 type="url"
                 required
                 value={newInstWebsite}
                 onChange={(e) => setNewInstWebsite(e.target.value)}
                 placeholder="https://www.nitrkl.ac.in"
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#121212] mb-1">
+              <label className="block text-xs font-bold text-[#0D0B2D] mb-1">
                 Authorized Domains (Comma separated)
               </label>
               <input
@@ -584,22 +584,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenTestModal 
                 value={newInstDomains}
                 onChange={(e) => setNewInstDomains(e.target.value)}
                 placeholder="nitrkl.ac.in, alumni.nitrkl.ac.in"
-                className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212] font-mono"
+                className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] font-mono"
               />
-              <p className="text-[10px] text-[#736E65] mt-1 font-medium">Exact match only. Do not include @ symbol.</p>
+              <p className="text-[10px] text-[#77758F] mt-1 font-medium">Exact match only. Do not include @ symbol.</p>
             </div>
 
             <div className="flex gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setShowAddInstModal(false)}
-                className="w-1/3 py-2 rounded-xl bg-[#FAF8F5] text-[#59554E] font-bold text-xs border border-[#D9D2C7]"
+                className="w-1/3 py-2 rounded-xl bg-[#F7F8FF] text-[#77758F] font-bold text-xs border border-[#DDD6FE]"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="w-2/3 py-2 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-black text-xs"
+                className="w-2/3 py-2 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 font-black text-xs"
               >
                 Register & Verify Domain
               </button>

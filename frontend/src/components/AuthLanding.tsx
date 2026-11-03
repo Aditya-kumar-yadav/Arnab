@@ -232,88 +232,92 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#FAF8F5] text-[#121212]">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row bg-[#F7F8FF] text-[#0D0B2D]">
       {/* LEFT SECTION: Brand, Tagline & Editorial Showcase Cards */}
-      <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#E2DBD0] bg-[#F4EFE6]/50">
-        <div className="space-y-6">
+      <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#DDD6FE] bg-gradient-to-br from-[#F7F8FF] via-[#E6E0FF]/35 to-[#F7F8FF] relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-[#A78BFA]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-[#5B4BFF]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-6">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#D9D2C7] text-[#121212] text-xs font-bold shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-[#121212]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DDD6FE] text-[#5B4BFF] text-xs font-bold shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#5B4BFF]" />
             <span>Campus-to-Employment Opportunity Matcher</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-[#121212]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-[#0D0B2D]">
             Democratizing <br />
-            <span className="underline decoration-2 underline-offset-8 decoration-[#121212]">
+            <span className="text-[#5B4BFF] underline decoration-[#A78BFA] decoration-2 underline-offset-8">
               Campus Careers.
             </span>
           </h1>
 
-          <p className="text-[#59554E] text-sm sm:text-base max-w-lg leading-relaxed font-medium">
+          <p className="text-[#77758F] text-sm sm:text-base max-w-lg leading-relaxed font-medium">
             Connecting first-generation, rural, and economically disadvantaged learners with verified internships, jobs, and subsidized programs. Built with anti-bias blind review and explainable matching.
           </p>
 
-          {/* Floating Opportunity Showcase Cards (Beige & White Aesthetic) */}
+          {/* Floating Opportunity Showcase Cards */}
           <div className="space-y-3.5 pt-4">
             {/* Opportunity Card 1 */}
-            <div className="p-5 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm hover:border-[#121212] transition-all group">
+            <div className="p-5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#DDD6FE] hover:border-[#5B4BFF] shadow-[0_8px_30px_rgba(91,75,255,0.06)] hover:shadow-[0_12px_36px_rgba(91,75,255,0.12)] transition-all group">
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#121212]">
+                    <span className="text-xs font-bold text-[#0D0B2D]">
                       Full-Stack Engineering Apprentice
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7]">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#5B4BFF] border border-[#DDD6FE]">
                       ₹30,000 / mo
                     </span>
                   </div>
-                  <div className="text-xs text-[#736E65] flex items-center gap-2 font-medium">
+                  <div className="text-xs text-[#77758F] flex items-center gap-2 font-medium">
                     <span className="flex items-center gap-1">
-                      <Building2 className="w-3 h-3 text-[#59554E]" /> RuralTech Labs
+                      <Building2 className="w-3 h-3 text-[#5B4BFF]" /> RuralTech Labs
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#59554E]" /> Remote (All India)
+                      <MapPin className="w-3 h-3 text-[#77758F]" /> Remote (All India)
                     </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-mono font-black text-[#121212] bg-[#EDE7DC] px-2 py-0.5 rounded">96% Fit</span>
-                  <div className="text-[10px] text-[#736E65] font-semibold mt-0.5">Competency Match</div>
+                  <span className="text-xs font-mono font-black text-white bg-[#5B4BFF] px-2.5 py-0.5 rounded-md shadow-xs">96% Fit</span>
+                  <div className="text-[10px] text-[#77758F] font-semibold mt-0.5">Competency Match</div>
                 </div>
               </div>
-              <div className="mt-3 pt-2.5 border-t border-[#F4EFE6] flex flex-wrap gap-1.5 text-[10px] font-medium text-[#423E37]">
-                <span className="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E2DBD0]">💻 Laptop Provided</span>
-                <span className="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E2DBD0]">Zero Prestige Filter</span>
-                <span className="px-2 py-0.5 rounded bg-[#121212] text-white">Explainable AI</span>
+              <div className="mt-3 pt-2.5 border-t border-[#F7F8FF] flex flex-wrap gap-1.5 text-[10px] font-medium text-[#0D0B2D]">
+                <span className="px-2 py-0.5 rounded bg-[#E6E0FF] border border-[#DDD6FE]">💻 Laptop Provided</span>
+                <span className="px-2 py-0.5 rounded bg-[#F7F8FF] border border-[#DDD6FE]">Zero Prestige Filter</span>
+                <span className="px-2 py-0.5 rounded bg-[#0D0B2D] text-white">Explainable AI</span>
               </div>
             </div>
 
             {/* Opportunity Card 2 */}
-            <div className="p-5 rounded-2xl bg-white border border-[#E2DBD0] shadow-sm hover:border-[#121212] transition-all group">
+            <div className="p-5 rounded-2xl bg-white/90 backdrop-blur-md border border-[#DDD6FE] hover:border-[#5B4BFF] shadow-[0_8px_30px_rgba(91,75,255,0.06)] hover:shadow-[0_12px_36px_rgba(91,75,255,0.12)] transition-all group">
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#121212]">
+                    <span className="text-xs font-bold text-[#0D0B2D]">
                       AI Systems Fellowship (Subsidized)
                     </span>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#FAF8F5] text-[#121212] border border-[#D9D2C7]">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E6E0FF] text-[#5B4BFF] border border-[#DDD6FE]">
                       Full Grant
                     </span>
                   </div>
-                  <div className="text-xs text-[#736E65] flex items-center gap-2 font-medium">
+                  <div className="text-xs text-[#77758F] flex items-center gap-2 font-medium">
                     <span className="flex items-center gap-1">
-                      <Building2 className="w-3 h-3 text-[#59554E]" /> NextGen AI Foundation
+                      <Building2 className="w-3 h-3 text-[#5B4BFF]" /> NextGen AI Foundation
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <Laptop className="w-3 h-3 text-[#59554E]" /> Cloud Compute Subsidized
+                      <Laptop className="w-3 h-3 text-[#77758F]" /> Cloud Compute Subsidized
                     </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-mono font-black text-[#121212] bg-[#EDE7DC] px-2 py-0.5 rounded">91% Fit</span>
-                  <div className="text-[10px] text-[#736E65] font-semibold mt-0.5">Gap: 1 Free Course</div>
+                  <span className="text-xs font-mono font-black text-white bg-[#5B4BFF] px-2.5 py-0.5 rounded-md shadow-xs">91% Fit</span>
+                  <div className="text-[10px] text-[#77758F] font-semibold mt-0.5">Gap: 1 Free Course</div>
                 </div>
               </div>
             </div>
@@ -345,25 +349,25 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
         </div>
 
         {/* Footer Guarantee */}
-        <div className="pt-8 mt-6 border-t border-[#E2DBD0] text-xs text-[#59554E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-medium">
+        <div className="relative z-10 pt-8 mt-6 border-t border-[#DDD6FE] text-xs text-[#77758F] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-medium">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#121212]" />
+            <ShieldCheck className="w-4 h-4 text-[#16A36A]" />
             <span>Anti-Bias Blind Reviews & Exact Domain Verification</span>
           </div>
           <button
             onClick={onOpenTestModal}
-            className="text-[#121212] hover:underline underline-offset-4 font-mono font-bold text-[11px]"
+            className="text-[#5B4BFF] hover:underline underline-offset-4 font-mono font-bold text-[11px]"
           >
             Launch Judge Verification Sandbox →
           </button>
         </div>
       </div>
 
-      {/* RIGHT SECTION: Interactive White & Beige Auth Box */}
+      {/* RIGHT SECTION: Interactive Lavender Glass Auth Box */}
       <div className="lg:w-1/2 p-6 sm:p-10 lg:p-12 flex flex-col justify-center max-w-xl mx-auto w-full">
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2DBD0] shadow-sm">
+        <div className="bg-white/95 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-[#DDD6FE] shadow-[0_12px_40px_rgba(91,75,255,0.08)]">
           {/* Toggle Mode: Login vs Register */}
-          <div className="flex items-center p-1 bg-[#FAF8F5] border border-[#E2DBD0] rounded-2xl mb-6">
+          <div className="flex items-center p-1 bg-[#E6E0FF]/60 border border-[#DDD6FE] rounded-2xl mb-6">
             <button
               onClick={() => {
                 setMode("LOGIN");
@@ -371,8 +375,8 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
               }}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
                 mode === "LOGIN"
-                  ? "bg-[#121212] text-white shadow-sm"
-                  : "text-[#736E65] hover:text-[#121212]"
+                  ? "bg-[#5B4BFF] text-white shadow-md shadow-[#5B4BFF]/25"
+                  : "text-[#77758F] hover:text-[#0D0B2D]"
               }`}
             >
               Sign In to PATHFINDER
@@ -385,8 +389,8 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
               }}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
                 mode === "REGISTER"
-                  ? "bg-[#121212] text-white shadow-sm"
-                  : "text-[#736E65] hover:text-[#121212]"
+                  ? "bg-[#5B4BFF] text-white shadow-md shadow-[#5B4BFF]/25"
+                  : "text-[#77758F] hover:text-[#0D0B2D]"
               }`}
             >
               Create New Account
@@ -395,8 +399,8 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
 
           {/* Error message alert */}
           {errorMessage && (
-            <div className="p-3 mb-4 rounded-xl bg-[#FDF2F2] border border-[#F87171] text-[#991B1B] text-xs flex items-start gap-2 animate-in fade-in">
-              <AlertCircle className="w-4 h-4 text-[#DC2626] mt-0.5 shrink-0" />
+            <div className="p-3 mb-4 rounded-xl bg-red-50 border border-red-200 text-[#E5484D] text-xs flex items-start gap-2 animate-in fade-in">
+              <AlertCircle className="w-4 h-4 text-[#E5484D] mt-0.5 shrink-0" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -406,7 +410,7 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
             <SignInButton mode="modal" fallbackRedirectUrl="/" forceRedirectUrl="/">
               <button
                 type="button"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] border border-[#D9D2C7] hover:border-[#121212] text-[#121212] font-bold text-xs flex items-center justify-center gap-2.5 transition-all shadow-sm"
+                className="w-full py-2.5 px-4 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF]/60 border border-[#DDD6FE] hover:border-[#5B4BFF] text-[#0D0B2D] font-bold text-xs flex items-center justify-center gap-2.5 transition-all shadow-xs"
               >
                 <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -419,21 +423,21 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
             </SignInButton>
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#E2DBD0]" />
+                <div className="w-full border-t border-[#DDD6FE]" />
               </div>
               <div className="relative flex justify-center text-[10px] uppercase font-mono font-bold tracking-wider">
-                <span className="bg-white px-2 text-[#8C877D]">Or with PATHFINDER credentials</span>
+                <span className="bg-white px-2 text-[#77758F]">Or with PATHFINDER credentials</span>
               </div>
             </div>
           </div>
 
           {/* =========================================================================
-              MODE A: LOGIN FORM WITH QUICK FILL DEMO CHIPS (MAKES IT VERY INTERESTING)
+              MODE A: LOGIN FORM WITH QUICK FILL DEMO CHIPS
              ========================================================================= */}
           {mode === "LOGIN" && (
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#121212] mb-1.5">
+                <label className="block text-xs font-bold text-[#0D0B2D] mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
@@ -443,14 +447,14 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="student@bitmesra.ac.in or talent@ruraltechlabs.io"
-                    className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-sm text-[#121212] placeholder:text-[#A8A297] outline-none transition-all pl-10"
+                    className="w-full px-3.5 py-2.5 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] focus:ring-2 focus:ring-[#5B4BFF]/20 rounded-xl text-sm text-[#0D0B2D] placeholder:text-[#77758F]/60 outline-none transition-all pl-10"
                   />
-                  <Mail className="w-4 h-4 text-[#736E65] absolute left-3.5 top-3" />
+                  <Mail className="w-4 h-4 text-[#77758F] absolute left-3.5 top-3" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#121212] mb-1.5">
+                <label className="block text-xs font-bold text-[#0D0B2D] mb-1.5">
                   Password
                 </label>
                 <div className="relative">
@@ -460,13 +464,13 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-sm text-[#121212] placeholder:text-[#A8A297] outline-none transition-all pl-10 pr-10"
+                    className="w-full px-3.5 py-2.5 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] focus:ring-2 focus:ring-[#5B4BFF]/20 rounded-xl text-sm text-[#0D0B2D] placeholder:text-[#77758F]/60 outline-none transition-all pl-10 pr-10"
                   />
-                  <Lock className="w-4 h-4 text-[#736E65] absolute left-3.5 top-3" />
+                  <Lock className="w-4 h-4 text-[#77758F] absolute left-3.5 top-3" />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-3 text-[#736E65] hover:text-[#121212]"
+                    className="absolute right-3.5 top-3 text-[#77758F] hover:text-[#0D0B2D]"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -476,53 +480,53 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-sm transition-all shadow-sm flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white font-bold text-sm transition-all shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
               >
                 {loading ? "Authenticating Session..." : "Sign In to Dashboard"}
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               {/* INTERACTIVE 1-CLICK DEMO AUTO-FILL CHIPS */}
-              <div className="mt-5 p-3.5 bg-[#FAF8F5] border border-[#E2DBD0] rounded-2xl space-y-2">
-                <div className="text-[11px] font-bold text-[#121212] flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-[#121212]" />
+              <div className="mt-5 p-3.5 bg-[#F7F8FF] border border-[#DDD6FE] rounded-2xl space-y-2">
+                <div className="text-[11px] font-bold text-[#0D0B2D] flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-[#5B4BFF]" />
                   <span>1-Click Test Credentials (Pre-Configured):</span>
                 </div>
                 <div className="grid grid-cols-2 gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleQuickFill("student@bitmesra.ac.in", "StudentPass2026!")}
-                    className="p-2 rounded-lg bg-white border border-[#D9D2C7] hover:border-[#121212] text-left transition-all"
+                    className="p-2 rounded-xl bg-white border border-[#DDD6FE] hover:border-[#5B4BFF] text-left transition-all hover:shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-[#121212]">🎓 Student (BIT Mesra)</div>
-                    <div className="text-[9px] text-[#736E65] font-mono">Institutional Verified</div>
+                    <div className="text-[11px] font-bold text-[#0D0B2D]">🎓 Student (BIT Mesra)</div>
+                    <div className="text-[9px] text-[#5B4BFF] font-mono">Institutional Verified</div>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleQuickFill("rahul.learner@gmail.com", "StudentPass2026!")}
-                    className="p-2 rounded-lg bg-white border border-[#D9D2C7] hover:border-[#121212] text-left transition-all"
+                    className="p-2 rounded-xl bg-white border border-[#DDD6FE] hover:border-[#5B4BFF] text-left transition-all hover:shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-[#121212]">🌾 Rural Learner (Gmail)</div>
-                    <div className="text-[9px] text-[#736E65] font-mono">Affiliation Pending</div>
+                    <div className="text-[11px] font-bold text-[#0D0B2D]">🌾 Rural Learner (Gmail)</div>
+                    <div className="text-[9px] text-[#77758F] font-mono">Affiliation Pending</div>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleQuickFill("talent@ruraltechlabs.io", "RecruiterPass2026!")}
-                    className="p-2 rounded-lg bg-white border border-[#D9D2C7] hover:border-[#121212] text-left transition-all"
+                    className="p-2 rounded-xl bg-white border border-[#DDD6FE] hover:border-[#5B4BFF] text-left transition-all hover:shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-[#121212]">💼 Verified Recruiter</div>
-                    <div className="text-[9px] text-[#736E65] font-mono">RuralTech Labs</div>
+                    <div className="text-[11px] font-bold text-[#0D0B2D]">💼 Verified Recruiter</div>
+                    <div className="text-[9px] text-[#16A36A] font-mono font-semibold">RuralTech Labs</div>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleQuickFill("admin@pathfinder.ai", "AdminSecurePassword2026!")}
-                    className="p-2 rounded-lg bg-white border border-[#D9D2C7] hover:border-[#121212] text-left transition-all"
+                    className="p-2 rounded-xl bg-white border border-[#DDD6FE] hover:border-[#5B4BFF] text-left transition-all hover:shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-[#121212]">🛡️ Root Administrator</div>
-                    <div className="text-[9px] text-[#736E65] font-mono">Governance Console</div>
+                    <div className="text-[11px] font-bold text-[#0D0B2D]">🛡️ Root Administrator</div>
+                    <div className="text-[9px] text-[#5B4BFF] font-mono font-semibold">Governance Console</div>
                   </button>
                 </div>
               </div>
@@ -535,14 +539,14 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
           {mode === "REGISTER" && (
             <div className="space-y-5">
               {/* Step Indicators */}
-              <div className="flex items-center justify-between text-xs text-[#736E65] pb-2 border-b border-[#E2DBD0]">
-                <span className="font-bold text-[#121212]">
+              <div className="flex items-center justify-between text-xs text-[#77758F] pb-2 border-b border-[#DDD6FE]">
+                <span className="font-bold text-[#0D0B2D]">
                   Step {step} of 3: {step === 1 ? "Role & Account" : step === 2 ? "Affiliation Details" : "Verification Preview"}
                 </span>
                 <div className="flex items-center gap-1.5 font-mono">
-                  <span className={`w-2 h-2 rounded-full ${step >= 1 ? "bg-[#121212]" : "bg-[#D9D2C7]"}`} />
-                  <span className={`w-2 h-2 rounded-full ${step >= 2 ? "bg-[#121212]" : "bg-[#D9D2C7]"}`} />
-                  <span className={`w-2 h-2 rounded-full ${step >= 3 ? "bg-[#121212]" : "bg-[#D9D2C7]"}`} />
+                  <span className={`w-2 h-2 rounded-full ${step >= 1 ? "bg-[#5B4BFF]" : "bg-[#DDD6FE]"}`} />
+                  <span className={`w-2 h-2 rounded-full ${step >= 2 ? "bg-[#5B4BFF]" : "bg-[#DDD6FE]"}`} />
+                  <span className={`w-2 h-2 rounded-full ${step >= 3 ? "bg-[#5B4BFF]" : "bg-[#DDD6FE]"}`} />
                 </div>
               </div>
 
@@ -556,16 +560,16 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                       onClick={() => setSelectedRole("STUDENT")}
                       className={`p-3.5 rounded-2xl border text-left transition-all ${
                         selectedRole === "STUDENT"
-                          ? "bg-[#FAF8F5] border-[#121212] shadow-sm"
-                          : "bg-white border-[#E2DBD0] hover:border-[#121212]"
+                          ? "bg-white border-[#5B4BFF] ring-2 ring-[#5B4BFF]/30 shadow-xs"
+                          : "bg-[#F7F8FF] border-[#DDD6FE] hover:border-[#A78BFA]"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
-                        <GraduationCap className="w-5 h-5 text-[#121212]" />
-                        {selectedRole === "STUDENT" && <Check className="w-4 h-4 text-[#121212]" />}
+                        <GraduationCap className="w-5 h-5 text-[#5B4BFF]" />
+                        {selectedRole === "STUDENT" && <Check className="w-4 h-4 text-[#5B4BFF]" />}
                       </div>
-                      <div className="text-xs font-bold text-[#121212]">Continue as Student</div>
-                      <div className="text-[11px] text-[#736E65] leading-tight mt-0.5">
+                      <div className="text-xs font-bold text-[#0D0B2D]">Continue as Student</div>
+                      <div className="text-[11px] text-[#77758F] leading-tight mt-0.5">
                         Internships, subsidized training, explainable matching.
                       </div>
                     </button>
@@ -575,16 +579,16 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                       onClick={() => setSelectedRole("RECRUITER")}
                       className={`p-3.5 rounded-2xl border text-left transition-all ${
                         selectedRole === "RECRUITER"
-                          ? "bg-[#FAF8F5] border-[#121212] shadow-sm"
-                          : "bg-white border-[#E2DBD0] hover:border-[#121212]"
+                          ? "bg-white border-[#5B4BFF] ring-2 ring-[#5B4BFF]/30 shadow-xs"
+                          : "bg-[#F7F8FF] border-[#DDD6FE] hover:border-[#A78BFA]"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
-                        <Briefcase className="w-5 h-5 text-[#121212]" />
-                        {selectedRole === "RECRUITER" && <Check className="w-4 h-4 text-[#121212]" />}
+                        <Briefcase className="w-5 h-5 text-[#5B4BFF]" />
+                        {selectedRole === "RECRUITER" && <Check className="w-4 h-4 text-[#5B4BFF]" />}
                       </div>
-                      <div className="text-xs font-bold text-[#121212]">Continue as Recruiter</div>
-                      <div className="text-[11px] text-[#736E65] leading-tight mt-0.5">
+                      <div className="text-xs font-bold text-[#0D0B2D]">Continue as Recruiter</div>
+                      <div className="text-[11px] text-[#77758F] leading-tight mt-0.5">
                         Verified hiring, blind evaluations, high-potential learners.
                       </div>
                     </button>
@@ -592,19 +596,19 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
 
                   {/* Common Credentials */}
                   <div>
-                    <label className="block text-xs font-bold text-[#121212] mb-1">Full Name</label>
+                    <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Full Name</label>
                     <input
                       type="text"
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder={selectedRole === "STUDENT" ? "e.g. Priya Sharma" : "e.g. Alok Verma"}
-                      className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-sm text-[#121212] outline-none transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] rounded-xl text-sm text-[#0D0B2D] outline-none transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#121212] mb-1">
+                    <label className="block text-xs font-bold text-[#0D0B2D] mb-1">
                       {selectedRole === "STUDENT" ? "College or Personal Email" : "Official Work Email"}
                     </label>
                     <input
@@ -613,25 +617,25 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={selectedRole === "STUDENT" ? "student@bitmesra.ac.in or learner@gmail.com" : "recruiter@company.com"}
-                      className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-sm text-[#121212] outline-none transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] rounded-xl text-sm text-[#0D0B2D] outline-none transition-all"
                     />
                     {/* Real-time Domain Recognition Pill */}
                     {domainCheck && (
-                      <div className="mt-1.5 p-2 rounded-xl bg-[#FAF8F5] border border-[#E2DBD0] text-[11px] flex items-start gap-1.5 animate-in fade-in">
+                      <div className="mt-1.5 p-2 rounded-xl bg-[#F7F8FF] border border-[#DDD6FE] text-[11px] flex items-start gap-1.5 animate-in fade-in">
                         {domainCheck.is_institutional ? (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#121212] mt-0.5 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#16A36A] mt-0.5 shrink-0" />
                         ) : (
-                          <AlertCircle className="w-3.5 h-3.5 text-[#736E65] mt-0.5 shrink-0" />
+                          <AlertCircle className="w-3.5 h-3.5 text-[#77758F] mt-0.5 shrink-0" />
                         )}
                         <div>
-                          <span className="font-bold text-[#121212]">
+                          <span className="font-bold text-[#0D0B2D]">
                             {domainCheck.is_institutional
                               ? `Recognized College: ${domainCheck.institution_name}`
                               : domainCheck.is_public_provider
                               ? "Personal Email Provider"
                               : "Custom Domain"}
                           </span>
-                          <p className="text-[#59554E] text-[10px] leading-tight mt-0.5">{domainCheck.reason}</p>
+                          <p className="text-[#77758F] text-[10px] leading-tight mt-0.5">{domainCheck.reason}</p>
                         </div>
                       </div>
                     )}
@@ -639,25 +643,25 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-[#121212] mb-1">Password</label>
+                      <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Password</label>
                       <input
                         type="password"
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••••••"
-                        className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-xs text-[#121212] outline-none"
+                        className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] rounded-xl text-xs text-[#0D0B2D] outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-[#121212] mb-1">Confirm Password</label>
+                      <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Confirm Password</label>
                       <input
                         type="password"
                         required
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••••••"
-                        className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] focus:border-[#121212] rounded-xl text-xs text-[#121212] outline-none"
+                        className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] focus:border-[#5B4BFF] rounded-xl text-xs text-[#0D0B2D] outline-none"
                       />
                     </div>
                   </div>
@@ -676,7 +680,7 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                       setErrorMessage("");
                       setStep(2);
                     }}
-                    className="w-full py-2.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 mt-2"
+                    className="w-full py-2.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 mt-2 shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5"
                   >
                     Continue to Affiliation Details <ArrowRight className="w-3.5 h-3.5" />
                   </button>
@@ -689,84 +693,84 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                   {selectedRole === "STUDENT" ? (
                     <>
                       <div>
-                        <label className="block text-xs font-bold text-[#121212] mb-1">College / University Name</label>
+                        <label className="block text-xs font-bold text-[#0D0B2D] mb-1">College / University Name</label>
                         <input
                           type="text"
                           required
                           value={collegeName}
                           onChange={(e) => setCollegeName(e.target.value)}
                           placeholder="Birla Institute of Technology, Mesra"
-                          className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                          className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                         />
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-bold text-[#121212] mb-1">Degree</label>
+                          <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Degree</label>
                           <input
                             type="text"
                             value={degree}
                             onChange={(e) => setDegree(e.target.value)}
                             placeholder="B.Tech"
-                            className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                            className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-[#121212] mb-1">Graduation Year</label>
+                          <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Graduation Year</label>
                           <input
                             type="number"
                             value={graduationYear}
                             onChange={(e) => setGraduationYear(Number(e.target.value))}
-                            className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                            className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-[#121212] mb-1">Branch / Department</label>
+                        <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Branch / Department</label>
                         <input
                           type="text"
                           value={branch}
                           onChange={(e) => setBranch(e.target.value)}
                           placeholder="Computer Science & Engineering"
-                          className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                          className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-[#121212] mb-1">College Location (City, State)</label>
+                        <label className="block text-xs font-bold text-[#0D0B2D] mb-1">College Location (City, State)</label>
                         <input
                           type="text"
                           value={collegeLocation}
                           onChange={(e) => setCollegeLocation(e.target.value)}
                           placeholder="Ranchi, Jharkhand"
-                          className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                          className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                         />
                       </div>
 
                       {/* Social Equity and Affirmative Context Flags */}
-                      <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-2 mt-2">
-                        <div className="text-[11px] font-bold text-[#121212] flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5 text-[#121212]" />
+                      <div className="p-3.5 rounded-2xl bg-[#E6E0FF]/40 border border-[#DDD6FE] space-y-2 mt-2">
+                        <div className="text-[11px] font-bold text-[#0D0B2D] flex items-center gap-1.5">
+                          <Award className="w-3.5 h-3.5 text-[#5B4BFF]" />
                           Affirmative & Rural Representation Flags
                         </div>
 
-                        <label className="flex items-center gap-2 cursor-pointer text-xs text-[#423E37]">
+                        <label className="flex items-center gap-2 cursor-pointer text-xs text-[#0D0B2D]">
                           <input
                             type="checkbox"
                             checked={isFirstGen}
                             onChange={(e) => setIsFirstGen(e.target.checked)}
-                            className="w-4 h-4 rounded border-[#CEBFAD] text-[#121212] focus:ring-0"
+                            className="w-4 h-4 rounded border-[#DDD6FE] text-[#5B4BFF] focus:ring-[#5B4BFF]"
                           />
                           <span>I am a first-generation college student in my family</span>
                         </label>
 
-                        <label className="flex items-center gap-2 cursor-pointer text-xs text-[#423E37]">
+                        <label className="flex items-center gap-2 cursor-pointer text-xs text-[#0D0B2D]">
                           <input
                             type="checkbox"
                             checked={isRural}
                             onChange={(e) => setIsRural(e.target.checked)}
-                            className="w-4 h-4 rounded border-[#CEBFAD] text-[#121212] focus:ring-0"
+                            className="w-4 h-4 rounded border-[#DDD6FE] text-[#5B4BFF] focus:ring-[#5B4BFF]"
                           />
                           <span>I am from a rural area or Tier-2/3 town</span>
                         </label>
@@ -775,50 +779,50 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                   ) : (
                     <>
                       <div>
-                        <label className="block text-xs font-bold text-[#121212] mb-1">Company / Organization Name</label>
+                        <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Company / Organization Name</label>
                         <input
                           type="text"
                           required
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                           placeholder="RuralTech Innovations"
-                          className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                          className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                         />
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-bold text-[#121212] mb-1">Official Website</label>
+                          <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Official Website</label>
                           <input
                             type="url"
                             required
                             value={officialWebsite}
                             onChange={(e) => setOfficialWebsite(e.target.value)}
                             placeholder="https://company.com"
-                            className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                            className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold text-[#121212] mb-1">Job Designation</label>
+                          <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Job Designation</label>
                           <input
                             type="text"
                             required
                             value={designation}
                             onChange={(e) => setDesignation(e.target.value)}
                             placeholder="Technical Recruiter"
-                            className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                            className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-[#121212] mb-1">Phone Number</label>
+                        <label className="block text-xs font-bold text-[#0D0B2D] mb-1">Phone Number</label>
                         <input
                           type="tel"
                           value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                           placeholder="+91-9876543210"
-                          className="w-full px-3 py-2 bg-[#FAF8F5] border border-[#D9D2C7] rounded-xl text-xs text-[#121212]"
+                          className="w-full px-3 py-2 bg-[#F7F8FF] border border-[#DDD6FE] rounded-xl text-xs text-[#0D0B2D] focus:border-[#5B4BFF]"
                         />
                       </div>
                     </>
@@ -828,14 +832,14 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="w-1/3 py-2.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#736E65] font-bold text-xs border border-[#D9D2C7] transition-colors"
+                      className="w-1/3 py-2.5 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF]/50 text-[#77758F] font-bold text-xs border border-[#DDD6FE] transition-colors"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={() => setStep(3)}
-                      className="w-2/3 py-2.5 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+                      className="w-2/3 py-2.5 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5"
                     >
                       Review Verification Status <ArrowRight className="w-3.5 h-3.5" />
                     </button>
@@ -846,50 +850,50 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
               {/* STEP 3: Verification Preview & Final Submission */}
               {step === 3 && (
                 <div className="space-y-4">
-                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#E2DBD0] space-y-3">
-                    <div className="text-xs font-bold text-[#121212] flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-[#121212]" />
+                  <div className="p-4 rounded-2xl bg-[#F7F8FF] border border-[#DDD6FE] space-y-3">
+                    <div className="text-xs font-bold text-[#0D0B2D] flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#5B4BFF]" />
                       <span>System Verification Diagnostic</span>
                     </div>
 
                     {selectedRole === "STUDENT" ? (
-                      <div className="space-y-2 text-xs text-[#423E37]">
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Account Type:</span>
-                          <span className="font-bold text-[#121212]">Student Profile</span>
+                      <div className="space-y-2 text-xs text-[#0D0B2D]">
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Account Type:</span>
+                          <span className="font-bold text-[#0D0B2D]">Student Profile</span>
                         </div>
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Email Address:</span>
-                          <span className="font-mono text-[#121212]">{email}</span>
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Email Address:</span>
+                          <span className="font-mono text-[#0D0B2D]">{email}</span>
                         </div>
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Domain Classification:</span>
-                          <span className="font-bold text-[#121212]">
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Domain Classification:</span>
+                          <span className="font-bold text-[#0D0B2D]">
                             {domainCheck?.is_institutional ? "Verified Institutional Domain" : "Personal Email (Gmail/Outlook)"}
                           </span>
                         </div>
                         <div className="flex items-center justify-between py-1">
-                          <span className="text-[#736E65]">Badge Issued Upon Signup:</span>
-                          <span className="font-bold text-[#121212]">
+                          <span className="text-[#77758F]">Badge Issued Upon Signup:</span>
+                          <span className="font-bold text-[#16A36A]">
                             {domainCheck?.is_institutional ? "Institutional Email Verified" : "Personal Email (Pending ID)"}
                           </span>
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-2 text-xs text-[#423E37]">
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Account Type:</span>
-                          <span className="font-bold text-[#121212]">Recruiter Profile</span>
+                      <div className="space-y-2 text-xs text-[#0D0B2D]">
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Account Type:</span>
+                          <span className="font-bold text-[#0D0B2D]">Recruiter Profile</span>
                         </div>
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Company:</span>
-                          <span className="font-bold text-[#121212]">{companyName}</span>
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Company:</span>
+                          <span className="font-bold text-[#0D0B2D]">{companyName}</span>
                         </div>
-                        <div className="flex items-center justify-between py-1 border-b border-[#E2DBD0]">
-                          <span className="text-[#736E65]">Initial Status:</span>
-                          <span className="font-bold text-[#121212]">Pending Administrative Review</span>
+                        <div className="flex items-center justify-between py-1 border-b border-[#DDD6FE]">
+                          <span className="text-[#77758F]">Initial Status:</span>
+                          <span className="font-bold text-[#5B4BFF]">Pending Administrative Review</span>
                         </div>
-                        <div className="p-2 rounded bg-white border border-[#CEBFAD] text-[11px] text-[#59554E] leading-snug">
+                        <div className="p-2.5 rounded-xl bg-white border border-[#DDD6FE] text-[11px] text-[#77758F] leading-snug">
                           Security Notice: Recruiters cannot publish jobs or view sensitive candidate information until approved by an administrator.
                         </div>
                       </div>
@@ -897,12 +901,12 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                   </div>
 
                   {/* Terms Acceptance */}
-                  <label className="flex items-start gap-2 cursor-pointer text-xs text-[#59554E]">
+                  <label className="flex items-start gap-2 cursor-pointer text-xs text-[#77758F]">
                     <input
                       type="checkbox"
                       checked={agreeTerms}
                       onChange={(e) => setAgreeTerms(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 rounded border-[#CEBFAD] text-[#121212] focus:ring-0"
+                      className="mt-0.5 w-4 h-4 rounded border-[#DDD6FE] text-[#5B4BFF] focus:ring-[#5B4BFF]"
                     />
                     <span>
                       I confirm my provided credentials are authentic, and agree to the PATHFINDER AI Anti-Bias Fair-Hiring Charter and Privacy Terms.
@@ -913,7 +917,7 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                     <button
                       type="button"
                       onClick={() => setStep(2)}
-                      className="w-1/3 py-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F4EFE6] text-[#736E65] font-bold text-xs border border-[#D9D2C7] transition-colors"
+                      className="w-1/3 py-3 rounded-xl bg-[#F7F8FF] hover:bg-[#E6E0FF]/50 text-[#77758F] font-bold text-xs border border-[#DDD6FE] transition-colors"
                     >
                       Back
                     </button>
@@ -921,7 +925,7 @@ export const AuthLanding: React.FC<AuthLandingProps> = ({ onAuthSuccess, onOpenT
                       type="button"
                       onClick={selectedRole === "STUDENT" ? handleStudentRegister : handleRecruiterRegister}
                       disabled={loading}
-                      className="w-2/3 py-3 rounded-xl bg-[#121212] hover:bg-[#262626] text-white font-black text-sm transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="w-2/3 py-3 rounded-xl bg-[#5B4BFF] hover:bg-[#4D3DF5] text-white font-black text-sm transition-all shadow-md shadow-[#5B4BFF]/25 hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       {loading ? "Registering..." : "Complete Registration"}
                       <CheckCircle2 className="w-4 h-4" />
